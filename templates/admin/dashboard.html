@@ -1,0 +1,301 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block title %}Дашборд - {{ block.super }}{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    .dashboard-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        border: 1px solid #e8e8e8;
+    }
+    
+    .metric-card {
+        text-align: center;
+        padding: 1.5rem;
+        background: linear-gradient(135deg, #4A90E2 0%, #27AE60 100%);
+        color: white;
+        border-radius: 12px;
+        margin-bottom: 1rem;
+    }
+    
+    .metric-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+    
+    .metric-label {
+        font-size: 0.9rem;
+        opacity: 0.9;
+    }
+    
+    .status-badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-right: 0.5rem;
+    }
+    
+    .status-pending { background: #FFF3CD; color: #856404; }
+    .status-confirmed { background: #D1ECF1; color: #0C5460; }
+    .status-completed { background: #D4EDDA; color: #155724; }
+    .status-cancelled { background: #F8D7DA; color: #721C24; }
+    
+    .service-item, .specialist-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .service-item:last-child, .specialist-item:last-child {
+        border-bottom: none;
+    }
+    
+    .count-badge {
+        background: #4A90E2;
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+    
+    .message-item {
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+        margin-bottom: 0.75rem;
+        border-left: 4px solid #F39C12;
+    }
+    
+    .message-name {
+        font-weight: 600;
+        color: #2C3E50;
+    }
+    
+    .message-time {
+        font-size: 0.8rem;
+        color: #7F8C8D;
+    }
+    
+    .chart-container {
+        height: 300px;
+        position: relative;
+    }
+    
+    .dashboard-header {
+        background: linear-gradient(135deg, #4A90E2 0%, #27AE60 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 12px;
+        margin-bottom: 2rem;
+    }
+    
+    .dashboard-header h1 {
+        margin: 0;
+        font-size: 2rem;
+        font-weight: 700;
+    }
+    
+    .dashboard-header p {
+        margin: 0.5rem 0 0 0;
+        opacity: 0.9;
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <h1><i class="fas fa-chart-line me-3"></i>Дашборд управления</h1>
+    <p>Центр здоровья "Новая Жизнь" - обзор деятельности</p>
+</div>
+
+<div class="row">
+    <!-- Метрики записей -->
+    <div class="col-md-3">
+        <div class="metric-card">
+            <div class="metric-number">{{ dashboard_data.appointments_today }}</div>
+            <div class="metric-label">Записей сегодня</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="metric-card" style="background: linear-gradient(135deg, #27AE60 0%, #F39C12 100%);">
+            <div class="metric-number">{{ dashboard_data.appointments_week }}</div>
+            <div class="metric-label">Записей за неделю</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="metric-card" style="background: linear-gradient(135deg, #F39C12 0%, #E67E22 100%);">
+            <div class="metric-number">{{ dashboard_data.appointments_month }}</div>
+            <div class="metric-label">Записей за месяц</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="metric-card" style="background: linear-gradient(135deg, #9B59B6 0%, #8E44AD 100%);">
+            <div class="metric-number">{{ dashboard_data.total_patients }}</div>
+            <div class="metric-label">Всего пациентов</div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- График записей -->
+    <div class="col-md-8">
+        <div class="dashboard-card">
+            <h3><i class="fas fa-chart-area me-2"></i>Записи за последние 7 дней</h3>
+            <div class="chart-container">
+                <canvas id="appointmentsChart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Статистика по статусам -->
+    <div class="col-md-4">
+        <div class="dashboard-card">
+            <h3><i class="fas fa-tasks me-2"></i>Статусы записей</h3>
+            {% for status in dashboard_data.appointments_by_status %}
+            <div class="status-item mb-2">
+                <span class="status-badge status-{{ status.status }}">
+                    {% if status.status == 'pending' %}Ожидает
+                    {% elif status.status == 'confirmed' %}Подтверждена
+                    {% elif status.status == 'completed' %}Завершена
+                    {% elif status.status == 'cancelled' %}Отменена
+                    {% else %}{{ status.status }}{% endif %}
+                </span>
+                <span class="count-badge">{{ status.count }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Популярные услуги -->
+    <div class="col-md-6">
+        <div class="dashboard-card">
+            <h3><i class="fas fa-star me-2"></i>Популярные услуги</h3>
+            {% for service in dashboard_data.popular_services %}
+            <div class="service-item">
+                <div>
+                    <strong>{{ service.name }}</strong>
+                    <div class="text-muted small">{{ service.price }}{{ service.currency }}</div>
+                </div>
+                <span class="count-badge">{{ service.appointment_count }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- Статистика специалистов -->
+    <div class="col-md-6">
+        <div class="dashboard-card">
+            <h3><i class="fas fa-user-md me-2"></i>Активность специалистов</h3>
+            {% for specialist in dashboard_data.specialists_stats %}
+            <div class="specialist-item">
+                <div>
+                    <strong>{{ specialist.specialist__name }}</strong>
+                    <div class="text-muted small">{{ specialist.specialist__specialty }}</div>
+                </div>
+                <span class="count-badge">{{ specialist.appointment_count }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Последние сообщения -->
+    <div class="col-md-6">
+        <div class="dashboard-card">
+            <h3><i class="fas fa-envelope me-2"></i>Новые сообщения</h3>
+            {% for message in dashboard_data.recent_messages %}
+            <div class="message-item">
+                <div class="message-name">{{ message.name }}</div>
+                <div class="text-muted small mb-1">{{ message.phone }} • {{ message.email }}</div>
+                <div class="small">{{ message.message|truncatechars:100 }}</div>
+                <div class="message-time mt-1">{{ message.created_at|date:"d.m.Y H:i" }}</div>
+            </div>
+            {% empty %}
+            <p class="text-muted">Нет новых сообщений</p>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- Статистика по каналам -->
+    <div class="col-md-6">
+        <div class="dashboard-card">
+            <h3><i class="fas fa-chart-pie me-2"></i>Каналы привлечения</h3>
+            {% for channel in dashboard_data.channels_stats %}
+            <div class="service-item">
+                <div>
+                    <strong>
+                        {% if channel.channel == 'web' %}Веб-сайт
+                        {% elif channel.channel == 'phone' %}Телефон
+                        {% elif channel.channel == 'ai' %}ИИ-секретарь
+                        {% else %}{{ channel.channel }}{% endif %}
+                    </strong>
+                </div>
+                <span class="count-badge">{{ channel.count }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+// График записей за 7 дней
+const ctx = document.getElementById('appointmentsChart').getContext('2d');
+const appointmentsChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: [{% for day in dashboard_data.daily_appointments %}'{{ day.date }}'{% if not forloop.last %},{% endif %}{% endfor %}],
+        datasets: [{
+            label: 'Записи',
+            data: [{% for day in dashboard_data.daily_appointments %}{{ day.count }}{% if not forloop.last %},{% endif %}{% endfor %}],
+            borderColor: '#4A90E2',
+            backgroundColor: 'rgba(74, 144, 226, 0.1)',
+            borderWidth: 3,
+            fill: true,
+            tension: 0.4,
+            pointBackgroundColor: '#4A90E2',
+            pointBorderColor: '#ffffff',
+            pointBorderWidth: 2,
+            pointRadius: 6
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                grid: {
+                    color: 'rgba(0, 0, 0, 0.05)'
+                }
+            },
+            x: {
+                grid: {
+                    color: 'rgba(0, 0, 0, 0.05)'
+                }
+            }
+        }
+    }
+});
+</script>
+{% endblock %}

@@ -7,11 +7,18 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="card shadow">
-                <div class="card-header bg-primary text-white text-center">
-                    <h2 class="mb-0">
+                <div class="card-header bg-gradient-primary text-white text-center">
+                    <h2 class="mb-3">
                         <i class="fas fa-calendar-plus me-2"></i>
                         Записаться на прием
                     </h2>
+                    <p class="mb-0 opacity-90">Заполните форму, и мы свяжемся с вами для подтверждения</p>
+                    
+                    <!-- Прогресс-бар -->
+                    <div class="progress mt-3" style="height: 6px;">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 33%" 
+                             aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
                 </div>
                 <div class="card-body p-4">
                     {% if messages %}
@@ -26,81 +33,169 @@
                     <form method="post" id="appointmentForm">
                         {% csrf_token %}
                         
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="{{ form.name.id_for_label }}" class="form-label">{{ form.name.label }}</label>
-                                {{ form.name }}
-                                {% if form.name.errors %}
-                                    <div class="text-danger">{{ form.name.errors }}</div>
-                                {% endif %}
+                        <!-- Шаг 1: Личная информация -->
+                        <div class="form-step" id="step-1">
+                            <div class="text-center mb-4">
+                                <div class="bg-gradient-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" 
+                                     style="width: 60px; height: 60px;">
+                                    <i class="fas fa-user text-white" style="font-size: 1.5rem;"></i>
+                                </div>
+                                <h4 class="text-primary-blue">Расскажите о себе</h4>
+                                <p class="text-muted">Как к вам обращаться и как с вами связаться</p>
                             </div>
                             
-                            <div class="col-md-6 mb-3">
-                                <label for="{{ form.phone.id_for_label }}" class="form-label">{{ form.phone.label }}</label>
-                                {{ form.phone }}
-                                {% if form.phone.errors %}
-                                    <div class="text-danger">{{ form.phone.errors }}</div>
-                                {% endif %}
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.name.id_for_label }}" class="form-label">
+                                        <i class="fas fa-user me-2 text-primary-blue"></i>{{ form.name.label }}
+                                    </label>
+                                    {{ form.name }}
+                                    {% if form.name.errors %}
+                                        <div class="text-danger">{{ form.name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.phone.id_for_label }}" class="form-label">
+                                        <i class="fas fa-phone me-2 text-primary-green"></i>{{ form.phone.label }}
+                                    </label>
+                                    {{ form.phone }}
+                                    {% if form.phone.errors %}
+                                        <div class="text-danger">{{ form.phone.errors }}</div>
+                                    {% endif %}
+                                    <div class="form-text">
+                                        <i class="fas fa-info-circle me-1"></i>Формат: +972545270015
+                                    </div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="{{ form.service.id_for_label }}" class="form-label">{{ form.service.label }}</label>
-                                {{ form.service }}
-                                {% if form.service.errors %}
-                                    <div class="text-danger">{{ form.service.errors }}</div>
+                            <div class="mb-4">
+                                <label for="{{ form.email.id_for_label }}" class="form-label">
+                                    <i class="fas fa-envelope me-2 text-accent-orange"></i>{{ form.email.label }}
+                                </label>
+                                {{ form.email }}
+                                {% if form.email.errors %}
+                                    <div class="text-danger">{{ form.email.errors }}</div>
                                 {% endif %}
+                                <div class="form-text">
+                                    <i class="fas fa-info-circle me-1"></i>Для отправки подтверждения записи
+                                </div>
                             </div>
                             
-                            <div class="col-md-6 mb-3">
-                                <label for="{{ form.specialist.id_for_label }}" class="form-label">{{ form.specialist.label }}</label>
-                                {{ form.specialist }}
-                                {% if form.specialist.errors %}
-                                    <div class="text-danger">{{ form.specialist.errors }}</div>
-                                {% endif %}
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn btn-primary btn-lg btn-next">
+                                    Далее <i class="fas fa-arrow-right ms-2"></i>
+                                </button>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="{{ form.preferred_date.id_for_label }}" class="form-label">{{ form.preferred_date.label }}</label>
-                                {{ form.preferred_date }}
-                                {% if form.preferred_date.errors %}
-                                    <div class="text-danger">{{ form.preferred_date.errors }}</div>
-                                {% endif %}
+                        <!-- Шаг 2: Выбор услуги и специалиста -->
+                        <div class="form-step" id="step-2" style="display: none;">
+                            <div class="text-center mb-4">
+                                <div class="bg-gradient-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" 
+                                     style="width: 60px; height: 60px;">
+                                    <i class="fas fa-stethoscope text-white" style="font-size: 1.5rem;"></i>
+                                </div>
+                                <h4 class="text-primary-blue">Выберите услугу</h4>
+                                <p class="text-muted">Какая помощь вам нужна и к какому специалисту</p>
                             </div>
                             
-                            <div class="col-md-6 mb-3">
-                                <label for="{{ form.preferred_time.id_for_label }}" class="form-label">{{ form.preferred_time.label }}</label>
-                                {{ form.preferred_time }}
-                                {% if form.preferred_time.errors %}
-                                    <div class="text-danger">{{ form.preferred_time.errors }}</div>
-                                {% endif %}
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.service.id_for_label }}" class="form-label">
+                                        <i class="fas fa-medkit me-2 text-primary-blue"></i>{{ form.service.label }}
+                                    </label>
+                                    {{ form.service }}
+                                    {% if form.service.errors %}
+                                        <div class="text-danger">{{ form.service.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.specialist.id_for_label }}" class="form-label">
+                                        <i class="fas fa-user-md me-2 text-primary-green"></i>{{ form.specialist.label }}
+                                    </label>
+                                    {{ form.specialist }}
+                                    {% if form.specialist.errors %}
+                                        <div class="text-danger">{{ form.specialist.errors }}</div>
+                                    {% endif %}
+                                    <div class="form-text">
+                                        <i class="fas fa-info-circle me-1"></i>Сначала выберите услугу
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between">
+                                <button type="button" class="btn btn-outline-secondary btn-lg btn-prev">
+                                    <i class="fas fa-arrow-left me-2"></i>Назад
+                                </button>
+                                <button type="button" class="btn btn-primary btn-lg btn-next">
+                                    Далее <i class="fas fa-arrow-right ms-2"></i>
+                                </button>
                             </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="{{ form.email.id_for_label }}" class="form-label">{{ form.email.label }}</label>
-                            {{ form.email }}
-                            {% if form.email.errors %}
-                                <div class="text-danger">{{ form.email.errors }}</div>
-                            {% endif %}
-                        </div>
+                        <!-- Шаг 3: Дата, время и дополнительная информация -->
+                        <div class="form-step" id="step-3" style="display: none;">
+                            <div class="text-center mb-4">
+                                <div class="bg-gradient-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" 
+                                     style="width: 60px; height: 60px;">
+                                    <i class="fas fa-calendar-alt text-white" style="font-size: 1.5rem;"></i>
+                                </div>
+                                <h4 class="text-primary-blue">Выберите время</h4>
+                                <p class="text-muted">Когда вам удобно прийти на прием</p>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.preferred_date.id_for_label }}" class="form-label">
+                                        <i class="fas fa-calendar me-2 text-primary-blue"></i>{{ form.preferred_date.label }}
+                                    </label>
+                                    {{ form.preferred_date }}
+                                    {% if form.preferred_date.errors %}
+                                        <div class="text-danger">{{ form.preferred_date.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.preferred_time.id_for_label }}" class="form-label">
+                                        <i class="fas fa-clock me-2 text-primary-green"></i>{{ form.preferred_time.label }}
+                                    </label>
+                                    {{ form.preferred_time }}
+                                    {% if form.preferred_time.errors %}
+                                        <div class="text-danger">{{ form.preferred_time.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
 
-                        <div class="mb-4">
-                            <label for="{{ form.notes.id_for_label }}" class="form-label">{{ form.notes.label }}</label>
-                            {{ form.notes }}
-                            {% if form.notes.errors %}
-                                <div class="text-danger">{{ form.notes.errors }}</div>
-                            {% endif %}
-                        </div>
-
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary btn-lg">
-                                <i class="fas fa-calendar-check me-2"></i>
-                                Записаться на прием
-                            </button>
+                            <div class="mb-4">
+                                <label for="{{ form.notes.id_for_label }}" class="form-label">
+                                    <i class="fas fa-comment-medical me-2 text-accent-orange"></i>{{ form.notes.label }}
+                                </label>
+                                {{ form.notes }}
+                                {% if form.notes.errors %}
+                                    <div class="text-danger">{{ form.notes.errors }}</div>
+                                {% endif %}
+                                <div class="form-text">
+                                    <i class="fas fa-info-circle me-1"></i>Опишите ваши симптомы или особые пожелания
+                                </div>
+                            </div>
+                            
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle me-2"></i>
+                                <strong>Обратите внимание:</strong> После отправки заявки наш администратор свяжется с вами 
+                                для подтверждения записи в течение 30 минут.
+                            </div>
+                            
+                            <div class="d-flex justify-content-between">
+                                <button type="button" class="btn btn-outline-secondary btn-lg btn-prev">
+                                    <i class="fas fa-arrow-left me-2"></i>Назад
+                                </button>
+                                <button type="submit" class="btn btn-primary btn-lg px-5">
+                                    <i class="fas fa-calendar-check me-2"></i>
+                                    Записаться на прием
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -111,9 +206,10 @@
 {% endblock %}
 
 {% block extra_js %}
+<script src="{% static 'js/appointment.js' %}"></script>
 <script>
 $(document).ready(function() {
-    // Обновление специалистов при выборе услуги
+    // Обновление специалистов при выборе услуги (резервный jQuery код)
     $('#id_service').change(function() {
         var serviceId = $(this).val();
         if (serviceId) {
@@ -123,6 +219,7 @@ $(document).ready(function() {
                 success: function(data) {
                     var specialistSelect = $('#id_specialist');
                     specialistSelect.empty();
+                    specialistSelect.append('<option value="">Выберите специалиста</option>');
                     $.each(data, function(index, specialist) {
                         specialistSelect.append(
                             '<option value="' + specialist.id + '">' + 

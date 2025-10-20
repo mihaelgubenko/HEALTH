@@ -1,6 +1,9 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Patient, Service, Specialist, Appointment, DialogLog, FAQ, ContactMessage  # Добавлен ContactMessage
+from django.urls import path
+from django.shortcuts import redirect
+from .models import Patient, Service, Specialist, Appointment, DialogLog, FAQ, ContactMessage
+from .admin_dashboard import dashboard
 
 
 @admin.register(Patient)
@@ -93,7 +96,79 @@ class ContactMessageAdmin(admin.ModelAdmin):
         return super().changelist_view(request, extra_context)
 
 
-# Настройка заголовков админки
-admin.site.site_header = "Умный Секретарь - Центр 'Новая Жизнь'"
-admin.site.site_title = "УС Админка"
-admin.site.index_title = "Управление системой"
+# Кастомизация админки
+class CustomAdminSite(admin.AdminSite):
+    site_header = "Центр здоровья 'Новая Жизнь'"
+    site_title = "Админ панель"
+    index_title = "Управление медицинским центром"
+    
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path('dashboard/', dashboard.dashboard_view, name='admin_dashboard'),
+        ]
+        return custom_urls + urls
+    
+    def index(self, request, extra_context=None):
+        # Перенаправляем на дашборд вместо стандартной главной
+        return redirect('admin:admin_dashboard')
+    
+    def get_app_list(self, request):
+        """Группировка приложений по категориям"""
+        app_list = super().get_app_list(request)
+        
+        # Создаем кастомную группировку
+        custom_app_list = [
+            {
+                'name': 'Пациенты и записи',
+                'app_label': 'patients_appointments',
+                'models': []
+            },
+            {
+                'name': 'Услуги и специалисты', 
+                'app_label': 'services_specialists',
+                'models': []
+            },
+            {
+                'name': 'Коммуникации',
+                'app_label': 'communications', 
+                'models': []
+            }
+        ]
+        
+        # Распределяем модели по группам
+        for app in app_list:
+            if app['app_label'] == 'core':
+                for model in app['models']:
+                    model_name = model['object_name']
+                    
+                    if model_name in ['Patient', 'Appointment']:
+                        model['admin_url'] = model['admin_url']
+                        custom_app_list[0]['models'].append(model)
+                    elif model_name in ['Service', 'Specialist']:
+                        custom_app_list[1]['models'].append(model)
+                    elif model_name in ['DialogLog', 'ContactMessage', 'FAQ']:
+                        custom_app_list[2]['models'].append(model)
+            else:
+                # Другие приложения добавляем как есть
+                custom_app_list.append(app)
+        
+        return custom_app_list
+
+
+# Создаем кастомный сайт админки
+admin_site = CustomAdminSite(name='admin')
+
+# Регистрируем модели в кастомном сайте
+admin_site.register(Patient, PatientAdmin)
+admin_site.register(Service, ServiceAdmin) 
+admin_site.register(Specialist, SpecialistAdmin)
+admin_site.register(Appointment, AppointmentAdmin)
+admin_site.register(DialogLog, DialogLogAdmin)
+admin_site.register(FAQ, FAQAdmin)
+admin_site.register(ContactMessage, ContactMessageAdmin)
+
+# Также регистрируем в стандартном сайте для совместимости
+admin.site.site_header = "Центр здоровья 'Новая Жизнь'"
+admin.site.site_title = "Админ панель"
+admin.site.index_title = "Управление медицинским центром"

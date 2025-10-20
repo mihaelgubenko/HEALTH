@@ -7,23 +7,28 @@
 <section class="hero-section">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-lg-6">
-                <h1 class="display-4 fw-bold mb-4">Ваше здоровье - наш приоритет</h1>
+            <div class="col-lg-6 fade-in-up">
+                <h1 class="display-4 fw-bold mb-4">Забота о вашем здоровье - наша миссия</h1>
                 <p class="lead mb-4">
-                    Профессиональная медицинская помощь в Иерусалиме. 
-                    Реабилитация, массаж, консультации специалистов и современная диагностика.
+                    Мы создаем атмосферу тепла и заботы, где каждый пациент чувствует себя как дома. 
+                    Наша команда профессионалов готова помочь вам на пути к здоровью и благополучию.
                 </p>
-                <div class="d-flex gap-3">
+                <div class="d-flex flex-column flex-sm-row gap-3">
                     <a href="{% url 'core:appointment_form' %}" class="btn btn-primary btn-lg">
                         <i class="fas fa-calendar-plus me-2"></i>Записаться на прием
                     </a>
-                    <a href="{% url 'core:services' %}" class="btn btn-outline-light btn-lg">
+                    <a href="{% url 'core:services' %}" class="btn btn-outline-primary btn-lg">
                         <i class="fas fa-list me-2"></i>Наши услуги
                     </a>
                 </div>
             </div>
             <div class="col-lg-6 text-center">
-                <i class="fas fa-heartbeat" style="font-size: 200px; opacity: 0.3;"></i>
+                <div style="position: relative;">
+                    <i class="fas fa-heartbeat text-white" style="font-size: 180px; opacity: 0.2;"></i>
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                        <i class="fas fa-hands-helping text-white" style="font-size: 80px; opacity: 0.8;"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -78,56 +83,204 @@
     </div>
 </section>
 
-<!-- Почему выбирают нас -->
-<section class="py-5 bg-light">
+<!-- О нас -->
+<section class="py-5 bg-cream">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h2 class="display-5 fw-bold mb-4 text-primary-blue">О нашем центре</h2>
+                <p class="lead mb-4">
+                    Центр здоровья "Новая Жизнь" - это место, где медицинская экспертность сочетается с человеческим теплом. 
+                    Мы верим, что каждый пациент заслуживает не только профессионального лечения, но и искренней заботы.
+                </p>
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <div class="d-flex align-items-center">
+                            <div class="advantage-icon me-3" style="width: 50px; height: 50px; font-size: 1.2rem;">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-1">5+ лет опыта</h6>
+                                <small class="text-muted">Проверенная репутация</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <div class="d-flex align-items-center">
+                            <div class="advantage-icon me-3" style="width: 50px; height: 50px; font-size: 1.2rem;">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-1">1000+ пациентов</h6>
+                                <small class="text-muted">Доверяют нам</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="position-relative">
+                    <div class="bg-gradient-primary rounded-circle d-inline-flex align-items-center justify-content-center" 
+                         style="width: 300px; height: 300px;">
+                        <i class="fas fa-clinic-medical text-white" style="font-size: 120px; opacity: 0.9;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Преимущества -->
+<section class="advantages-section">
     <div class="container">
         <div class="row">
             <div class="col-12 text-center mb-5">
-                <h2 class="display-5 fw-bold">Почему выбирают нас</h2>
+                <h2 class="display-5 fw-bold text-primary-blue">Почему нас выбирают</h2>
+                <p class="lead text-muted">Мы создаем уникальный опыт заботы о здоровье</p>
             </div>
         </div>
         
         <div class="row">
-            <div class="col-md-3 text-center mb-4">
-                <div class="mb-3">
-                    <i class="fas fa-user-md text-primary" style="font-size: 3rem;"></i>
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="advantage-card">
+                    <div class="advantage-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h5 class="text-primary-blue">Опытные специалисты</h5>
+                    <p class="text-muted">Наша команда - это врачи с многолетним опытом, которые постоянно совершенствуют свои навыки</p>
                 </div>
-                <h5>Опытные специалисты</h5>
-                <p class="text-muted">Врачи с многолетним опытом работы и высокой квалификацией</p>
             </div>
-            <div class="col-md-3 text-center mb-4">
-                <div class="mb-3">
-                    <i class="fas fa-clock text-primary" style="font-size: 3rem;"></i>
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="advantage-card">
+                    <div class="advantage-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h5 class="text-primary-green">Индивидуальный подход</h5>
+                    <p class="text-muted">Каждый пациент уникален, поэтому мы разрабатываем персональные программы лечения</p>
                 </div>
-                <h5>Удобное время</h5>
-                <p class="text-muted">Работаем в удобное для вас время, включая выходные</p>
             </div>
-            <div class="col-md-3 text-center mb-4">
-                <div class="mb-3">
-                    <i class="fas fa-shield-alt text-primary" style="font-size: 3rem;"></i>
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="advantage-card">
+                    <div class="advantage-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h5 class="text-accent-orange">Удобное время</h5>
+                    <p class="text-muted">Работаем в удобное для вас время, включая выходные дни и вечерние часы</p>
                 </div>
-                <h5>Безопасность</h5>
-                <p class="text-muted">Современное оборудование и безопасные методики лечения</p>
             </div>
-            <div class="col-md-3 text-center mb-4">
-                <div class="mb-3">
-                    <i class="fas fa-heart text-primary" style="font-size: 3rem;"></i>
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="advantage-card">
+                    <div class="advantage-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h5 class="text-primary-blue">Безопасность</h5>
+                    <p class="text-muted">Современное оборудование и проверенные методики обеспечивают безопасность лечения</p>
                 </div>
-                <h5>Индивидуальный подход</h5>
-                <p class="text-muted">Персональные программы лечения для каждого пациента</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Отзывы пациентов -->
+<section class="py-5 bg-cream">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="display-5 fw-bold text-primary-blue">Отзывы наших пациентов</h2>
+                <p class="lead text-muted">Что говорят о нас те, кому мы помогли</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-quote-left text-primary-blue" style="font-size: 2rem; opacity: 0.3;"></i>
+                        </div>
+                        <p class="card-text mb-4">"Прекрасная атмосфера и профессиональный подход. Екатерина помогла мне справиться с болями в спине. Очень рекомендую!"</p>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <div class="bg-gradient-primary rounded-circle d-flex align-items-center justify-content-center me-3" 
+                                 style="width: 50px; height: 50px;">
+                                <i class="fas fa-user text-white"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">Мария К.</h6>
+                                <small class="text-muted">Пациент</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-quote-left text-primary-green" style="font-size: 2rem; opacity: 0.3;"></i>
+                        </div>
+                        <p class="card-text mb-4">"Диагностика на высшем уровне! Авраам очень внимательный специалист, объяснил все детально и дал полезные рекомендации."</p>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <div class="bg-gradient-primary rounded-circle d-flex align-items-center justify-content-center me-3" 
+                                 style="width: 50px; height: 50px;">
+                                <i class="fas fa-user text-white"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">Давид Л.</h6>
+                                <small class="text-muted">Пациент</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-quote-left text-accent-orange" style="font-size: 2rem; opacity: 0.3;"></i>
+                        </div>
+                        <p class="card-text mb-4">"Замечательный центр! Удобная запись через сайт, приятная атмосфера и результативное лечение. Спасибо команде!"</p>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <div class="bg-gradient-primary rounded-circle d-flex align-items-center justify-content-center me-3" 
+                                 style="width: 50px; height: 50px;">
+                                <i class="fas fa-user text-white"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">Анна С.</h6>
+                                <small class="text-muted">Пациент</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
 <!-- CTA секция -->
-<section class="py-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+<section class="py-5 bg-gradient-primary text-white">
     <div class="container text-center">
-        <h2 class="display-5 fw-bold mb-4">Готовы начать путь к здоровью?</h2>
-        <p class="lead mb-4">Запишитесь на консультацию прямо сейчас</p>
-        <a href="{% url 'core:appointment_form' %}" class="btn btn-light btn-lg">
-            <i class="fas fa-calendar-plus me-2"></i>Записаться на прием
-        </a>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h2 class="display-5 fw-bold mb-4">Начните свой путь к здоровью уже сегодня</h2>
+                <p class="lead mb-4">
+                    Не откладывайте заботу о своем здоровье на завтра. 
+                    Запишитесь на консультацию и сделайте первый шаг к лучшему самочувствию.
+                </p>
+                <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                    <a href="{% url 'core:appointment_form' %}" class="btn btn-light btn-lg px-5">
+                        <i class="fas fa-calendar-plus me-2"></i>Записаться на прием
+                    </a>
+                    <a href="tel:+972545270015" class="btn btn-outline-light btn-lg px-5">
+                        <i class="fas fa-phone me-2"></i>Позвонить сейчас
+                    </a>
+                </div>
+                <div class="mt-4">
+                    <small class="opacity-75">
+                        <i class="fas fa-clock me-2"></i>Работаем ежедневно с 9:00 до 19:00
+                    </small>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 {% endblock %}
