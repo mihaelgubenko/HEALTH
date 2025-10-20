@@ -31,12 +31,13 @@ class SpecialistAdmin(admin.ModelAdmin):
 
 
 class AppointmentAdmin(admin.ModelAdmin):
-    list_display = ['patient', 'specialist', 'service', 'start_time', 'status', 'channel', 'created_at']
+    list_display = ['patient', 'specialist', 'service', 'start_time', 'colored_status', 'quick_actions', 'channel', 'created_at']
     list_filter = ['status', 'channel', 'specialist', 'start_time', 'created_at']
     search_fields = ['patient__name', 'patient__phone', 'specialist__name']
     readonly_fields = ['created_at', 'updated_at']
     ordering = ['start_time']
     actions = ['confirm_appointments', 'cancel_appointments', 'complete_appointments']
+    list_per_page = 25
     
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('patient', 'specialist', 'service')
@@ -58,6 +59,76 @@ class AppointmentAdmin(admin.ModelAdmin):
         updated = queryset.update(status='completed')
         self.message_user(request, f'Завершено записей: {updated}')
     complete_appointments.short_description = "✅ Завершить выбранные записи"
+    
+    def colored_status(self, obj):
+        """Цветной статус"""
+        colors = {
+            'pending': '#ffc107',      # желтый
+            'confirmed': '#28a745',    # зеленый
+            'cancelled': '#dc3545',    # красный
+            'completed': '#6c757d'     # серый
+        }
+        status_names = {
+            'pending': 'Ожидает',
+            'confirmed': 'Подтверждена',
+            'cancelled': 'Отменена',
+            'completed': 'Завершена'
+        }
+        color = colors.get(obj.status, '#6c757d')
+        name = status_names.get(obj.status, obj.status)
+        return format_html(
+            '<span style="color: {}; font-weight: bold;">{}</span>',
+            color, name
+        )
+    colored_status.short_description = 'Статус'
+    
+    def quick_actions(self, obj):
+        """Быстрые действия для изменения статуса"""
+        if obj.status == 'pending':
+            return format_html(
+                '<a href="?action=confirm&id={}" style="color: green; text-decoration: none;" title="Подтвердить">✅</a> '
+                '<a href="?action=cancel&id={}" style="color: red; text-decoration: none;" title="Отменить">❌</a>',
+                obj.id, obj.id
+            )
+        elif obj.status == 'confirmed':
+            return format_html(
+                '<a href="?action=complete&id={}" style="color: blue; text-decoration: none;" title="Завершить">✔️</a> '
+                '<a href="?action=cancel&id={}" style="color: red; text-decoration: none;" title="Отменить">❌</a>',
+                obj.id, obj.id
+            )
+        else:
+            return format_html('<span style="color: #6c757d;">—</span>')
+    quick_actions.short_description = 'Действия'
+    
+    def changelist_view(self, request, extra_context=None):
+        """Обработка быстрых действий"""
+        if request.GET.get('action') and request.GET.get('id'):
+            action = request.GET.get('action')
+            appointment_id = request.GET.get('id')
+            
+            try:
+                appointment = Appointment.objects.get(id=appointment_id)
+                if action == 'confirm':
+                    appointment.status = 'confirmed'
+                    appointment.save()
+                    self.message_user(request, f'Запись {appointment} подтверждена')
+                elif action == 'cancel':
+                    appointment.status = 'cancelled'
+                    appointment.save()
+                    self.message_user(request, f'Запись {appointment} отменена')
+                elif action == 'complete':
+                    appointment.status = 'completed'
+                    appointment.save()
+                    self.message_user(request, f'Запись {appointment} завершена')
+                    
+                # Перенаправляем обратно на список без параметров действия
+                from django.shortcuts import redirect
+                return redirect(request.path)
+                
+            except Appointment.DoesNotExist:
+                self.message_user(request, 'Запись не найдена', level='ERROR')
+        
+        return super().changelist_view(request, extra_context)
 
 
 # УДАЛЕНО: ReminderAdmin (напоминания не используются в минимальной конфигурации)

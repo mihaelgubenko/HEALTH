@@ -16,6 +16,7 @@ class AdminDashboard:
         week_ago = today - timedelta(days=7)
         month_ago = today - timedelta(days=30)
         
+        
         # Статистика записей
         appointments_today = Appointment.objects.filter(
             start_time__date=today

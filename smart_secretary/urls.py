@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 from core.admin import admin_site
 
 urlpatterns = [
-    path('admin/', admin_site.urls),  # Используем кастомную админку
+    path('admin/', admin_site.urls),  # Кастомная админка с дашбордом
     path('', include('core.urls')),
 ]
 
