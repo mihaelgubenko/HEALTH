@@ -41,7 +41,7 @@ class AdminDashboard:
         
         # Статистика по специалистам
         specialists_stats = Appointment.objects.values(
-            'specialist__name', 'specialist__specialty'
+            'specialist__id', 'specialist__name', 'specialist__specialty'
         ).annotate(
             appointment_count=Count('id')
         ).order_by('-appointment_count')[:5]
