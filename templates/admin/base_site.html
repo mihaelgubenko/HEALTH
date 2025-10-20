@@ -18,6 +18,9 @@
         <a href="{% url 'admin:admin_dashboard' %}" style="color: white; text-decoration: none; margin-right: 30px; font-weight: 600;">
             <i class="fas fa-chart-line" style="margin-right: 8px;"></i>Дашборд
         </a>
+        <a href="{% url 'admin:index' %}" style="color: white; text-decoration: none; margin-right: 30px; font-weight: 600;">
+            <i class="fas fa-cogs" style="margin-right: 8px;"></i>Управление
+        </a>
         <div style="flex: 1;"></div>
         <span style="color: rgba(255,255,255,0.9); font-size: 14px;">
             <i class="fas fa-user" style="margin-right: 5px;"></i>{{ user.get_full_name|default:user.username }}

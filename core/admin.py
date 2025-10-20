@@ -110,50 +110,12 @@ class CustomAdminSite(admin.AdminSite):
         return custom_urls + urls
     
     def index(self, request, extra_context=None):
-        # Показываем дашборд как главную страницу
-        return dashboard.dashboard_view(request)
+        # Показываем стандартную главную страницу админки
+        return super().index(request, extra_context)
     
     def get_app_list(self, request):
-        """Группировка приложений по категориям"""
-        app_list = super().get_app_list(request)
-        
-        # Создаем кастомную группировку
-        custom_app_list = [
-            {
-                'name': 'Пациенты и записи',
-                'app_label': 'patients_appointments',
-                'models': []
-            },
-            {
-                'name': 'Услуги и специалисты', 
-                'app_label': 'services_specialists',
-                'models': []
-            },
-            {
-                'name': 'Коммуникации',
-                'app_label': 'communications', 
-                'models': []
-            }
-        ]
-        
-        # Распределяем модели по группам
-        for app in app_list:
-            if app['app_label'] == 'core':
-                for model in app['models']:
-                    model_name = model['object_name']
-                    
-                    if model_name in ['Patient', 'Appointment']:
-                        model['admin_url'] = model['admin_url']
-                        custom_app_list[0]['models'].append(model)
-                    elif model_name in ['Service', 'Specialist']:
-                        custom_app_list[1]['models'].append(model)
-                    elif model_name in ['DialogLog', 'ContactMessage', 'FAQ']:
-                        custom_app_list[2]['models'].append(model)
-            else:
-                # Другие приложения добавляем как есть
-                custom_app_list.append(app)
-        
-        return custom_app_list
+        """Возвращаем стандартный список приложений"""
+        return super().get_app_list(request)
 
 
 # Создаем кастомный сайт админки
