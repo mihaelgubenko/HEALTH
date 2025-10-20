@@ -229,6 +229,8 @@
                 </div>
                 <span class="count-badge">{{ service.appointment_count }}</span>
             </div>
+            {% empty %}
+            <p class="text-muted">Нет данных об услугах</p>
             {% endfor %}
         </div>
     </div>
@@ -241,14 +243,20 @@
             <div class="specialist-item">
                 <div>
                     <strong>
+                        {% if specialist.specialist__id %}
                         <a href="{% url 'admin:core_specialist_change' specialist.specialist__id %}" style="text-decoration: none; color: inherit;">
                             {{ specialist.specialist__name }}
                         </a>
+                        {% else %}
+                            {{ specialist.specialist__name }}
+                        {% endif %}
                     </strong>
                     <div class="text-muted small">{{ specialist.specialist__specialty }}</div>
                 </div>
                 <span class="count-badge">{{ specialist.appointment_count }}</span>
             </div>
+            {% empty %}
+            <p class="text-muted">Нет данных о специалистах</p>
             {% endfor %}
         </div>
     </div>
