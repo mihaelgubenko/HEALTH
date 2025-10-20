@@ -22,7 +22,7 @@ class AppointmentForm(forms.ModelForm):
         label='Телефон',
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': '+972-XX-XXX-XXXX'
+            'placeholder': '+972545270015'
         })
     )
     
