@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block title %}Аналитика ИИ-секретаря{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">📊 Аналитика работы ИИ-секретаря</h2>
+        </div>
+    </div>
+
+    <!-- Основные метрики -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">💬 Диалоги за сегодня</h5>
+                    <h2>{{ daily_stats.total_dialogs }}</h2>
+                    <small>Уникальных сессий: {{ daily_stats.unique_sessions }}</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">📅 Записи созданы</h5>
+                    <h2>{{ daily_stats.appointments_created }}</h2>
+                    <small>За {{ daily_stats.date }}</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5 class="card-title">📈 Конверсия</h5>
+                    <h2>{{ daily_stats.conversion_rate }}%</h2>
+                    <small>диалог → запись</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <h5 class="card-title">🎯 Успешность</h5>
+                    <h2>{{ success_rate.success_rate }}%</h2>
+                    <small>за 7 дней</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Популярные намерения -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>🎯 Топ намерений пользователей</h5>
+                </div>
+                <div class="card-body">
+                    {% for intent in daily_stats.top_intents %}
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>{{ intent.intent|capfirst }}</span>
+                        <span class="badge badge-primary">{{ intent.count }}</span>
+                    </div>
+                    {% empty %}
+                    <p class="text-muted">Данные за сегодня отсутствуют</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Популярные услуги -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>🏆 Популярные услуги (30 дней)</h5>
+                </div>
+                <div class="card-body">
+                    {% for service in popular_services %}
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>{{ service.service__name|truncatechars:30 }}</span>
+                        <span class="badge badge-success">{{ service.count }}</span>
+                    </div>
+                    {% empty %}
+                    <p class="text-muted">Нет данных о записях</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Пиковые часы -->
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5>⏰ Пиковые часы обращений (7 дней)</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for hour in peak_hours %}
+                        <div class="col-md-2 text-center mb-3">
+                            <div class="badge badge-outline-primary p-3">
+                                <h5>{{ hour.hour }}:00</h5>
+                                <small>{{ hour.count }} обращений</small>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <p class="text-muted">Недостаточно данных</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>🚀 Рекомендации</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        {% if daily_stats.conversion_rate < 10 %}
+                        <li>📊 Конверсия низкая - улучшить промпты</li>
+                        {% endif %}
+                        
+                        {% if success_rate.success_rate < 70 %}
+                        <li>🎯 Добавить больше примеров диалогов</li>
+                        {% endif %}
+                        
+                        <li>💡 Анализируйте пиковые часы для планирования</li>
+                        <li>🔄 Обновляйте популярные услуги в промптах</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Кнопки управления -->
+    <div class="row mt-4">
+        <div class="col-12 text-center">
+            <a href="{% url 'core:chat' %}" class="btn btn-primary">💬 Перейти к чату</a>
+            <a href="{% url 'admin:core_dialoglog_changelist' %}" class="btn btn-secondary">📋 Логи диалогов</a>
+            <a href="{% url 'admin:core_appointment_changelist' %}" class="btn btn-success">📅 Записи</a>
+        </div>
+    </div>
+</div>
+
+<style>
+.badge-outline-primary {
+    border: 2px solid #007bff;
+    color: #007bff;
+    background: transparent;
+}
+</style>
+{% endblock %}

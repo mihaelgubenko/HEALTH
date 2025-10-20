@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Наши услуги - Центр здоровья "Новая Жизнь"{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12 text-center mb-5">
+            <h1 class="display-4 fw-bold">Наши услуги</h1>
+            <p class="lead text-muted">Профессиональная медицинская помощь по доступным ценам</p>
+        </div>
+    </div>
+    
+    <div class="row">
+        {% for service in services %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card service-card h-100">
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        {% if 'массаж' in service.name.lower %}
+                            <i class="fas fa-hands text-primary" style="font-size: 3rem;"></i>
+                        {% elif 'консультация' in service.name.lower %}
+                            <i class="fas fa-user-md text-primary" style="font-size: 3rem;"></i>
+                        {% elif 'диагностика' in service.name.lower %}
+                            <i class="fas fa-stethoscope text-primary" style="font-size: 3rem;"></i>
+                        {% else %}
+                            <i class="fas fa-medkit text-primary" style="font-size: 3rem;"></i>
+                        {% endif %}
+                    </div>
+                    
+                    <h5 class="card-title text-center">{{ service.name }}</h5>
+                    <p class="card-text">{{ service.description|truncatewords:20 }}</p>
+                    
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="h5 text-primary mb-0">{{ service.price }}{{ service.currency }}</span>
+                        <small class="text-muted">{{ service.duration }} мин</small>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <a href="{% url 'core:service_detail' service.id %}" class="btn btn-outline-primary">
+                            Подробнее
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <div class="alert alert-info">
+                <h4>Услуги временно недоступны</h4>
+                <p>Пожалуйста, попробуйте позже или свяжитесь с нами по телефону.</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="text-center mt-5">
+        <a href="{% url 'core:appointment_form' %}" class="btn btn-primary btn-lg">
+            <i class="fas fa-calendar-plus me-2"></i>Записаться на прием
+        </a>
+    </div>
+</div>
+{% endblock %}

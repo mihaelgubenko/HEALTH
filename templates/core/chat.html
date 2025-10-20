@@ -1,0 +1,911 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}ИИ-секретарь - Центр здоровья "Новая Жизнь"{% endblock %}
+
+{% block extra_css %}
+<style>
+    .chat-container {
+        height: 600px;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    
+    .chat-messages {
+        height: 500px;
+        overflow-y: auto;
+        padding: 20px;
+        background-color: #f8f9fa;
+    }
+    
+    .message {
+        margin-bottom: 15px;
+        padding: 10px 15px;
+        border-radius: 15px;
+        max-width: 80%;
+    }
+    
+    .user-message {
+        background-color: #007bff;
+        color: white;
+        margin-left: auto;
+        text-align: right;
+    }
+    
+    .ai-message {
+        background-color: white;
+        color: #333;
+        border: 1px solid #dee2e6;
+    }
+    
+    .chat-input {
+        height: 100px;
+        border-top: 1px solid #dee2e6;
+        padding: 15px;
+        background-color: white;
+    }
+    
+    .typing-indicator {
+        display: none;
+        color: #6c757d;
+        font-style: italic;
+    }
+    
+    .service-card {
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 10px;
+        margin: 5px 0;
+        background-color: #f8f9fa;
+    }
+    
+    .slot-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin: 10px 0;
+    }
+    
+    .slot-btn {
+        padding: 5px 10px;
+        border: 1px solid #007bff;
+        background-color: white;
+        color: #007bff;
+        border-radius: 15px;
+        cursor: pointer;
+        font-size: 12px;
+    }
+    
+    .slot-btn:hover {
+        background-color: #007bff;
+        color: white;
+    }
+    
+        /* Общие стили для интерактивных кнопок */
+        .interactive-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
+        
+        /* Кнопки выбора услуг */
+        .service-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            flex: 1 1 calc(50% - 10px);
+            min-width: 150px;
+        }
+        
+        .service-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+        
+        /* Кнопки выбора специалистов */
+        .specialist-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            flex: 1 1 calc(33.33% - 10px);
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        .specialist-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+            background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+        }
+        
+        .specialist-btn strong {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .specialist-btn small {
+            display: block;
+            font-size: 11px;
+            opacity: 0.9;
+        }
+        
+        /* Кнопки слотов времени */
+        .time-slot-btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            flex: 0 1 auto;
+            min-width: 80px;
+        }
+        
+        .time-slot-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+        }
+        
+        /* Кнопки подтверждения */
+        .confirm-btn {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        
+        .confirm-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .cancel-btn {
+            background: linear-gradient(135deg, #f5576c 0%, #ff6b6b 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .cancel-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Календарь */
+        .calendar-widget {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            max-width: 350px;
+        }
+    
+    .calendar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+    
+    .calendar-nav-btn {
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: #007bff;
+        padding: 5px 10px;
+    }
+    
+    .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 5px;
+    }
+    
+    .calendar-day-header {
+        text-align: center;
+        font-size: 12px;
+        color: #666;
+        padding: 5px;
+        font-weight: bold;
+    }
+    
+    .calendar-day {
+        text-align: center;
+        padding: 10px 5px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: all 0.2s;
+        font-size: 14px;
+    }
+    
+    .calendar-day:hover:not(.disabled):not(.empty) {
+        background-color: #e3f2fd;
+    }
+    
+    .calendar-day.disabled {
+        color: #ccc;
+        cursor: not-allowed;
+    }
+    
+    .calendar-day.selected {
+        background-color: #007bff;
+        color: white;
+        font-weight: bold;
+    }
+    
+    /* Подтверждение записи */
+    .appointment-confirmation {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 15px;
+        padding: 20px;
+        margin: 15px 0;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    
+    .appointment-confirmation h4 {
+        margin: 0 0 15px 0;
+        font-size: 20px;
+    }
+    
+    .appointment-detail {
+        display: flex;
+        align-items: center;
+        margin: 10px 0;
+        font-size: 16px;
+    }
+    
+    .appointment-detail i {
+        margin-right: 10px;
+        width: 25px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="text-center mb-4">
+                <i class="fas fa-robot text-primary me-2"></i>
+                ИИ-секретарь "Новая Жизнь"
+            </h2>
+            <p class="text-center text-muted mb-4">
+                Запишитесь на приём быстро и удобно!
+            </p>
+        </div>
+    </div>
+    
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message ai-message">
+                        <strong>ИИ-секретарь:</strong><br>
+                        👋 Здравствуйте! Я помогу вам записаться на приём в центр "Новая Жизнь".<br><br>
+                        <strong>Выберите услугу:</strong>
+                    </div>
+                    <!-- Стартовые кнопки услуг -->
+                    <div class="interactive-buttons" id="initialServiceButtons">
+                        <!-- Кнопки будут добавлены через JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="typing-indicator" id="typingIndicator">
+                    ИИ-секретарь печатает...
+                </div>
+                
+                <div class="chat-input">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="messageInput" 
+                               placeholder="Введите ваше сообщение..." 
+                               onkeypress="handleKeyPress(event)">
+                        <button class="btn btn-primary" onclick="sendMessage()">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Наши услуги</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row" id="servicesList">
+                        <!-- Услуги загружаются через AJAX -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let sessionId = generateSessionId();
+let currentAppointmentData = {};
+
+function generateSessionId() {
+    return 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+}
+
+function handleKeyPress(event) {
+    if (event.key === 'Enter') {
+        sendMessage();
+    }
+}
+
+function sendMessage() {
+    const input = document.getElementById('messageInput');
+    const message = input.value.trim();
+    
+    if (!message) return;
+    
+    // Добавляем сообщение пользователя в чат
+    addMessage(message, 'user');
+    input.value = '';
+    
+    // Показываем индикатор печати
+    showTypingIndicator();
+    
+    // Отправляем запрос к API
+    fetch('/api/chat/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify({
+            message: message,
+            session_id: sessionId
+        })
+    })
+    .then(response => {
+        console.log('Response status:', response.status);
+        return response.json();
+    })
+    .then(data => {
+        console.log('Response data:', data);
+        hideTypingIndicator();
+        
+        // ИСПРАВЛЕНО: data уже содержит reply, intent, entities
+        // Не нужно data.response!
+        handleAIResponse(data);
+    })
+    .catch(error => {
+        hideTypingIndicator();
+        addMessage('Извините, произошла ошибка соединения: ' + error.message, 'ai');
+        console.error('Error:', error);
+    });
+}
+
+function handleAIResponse(response) {
+    // ИСПРАВЛЕНО: Проверяем что response существует
+    if (!response) {
+        addMessage('Извините, произошла ошибка. Попробуйте еще раз.', 'ai');
+        console.error('Response is undefined or null');
+        return;
+    }
+
+    // НОВОЕ: Проверяем на ошибку сервера
+    if (response.error) {
+        addMessage(`Ошибка: ${response.error}`, 'ai');
+        console.error('Server error:', response.error);
+        return;
+    }
+
+    // Добавляем ответ ИИ (проверяем на undefined)
+    if (response.reply && response.reply !== 'undefined') {
+        addMessage(response.reply, 'ai');
+    } else {
+        // Если нет reply - что-то пошло не так
+        console.warn('No reply in response:', response);
+        addMessage('Извините, не получен ответ от сервера.', 'ai');
+        return;
+    }
+
+    // Сохраняем сущности из ответа
+    if (response.entities) {
+        currentAppointmentData = {...currentAppointmentData, ...response.entities};
+    }
+
+    // Показываем кнопки выбора услуг
+    if (response.intent === 'collect_service') {
+        showServiceButtons();
+    }
+
+    // Показываем кнопки выбора специалистов
+    if (response.intent === 'collect_specialist') {
+        showSpecialistButtons();
+    }
+
+    // Показываем календарь когда AI спрашивает дату
+    if (response.intent === 'collect_date' || response.intent === 'collect_day') {
+        showCalendar();
+    }
+
+    // Показываем кнопки выбора времени
+    if (response.intent === 'collect_time') {
+        showTimeSlots();
+    }
+
+    // Показываем слоты времени (если есть в ответе)
+    if (response.offer_slots && response.offer_slots.length > 0) {
+        addSlotButtons(response.offer_slots);
+    }
+
+    // Показываем подтверждение успешной записи
+    if (response.intent === 'time_collected' || response.intent === 'booking_completed') {
+        showAppointmentConfirmation(response.entities || currentAppointmentData);
+    }
+}
+
+function addMessage(text, sender) {
+    const messagesContainer = document.getElementById('chatMessages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${sender}-message`;
+    
+    if (sender === 'ai') {
+        messageDiv.innerHTML = `<strong>ИИ-секретарь:</strong><br>${text}`;
+    } else {
+        messageDiv.innerHTML = `<strong>Вы:</strong><br>${text}`;
+    }
+    
+    messagesContainer.appendChild(messageDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+function addSlotButtons(slots) {
+    const messagesContainer = document.getElementById('chatMessages');
+    const slotDiv = document.createElement('div');
+    slotDiv.className = 'slot-buttons';
+    
+    slots.forEach(slot => {
+        const btn = document.createElement('button');
+        btn.className = 'slot-btn';
+        btn.textContent = slot;
+        btn.onclick = () => {
+            document.getElementById('messageInput').value = slot;
+            sendMessage();
+        };
+        slotDiv.appendChild(btn);
+    });
+    
+    messagesContainer.appendChild(slotDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+function addServiceInfo(service) {
+    const messagesContainer = document.getElementById('chatMessages');
+    const serviceDiv = document.createElement('div');
+    serviceDiv.className = 'service-card';
+    serviceDiv.innerHTML = `<strong>Услуга:</strong> ${service}`;
+    messagesContainer.appendChild(serviceDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+function addSpecialistInfo(specialist) {
+    const messagesContainer = document.getElementById('chatMessages');
+    const specialistDiv = document.createElement('div');
+    specialistDiv.className = 'service-card';
+    specialistDiv.innerHTML = `<strong>Специалист:</strong> ${specialist}`;
+    messagesContainer.appendChild(specialistDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+function showTypingIndicator() {
+    document.getElementById('typingIndicator').style.display = 'block';
+}
+
+function hideTypingIndicator() {
+    document.getElementById('typingIndicator').style.display = 'none';
+}
+
+function createAppointment() {
+    fetch('/api/appointment/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify({
+            session_id: sessionId,
+            ...currentAppointmentData
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            addMessage('✅ Запись успешно создана! Мы свяжемся с вами для подтверждения.', 'ai');
+            currentAppointmentData = {};
+        } else {
+            addMessage('❌ Ошибка создания записи: ' + data.error, 'ai');
+        }
+    })
+    .catch(error => {
+        addMessage('❌ Ошибка создания записи.', 'ai');
+        console.error('Error:', error);
+    });
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Загружаем услуги при загрузке страницы
+document.addEventListener('DOMContentLoaded', function() {
+    // ИСПРАВЛЕНО: Показываем стартовые кнопки услуг сразу при загрузке
+    const initialButtons = document.getElementById('initialServiceButtons');
+    if (initialButtons) {
+        showServiceButtons(initialButtons);
+    }
+    
+    fetch('/api/services/')
+        .then(response => response.json())
+        .then(data => {
+            if (data.services) {
+                const servicesContainer = document.getElementById('servicesList');
+                if (servicesContainer) {
+                    data.services.forEach(service => {
+                        const serviceDiv = document.createElement('div');
+                        serviceDiv.className = 'col-md-6 mb-3';
+                        serviceDiv.innerHTML = `
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h6 class="card-title">${service.name}</h6>
+                                    <p class="card-text small">${service.description}</p>
+                                    <p class="card-text"><strong>${service.price}₪</strong></p>
+                                </div>
+                            </div>
+                        `;
+                        servicesContainer.appendChild(serviceDiv);
+                    });
+                }
+            }
+        })
+        .catch(error => console.error('Error loading services:', error));
+});
+
+// Функция показа кнопок выбора услуг
+function showServiceButtons(targetElement = null) {
+    const messagesContainer = document.getElementById('chatMessages');
+    const buttonsDiv = targetElement || document.createElement('div');
+    
+    if (!targetElement) {
+        buttonsDiv.className = 'interactive-buttons';
+    }
+    
+    // ВСЕ услуги из БД
+    const services = [
+        {name: 'Лечебный массаж для женщин (классический шведский)', emoji: '💆‍♀️', description: 'Массаж для женщин'},
+        {name: 'Лечебный массаж для мужчин (классический шведский)', emoji: '💆‍♂️', description: 'Массаж для мужчин'},
+        {name: 'Массаж детский', emoji: '👶', description: 'Детский массаж'},
+        {name: 'Массаж грудным детям', emoji: '🍼', description: 'Массаж грудничкам'},
+        {name: 'Массаж беременным (от 5 месяцев)', emoji: '🤰', description: 'Массаж беременным'},
+        {name: 'Массаж после родов', emoji: '👩‍🍼', description: 'Массаж после родов'},
+        {name: 'Консультация остеопата', emoji: '🦴', description: 'Остеопат'},
+        {name: 'Консультация реабилитолога', emoji: '🏃', description: 'Реабилитолог'},
+        {name: 'Консультация нутрициолога', emoji: '🥗', description: 'Нутрициолог'},
+        {name: 'Диагностика организма биорезонансным сканированием (базовая)', emoji: '🔍', description: 'Диагностика базовая'},
+        {name: 'Диагностика организма биорезонансным сканированием (расширенная)', emoji: '🔬', description: 'Диагностика расширенная'},
+        {name: 'Диагностика организма биорезонансным сканированием (VIP)', emoji: '⭐', description: 'Диагностика VIP'},
+        {name: 'Кинезиотейпирование', emoji: '🩹', description: 'Кинезиотейпирование'},
+        {name: 'Подбор комплекса упражнений', emoji: '🏋️', description: 'Комплекс упражнений'}
+    ];
+    
+    services.forEach(service => {
+        const btn = document.createElement('button');
+        btn.className = 'service-btn';
+        btn.innerHTML = `<div>${service.emoji}</div><div><strong>${service.description}</strong></div>`;
+        btn.onclick = () => selectOption(service.name, buttonsDiv);
+        buttonsDiv.appendChild(btn);
+    });
+    
+    if (!targetElement) {
+        messagesContainer.appendChild(buttonsDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+}
+
+// Функция показа кнопок выбора специалистов
+function showSpecialistButtons() {
+    const messagesContainer = document.getElementById('chatMessages');
+    const buttonsDiv = document.createElement('div');
+    buttonsDiv.className = 'interactive-buttons';
+    
+    // ИСПРАВЛЕНО: Полный список специалистов с их услугами
+    const allSpecialists = [
+        {
+            name: 'Авраам', 
+            specialty: 'Массажист', 
+            emoji: '👨‍⚕️',
+            services: ['массаж', 'лечебный массаж']
+        },
+        {
+            name: 'Екатерина', 
+            specialty: 'Остеопат/Реабилитолог/Диагностика', 
+            emoji: '👩‍⚕️',
+            services: ['остеопат', 'реабилитолог', 'диагностика', 'кинезио', 'упражнения']
+        },
+        {
+            name: 'Римма', 
+            specialty: 'Нутрициолог', 
+            emoji: '👩‍⚕️',
+            services: ['нутрициолог', 'питание']
+        }
+    ];
+    
+    // Фильтруем специалистов по выбранной услуге
+    let specialists = allSpecialists;
+    if (currentAppointmentData.service) {
+        const serviceLower = currentAppointmentData.service.toLowerCase();
+        specialists = allSpecialists.filter(s => 
+            s.services.some(service => serviceLower.includes(service))
+        );
+    }
+    
+    // Если остался только один специалист - автоматически выбираем
+    if (specialists.length === 1) {
+        selectOption(specialists[0].name, null);
+        return;
+    }
+    
+    specialists.forEach(specialist => {
+        const btn = document.createElement('button');
+        btn.className = 'specialist-btn';
+        btn.innerHTML = `<div>${specialist.emoji}</div><strong>${specialist.name}</strong><br><small>${specialist.specialty}</small>`;
+        btn.onclick = () => selectOption(specialist.name, buttonsDiv);
+        buttonsDiv.appendChild(btn);
+    });
+    
+    messagesContainer.appendChild(buttonsDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+// Универсальная функция выбора опции
+function selectOption(value, buttonsDiv) {
+    // Отключаем все кнопки чтобы нельзя было кликнуть дважды
+    if (buttonsDiv) {
+        const buttons = buttonsDiv.querySelectorAll('button');
+        buttons.forEach(btn => {
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+        });
+    }
+    
+    // Показываем выбор пользователя
+    addMessage(value, 'user');
+    
+    // Отправляем в AI
+    fetch('/api/chat/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            message: value,
+            session_id: sessionId
+        })
+    })
+    .then(response => {
+        // ИСПРАВЛЕНО: Проверяем статус ответа
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        // ИСПРАВЛЕНО: Логируем ответ для отладки
+        console.log('AI Response:', data);
+        handleAIResponse(data);
+    })
+    .catch(error => {
+        addMessage('Извините, произошла ошибка соединения: ' + error.message, 'ai');
+        console.error('Error:', error);
+    });
+}
+
+// Функция показа календаря
+function showCalendar() {
+    const messagesContainer = document.getElementById('chatMessages');
+    const calendarWidget = document.createElement('div');
+    calendarWidget.className = 'calendar-widget';
+    
+    const today = new Date();
+    const currentMonth = today.getMonth();
+    const currentYear = today.getFullYear();
+    
+    const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+                        'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+    const dayNames = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+    
+    let calendarHTML = `
+        <div class="calendar-header">
+            <span>${monthNames[currentMonth]} ${currentYear}</span>
+        </div>
+        <div class="calendar-grid">
+    `;
+    
+    // Заголовки дней недели
+    dayNames.forEach(day => {
+        calendarHTML += `<div class="calendar-day-header">${day}</div>`;
+    });
+    
+    // Получаем первый день месяца
+    const firstDay = new Date(currentYear, currentMonth, 1);
+    const lastDay = new Date(currentYear, currentMonth + 1, 0);
+    const startingDayOfWeek = (firstDay.getDay() + 6) % 7; // Пн=0, Вс=6
+    
+    // Пустые ячейки до первого дня
+    for (let i = 0; i < startingDayOfWeek; i++) {
+        calendarHTML += '<div class="calendar-day empty"></div>';
+    }
+    
+    // Дни месяца
+    for (let day = 1; day <= lastDay.getDate(); day++) {
+        const date = new Date(currentYear, currentMonth, day);
+        const isToday = date.toDateString() === today.toDateString();
+        const isPast = date < today && !isToday;
+        const isWeekend = date.getDay() === 0 || date.getDay() === 6; // 0=Воскресенье, 6=Суббота
+        
+        let dayClass = 'calendar-day';
+        if (isToday) dayClass += ' today';
+        if (isPast || isWeekend) dayClass += ' disabled'; // ИСПРАВЛЕНО: Выходные тоже disabled
+        
+        const dateStr = date.toISOString().split('T')[0];
+        
+        calendarHTML += `
+            <div class="${dayClass}"
+                 ${!isPast && !isWeekend ? `onclick="selectDate('${dateStr}')"` : ''}>
+                ${day}
+            </div>
+        `;
+    }
+    
+    calendarHTML += '</div>';
+    calendarWidget.innerHTML = calendarHTML;
+    messagesContainer.appendChild(calendarWidget);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+// Функция выбора даты
+function selectDate(dateStr) {
+    // ИСПРАВЛЕНО: Отправляем только дату без названия дня
+    // Валидатор сам определит день недели
+    const messageText = dateStr;
+    
+    // Удаляем календарь
+    const calendar = document.querySelector('.calendar-widget');
+    if (calendar) {
+        calendar.remove();
+    }
+    
+    // Показываем выбор и отправляем
+    selectOption(messageText, null);
+}
+
+// Функция показа кнопок выбора времени
+function showTimeSlots() {
+    const messagesContainer = document.getElementById('chatMessages');
+    const buttonsDiv = document.createElement('div');
+    buttonsDiv.className = 'interactive-buttons';
+    
+    // Генерируем слоты времени с 9:00 до 18:00
+    const timeSlots = [];
+    for (let hour = 9; hour < 19; hour++) {
+        for (let minute of ['00', '30']) {
+            timeSlots.push(`${hour}:${minute}`);
+        }
+    }
+    
+    timeSlots.forEach(timeSlot => {
+        const btn = document.createElement('button');
+        btn.className = 'time-slot-btn';
+        btn.innerHTML = `<i class="far fa-clock"></i> ${timeSlot}`;
+        btn.onclick = () => selectOption(timeSlot, buttonsDiv);
+        buttonsDiv.appendChild(btn);
+    });
+    
+    messagesContainer.appendChild(buttonsDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+// Функция показа подтверждения записи
+function showAppointmentConfirmation(data) {
+    const messagesContainer = document.getElementById('chatMessages');
+    const confirmationDiv = document.createElement('div');
+    confirmationDiv.className = 'appointment-confirmation';
+    
+    confirmationDiv.innerHTML = `
+        <div class="appointment-success-icon">✅</div>
+        <h4>Запись успешно создана!</h4>
+        <div class="appointment-detail">
+            <i class="fas fa-user"></i>
+            <span><strong>Клиент:</strong> ${data.name || 'Не указано'}</span>
+        </div>
+        <div class="appointment-detail">
+            <i class="fas fa-phone"></i>
+            <span><strong>Телефон:</strong> ${data.phone || 'Не указано'}</span>
+        </div>
+        <div class="appointment-detail">
+            <i class="fas fa-stethoscope"></i>
+            <span><strong>Услуга:</strong> ${data.service || 'Не указано'}</span>
+        </div>
+        <div class="appointment-detail">
+            <i class="fas fa-user-md"></i>
+            <span><strong>Специалист:</strong> ${data.specialist || 'Не указано'}</span>
+        </div>
+        <div class="appointment-detail">
+            <i class="fas fa-calendar"></i>
+            <span><strong>Дата:</strong> ${data.date || 'Не указано'}</span>
+        </div>
+        <div class="appointment-detail">
+            <i class="fas fa-clock"></i>
+            <span><strong>Время:</strong> ${data.time || 'Не указано'}</span>
+        </div>
+        <hr style="border-color: rgba(255,255,255,0.3); margin: 15px 0;">
+        <p style="margin: 0; font-size: 14px; opacity: 0.9;">
+            <i class="fas fa-info-circle"></i>
+            Мы отправим вам напоминание за день до приема
+        </p>
+    `;
+    
+    messagesContainer.appendChild(confirmationDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+</script>
+{% endblock %}

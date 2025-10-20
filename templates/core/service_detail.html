@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ service.name }} - Центр здоровья "Новая Жизнь"{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        {% if 'массаж' in service.name.lower %}
+                            <i class="fas fa-hands text-primary" style="font-size: 4rem;"></i>
+                        {% elif 'консультация' in service.name.lower %}
+                            <i class="fas fa-user-md text-primary" style="font-size: 4rem;"></i>
+                        {% elif 'диагностика' in service.name.lower %}
+                            <i class="fas fa-stethoscope text-primary" style="font-size: 4rem;"></i>
+                        {% else %}
+                            <i class="fas fa-medkit text-primary" style="font-size: 4rem;"></i>
+                        {% endif %}
+                    </div>
+                    
+                    <h1 class="display-5 fw-bold text-center mb-4">{{ service.name }}</h1>
+                    
+                    <div class="row text-center mb-4">
+                        <div class="col-md-4">
+                            <div class="border rounded p-3">
+                                <h5 class="text-primary">{{ service.price }}{{ service.currency }}</h5>
+                                <small class="text-muted">Стоимость</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="border rounded p-3">
+                                <h5 class="text-primary">{{ service.duration }} мин</h5>
+                                <small class="text-muted">Длительность</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="border rounded p-3">
+                                <h5 class="text-primary">Каталог {{ service.catalog }}</h5>
+                                <small class="text-muted">Тип услуги</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h4>Описание услуги</h4>
+                        <p class="lead">{{ service.description }}</p>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                        <a href="{% url 'core:appointment_form' %}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-calendar-plus me-2"></i>Записаться на прием
+                        </a>
+                        <a href="{% url 'core:services' %}" class="btn btn-outline-primary btn-lg">
+                            <i class="fas fa-list me-2"></i>Все услуги
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Информация</h5>
+                </div>
+                <div class="card-body">
+                    <h6>Что включено:</h6>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-check text-success me-2"></i>Консультация специалиста</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Профессиональное обследование</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Индивидуальные рекомендации</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Последующее наблюдение</li>
+                    </ul>
+                    
+                    <hr>
+                    
+                    <h6>Подготовка:</h6>
+                    <p class="small text-muted">
+                        Специальная подготовка не требуется. 
+                        Приходите в удобной одежде.
+                    </p>
+                    
+                    <hr>
+                    
+                    <h6>Контакты:</h6>
+                    <p class="small">
+                        <i class="fas fa-phone text-primary me-2"></i> +972-XX-XXX-XXXX<br>
+                        <i class="fas fa-envelope text-primary me-2"></i> info@newlife-center.com
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

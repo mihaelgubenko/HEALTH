@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block title %}Записаться на прием - Центр здоровья "Новая Жизнь"{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white text-center">
+                    <h2 class="mb-0">
+                        <i class="fas fa-calendar-plus me-2"></i>
+                        Записаться на прием
+                    </h2>
+                </div>
+                <div class="card-body p-4">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <form method="post" id="appointmentForm">
+                        {% csrf_token %}
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.name.id_for_label }}" class="form-label">{{ form.name.label }}</label>
+                                {{ form.name }}
+                                {% if form.name.errors %}
+                                    <div class="text-danger">{{ form.name.errors }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.phone.id_for_label }}" class="form-label">{{ form.phone.label }}</label>
+                                {{ form.phone }}
+                                {% if form.phone.errors %}
+                                    <div class="text-danger">{{ form.phone.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.service.id_for_label }}" class="form-label">{{ form.service.label }}</label>
+                                {{ form.service }}
+                                {% if form.service.errors %}
+                                    <div class="text-danger">{{ form.service.errors }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.specialist.id_for_label }}" class="form-label">{{ form.specialist.label }}</label>
+                                {{ form.specialist }}
+                                {% if form.specialist.errors %}
+                                    <div class="text-danger">{{ form.specialist.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.preferred_date.id_for_label }}" class="form-label">{{ form.preferred_date.label }}</label>
+                                {{ form.preferred_date }}
+                                {% if form.preferred_date.errors %}
+                                    <div class="text-danger">{{ form.preferred_date.errors }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.preferred_time.id_for_label }}" class="form-label">{{ form.preferred_time.label }}</label>
+                                {{ form.preferred_time }}
+                                {% if form.preferred_time.errors %}
+                                    <div class="text-danger">{{ form.preferred_time.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.email.id_for_label }}" class="form-label">{{ form.email.label }}</label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="text-danger">{{ form.email.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="{{ form.notes.id_for_label }}" class="form-label">{{ form.notes.label }}</label>
+                            {{ form.notes }}
+                            {% if form.notes.errors %}
+                                <div class="text-danger">{{ form.notes.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-calendar-check me-2"></i>
+                                Записаться на прием
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    // Обновление специалистов при выборе услуги
+    $('#id_service').change(function() {
+        var serviceId = $(this).val();
+        if (serviceId) {
+            $.ajax({
+                url: '{% url "core:get_specialists" %}',
+                data: {'service_id': serviceId},
+                success: function(data) {
+                    var specialistSelect = $('#id_specialist');
+                    specialistSelect.empty();
+                    $.each(data, function(index, specialist) {
+                        specialistSelect.append(
+                            '<option value="' + specialist.id + '">' + 
+                            specialist.name + ' - ' + specialist.specialty + 
+                            '</option>'
+                        );
+                    });
+                }
+            });
+        }
+    });
+});
+</script>
+{% endblock %}

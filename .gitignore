@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv
+
+# Django
+*.log
+db.sqlite3
+db.sqlite3-journal
+/staticfiles/
+/media/
+
+# Environment variables
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing
+test_*.py
+*_test.py
+.pytest_cache/
+.coverage
+htmlcov/
+check_*.py
+clear_*.py
+debug_*.py
+
+# Documentation (except README)
+*.md
+!README.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+*.bat
+*.ini
+7.jpg
