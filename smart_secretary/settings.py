@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 """
 Django settings for smart_secretary project.
 
