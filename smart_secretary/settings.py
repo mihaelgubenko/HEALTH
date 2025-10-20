@@ -37,6 +37,12 @@ DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
 # Railway: разрешаем все хосты по умолчанию, можно ограничить через переменную окружения
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',') if os.getenv('ALLOWED_HOSTS') else ['*']
 
+# CSRF settings for Railway deployment
+CSRF_TRUSTED_ORIGINS = [
+    'https://health-production-49d3.up.railway.app',
+    'https://*.up.railway.app',
+]
+
 
 # Application definition
 
