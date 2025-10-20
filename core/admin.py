@@ -110,8 +110,8 @@ class CustomAdminSite(admin.AdminSite):
         return custom_urls + urls
     
     def index(self, request, extra_context=None):
-        # Перенаправляем на дашборд вместо стандартной главной
-        return redirect('admin:admin_dashboard')
+        # Показываем дашборд как главную страницу
+        return dashboard.dashboard_view(request)
     
     def get_app_list(self, request):
         """Группировка приложений по категориям"""

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подтверждение записи</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #4A90E2 0%, #27AE60 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .appointment-details {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .detail-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        .label {
+            font-weight: 600;
+            color: #495057;
+        }
+        .value {
+            color: #212529;
+        }
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+            text-align: center;
+            color: #6c757d;
+            font-size: 14px;
+        }
+        .contact-info {
+            background: #e3f2fd;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #F39C12 0%, #E67E22 100%);
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✅ Запись подтверждена!</h1>
+            <p>{{ center_name }}</p>
+        </div>
+        
+        <p>Здравствуйте, <strong>{{ patient.name }}</strong>!</p>
+        
+        <p>Ваша запись на прием успешно подтверждена. Мы ждем вас в назначенное время.</p>
+        
+        <div class="appointment-details">
+            <h3>📋 Детали записи:</h3>
+            
+            <div class="detail-row">
+                <span class="label">🏥 Услуга:</span>
+                <span class="value">{{ service.name }}</span>
+            </div>
+            
+            <div class="detail-row">
+                <span class="label">👨‍⚕️ Специалист:</span>
+                <span class="value">{{ specialist.name }} ({{ specialist.specialty }})</span>
+            </div>
+            
+            <div class="detail-row">
+                <span class="label">📅 Дата и время:</span>
+                <span class="value">{{ appointment.start_time|date:"d.m.Y в H:i" }}</span>
+            </div>
+            
+            <div class="detail-row">
+                <span class="label">⏱️ Длительность:</span>
+                <span class="value">{{ service.duration }} минут</span>
+            </div>
+            
+            <div class="detail-row">
+                <span class="label">💰 Стоимость:</span>
+                <span class="value">{{ service.price }}{{ service.currency }}</span>
+            </div>
+        </div>
+        
+        <div class="contact-info">
+            <h4>📞 Контактная информация:</h4>
+            <p><strong>Телефон:</strong> {{ center_phone }}</p>
+            <p><strong>Адрес:</strong> {{ center_address }}</p>
+        </div>
+        
+        <h4>📝 Важная информация:</h4>
+        <ul>
+            <li>Приходите за 10-15 минут до назначенного времени</li>
+            <li>Возьмите с собой документ, удостоверяющий личность</li>
+            <li>Если у вас есть результаты предыдущих обследований - захватите их</li>
+            <li>При необходимости отмены или переноса записи, пожалуйста, свяжитесь с нами заранее</li>
+        </ul>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="tel:{{ center_phone }}" class="btn">📞 Позвонить нам</a>
+        </div>
+        
+        <div class="footer">
+            <p>С уважением,<br>
+            Команда {{ center_name }}</p>
+            <p><small>Это автоматическое сообщение. Пожалуйста, не отвечайте на него.</small></p>
+        </div>
+    </div>
+</body>
+</html>

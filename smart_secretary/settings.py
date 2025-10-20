@@ -187,6 +187,20 @@ PHONE_MAIN = os.getenv('PHONE_MAIN', '+972545270015')
 PHONE_ALT = os.getenv('PHONE_ALT', '+972545270015')
 BASE_URL = os.getenv('BASE_URL', 'http://localhost:8000')
 
+# Email Configuration
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend')
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', '587'))
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True').lower() == 'true'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'noreply@newlife-center.com')
+
+# Administrators
+ADMINS = [
+    ('Admin', os.getenv('ADMIN_EMAIL', 'admin@newlife-center.com')),
+]
+
 # AI Pro Playbooks flags (additive)
 AI_PRO_PLAYBOOKS_ENABLED = os.getenv('AI_PRO_PLAYBOOKS_ENABLED', 'false').lower() == 'true'
 try:

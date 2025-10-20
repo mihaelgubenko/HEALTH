@@ -6,8 +6,9 @@ from django.utils import timezone
 from datetime import datetime, timedelta
 import json
 
-from .models import Service, Specialist, Patient, Appointment, FAQ
+from .models import Service, Specialist, Patient, Appointment, FAQ, ContactMessage
 from .forms import AppointmentForm
+from .email_service import EmailService
 
 
 def home(request):
@@ -63,6 +64,19 @@ def appointment_form(request):
             appointment.channel = 'web'
             appointment.status = 'pending'
             appointment.save()
+            
+            # Отправляем email уведомления
+            try:
+                # Уведомление пациенту
+                if patient.email:
+                    EmailService.send_appointment_confirmation(appointment)
+                
+                # Уведомление администратору
+                EmailService.send_admin_notification(appointment)
+                
+            except Exception as e:
+                # Логируем ошибку, но не прерываем процесс
+                print(f"Ошибка отправки email: {e}")
             
             messages.success(request, 'Запись успешно создана! Мы свяжемся с вами для подтверждения.')
             return redirect('core:appointment_success')
