@@ -113,8 +113,16 @@
     }
     
     .chart-container {
-        height: 300px;
+        height: 200px;
         position: relative;
+    }
+    
+    .count-badge:hover {
+        background: #007bff;
+        color: white;
+        transform: scale(1.1);
+        transition: all 0.2s;
+        cursor: pointer;
     }
     
     .dashboard-header {
@@ -183,30 +191,32 @@
 
 <div class="row">
     <!-- График записей -->
-    <div class="col-md-8">
+    <div class="col-md-6">
         <div class="dashboard-card">
-            <h3><i class="fas fa-chart-area me-2"></i>Записи за последние 7 дней</h3>
-            <div class="chart-container">
+            <h3><i class="fas fa-chart-area me-2"></i>Записи за 7 дней</h3>
+            <div class="chart-container" style="height: 200px;">
                 <canvas id="appointmentsChart"></canvas>
             </div>
         </div>
     </div>
     
     <!-- Статистика по статусам -->
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="dashboard-card">
             <h3><i class="fas fa-tasks me-2"></i>Статусы записей</h3>
             {% for status in dashboard_data.appointments_by_status %}
-            <div class="status-item mb-2">
-                <span class="status-badge status-{{ status.status }}">
-                    {% if status.status == 'pending' %}Ожидает
-                    {% elif status.status == 'confirmed' %}Подтверждена
-                    {% elif status.status == 'completed' %}Завершена
-                    {% elif status.status == 'cancelled' %}Отменена
-                    {% else %}{{ status.status }}{% endif %}
-                </span>
-                <span class="count-badge">{{ status.count }}</span>
-            </div>
+            <a href="{% url 'admin:core_appointment_changelist' %}?status__exact={{ status.status }}" style="text-decoration: none; color: inherit;">
+                <div class="status-item mb-2">
+                    <span class="status-badge status-{{ status.status }}">
+                        {% if status.status == 'pending' %}Ожидает
+                        {% elif status.status == 'confirmed' %}Подтверждена
+                        {% elif status.status == 'completed' %}Завершена
+                        {% elif status.status == 'cancelled' %}Отменена
+                        {% else %}{{ status.status }}{% endif %}
+                    </span>
+                    <span class="count-badge">{{ status.count }}</span>
+                </div>
+            </a>
             {% endfor %}
         </div>
     </div>
@@ -221,13 +231,15 @@
             <div class="service-item">
                 <div>
                     <strong>
-                        <a href="{% url 'admin:core_service_change' service.id %}" style="text-decoration: none; color: inherit;">
+                        <a href="{% url 'admin:core_service_change' service.id %}" style="text-decoration: none; color: inherit;" title="Редактировать услугу">
                             {{ service.name }}
                         </a>
                     </strong>
                     <div class="text-muted small">{{ service.price }}{{ service.currency }}</div>
                 </div>
-                <span class="count-badge">{{ service.appointment_count }}</span>
+                <a href="{% url 'admin:core_appointment_changelist' %}?service__exact={{ service.id }}" style="text-decoration: none;" title="Показать записи на эту услугу">
+                    <span class="count-badge">{{ service.appointment_count }}</span>
+                </a>
             </div>
             {% empty %}
             <p class="text-muted">Нет данных об услугах</p>
@@ -244,7 +256,7 @@
                 <div>
                     <strong>
                         {% if specialist.specialist__id %}
-                        <a href="{% url 'admin:core_specialist_change' specialist.specialist__id %}" style="text-decoration: none; color: inherit;">
+                        <a href="{% url 'admin:core_specialist_change' specialist.specialist__id %}" style="text-decoration: none; color: inherit;" title="Редактировать специалиста">
                             {{ specialist.specialist__name }}
                         </a>
                         {% else %}
@@ -253,7 +265,9 @@
                     </strong>
                     <div class="text-muted small">{{ specialist.specialist__specialty }}</div>
                 </div>
-                <span class="count-badge">{{ specialist.appointment_count }}</span>
+                <a href="{% url 'admin:core_appointment_changelist' %}?specialist__exact={{ specialist.specialist__id }}" style="text-decoration: none;" title="Показать записи к этому специалисту">
+                    <span class="count-badge">{{ specialist.appointment_count }}</span>
+                </a>
             </div>
             {% empty %}
             <p class="text-muted">Нет данных о специалистах</p>
