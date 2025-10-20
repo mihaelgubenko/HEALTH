@@ -188,5 +188,3 @@ try:
     AI_PRO_PLAYBOOK_STAGE = int(os.getenv('AI_PRO_PLAYBOOK_STAGE', '0'))
 except ValueError:
     AI_PRO_PLAYBOOK_STAGE = 0
-=======
->>>>>>> 258ead2034489f3c02e55eb3c9ed172d807187ec
