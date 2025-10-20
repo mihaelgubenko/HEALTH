@@ -6,7 +6,6 @@ from .models import Patient, Service, Specialist, Appointment, DialogLog, FAQ, C
 from .admin_dashboard import dashboard
 
 
-@admin.register(Patient)
 class PatientAdmin(admin.ModelAdmin):
     list_display = ['name', 'phone', 'country', 'city', 'created_at']
     list_filter = ['country', 'created_at']
@@ -15,7 +14,6 @@ class PatientAdmin(admin.ModelAdmin):
     ordering = ['-created_at']
 
 
-@admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
     list_display = ['name', 'price', 'currency', 'duration', 'catalog', 'is_active']
     list_filter = ['catalog', 'is_active', 'created_at']
@@ -24,7 +22,6 @@ class ServiceAdmin(admin.ModelAdmin):
     ordering = ['catalog', 'name']
 
 
-@admin.register(Specialist)
 class SpecialistAdmin(admin.ModelAdmin):
     list_display = ['name', 'specialty', 'is_active', 'created_at']
     list_filter = ['specialty', 'is_active', 'created_at']
@@ -33,22 +30,39 @@ class SpecialistAdmin(admin.ModelAdmin):
     ordering = ['name']
 
 
-@admin.register(Appointment)
 class AppointmentAdmin(admin.ModelAdmin):
     list_display = ['patient', 'specialist', 'service', 'start_time', 'status', 'channel', 'created_at']
     list_filter = ['status', 'channel', 'specialist', 'start_time', 'created_at']
     search_fields = ['patient__name', 'patient__phone', 'specialist__name']
     readonly_fields = ['created_at', 'updated_at']
     ordering = ['start_time']
+    actions = ['confirm_appointments', 'cancel_appointments', 'complete_appointments']
     
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('patient', 'specialist', 'service')
+    
+    def confirm_appointments(self, request, queryset):
+        """Подтвердить записи"""
+        updated = queryset.update(status='confirmed')
+        self.message_user(request, f'Подтверждено записей: {updated}')
+    confirm_appointments.short_description = "✅ Подтвердить выбранные записи"
+    
+    def cancel_appointments(self, request, queryset):
+        """Отменить записи"""
+        updated = queryset.update(status='cancelled')
+        self.message_user(request, f'Отменено записей: {updated}')
+    cancel_appointments.short_description = "❌ Отменить выбранные записи"
+    
+    def complete_appointments(self, request, queryset):
+        """Завершить записи"""
+        updated = queryset.update(status='completed')
+        self.message_user(request, f'Завершено записей: {updated}')
+    complete_appointments.short_description = "✅ Завершить выбранные записи"
 
 
 # УДАЛЕНО: ReminderAdmin (напоминания не используются в минимальной конфигурации)
 
 
-@admin.register(DialogLog)
 class DialogLogAdmin(admin.ModelAdmin):
     list_display = ['channel', 'intent', 'language', 'duration', 'created_at']
     list_filter = ['channel', 'intent', 'language', 'created_at']
@@ -60,7 +74,6 @@ class DialogLogAdmin(admin.ModelAdmin):
         return super().get_queryset(request).select_related('patient')
 
 
-@admin.register(FAQ)
 class FAQAdmin(admin.ModelAdmin):
     list_display = ['question', 'category', 'language', 'is_active', 'order']
     list_filter = ['category', 'language', 'is_active']
@@ -69,7 +82,6 @@ class FAQAdmin(admin.ModelAdmin):
     ordering = ['category', 'order', 'question']
 
 
-@admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
     """Админка для сообщений контактов"""
     list_display = ['name', 'phone', 'email', 'created_at', 'is_read', 'message_preview']

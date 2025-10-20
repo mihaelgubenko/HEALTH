@@ -92,6 +92,7 @@ class AdminDashboard:
         context = {
             'title': 'Дашборд',
             'dashboard_data': self.get_dashboard_data(),
+            'today': timezone.now().date(),
         }
         return render(request, 'admin/dashboard.html', context)
 

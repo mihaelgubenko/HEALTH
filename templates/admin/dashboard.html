@@ -7,12 +7,36 @@
 {{ block.super }}
 <style>
     .dashboard-card {
-        background: white;
+        background: var(--body-bg, white);
+        color: var(--body-fg, #333);
         border-radius: 12px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
         padding: 1.5rem;
         margin-bottom: 1.5rem;
-        border: 1px solid #e8e8e8;
+        border: 1px solid var(--border-color, #e8e8e8);
+    }
+    
+    /* Темная тема */
+    @media (prefers-color-scheme: dark) {
+        .dashboard-card {
+            background: #2b2b2b;
+            color: #e8e8e8;
+            border-color: #444;
+        }
+        
+        .message-item {
+            background: #3a3a3a !important;
+            color: #e8e8e8;
+        }
+        
+        .service-item, .specialist-item {
+            color: #e8e8e8;
+            border-bottom-color: #444;
+        }
+        
+        .dashboard-header {
+            color: white;
+        }
     }
     
     .metric-card {
@@ -124,28 +148,36 @@
 <div class="row">
     <!-- Метрики записей -->
     <div class="col-md-3">
-        <div class="metric-card">
-            <div class="metric-number">{{ dashboard_data.appointments_today }}</div>
-            <div class="metric-label">Записей сегодня</div>
-        </div>
+        <a href="{% url 'admin:core_appointment_changelist' %}?start_time__date={{ today }}" style="text-decoration: none; color: inherit;">
+            <div class="metric-card">
+                <div class="metric-number">{{ dashboard_data.appointments_today }}</div>
+                <div class="metric-label">Записей сегодня</div>
+            </div>
+        </a>
     </div>
     <div class="col-md-3">
-        <div class="metric-card" style="background: linear-gradient(135deg, #27AE60 0%, #F39C12 100%);">
-            <div class="metric-number">{{ dashboard_data.appointments_week }}</div>
-            <div class="metric-label">Записей за неделю</div>
-        </div>
+        <a href="{% url 'admin:core_appointment_changelist' %}" style="text-decoration: none; color: inherit;">
+            <div class="metric-card" style="background: linear-gradient(135deg, #27AE60 0%, #F39C12 100%);">
+                <div class="metric-number">{{ dashboard_data.appointments_week }}</div>
+                <div class="metric-label">Записей за неделю</div>
+            </div>
+        </a>
     </div>
     <div class="col-md-3">
-        <div class="metric-card" style="background: linear-gradient(135deg, #F39C12 0%, #E67E22 100%);">
-            <div class="metric-number">{{ dashboard_data.appointments_month }}</div>
-            <div class="metric-label">Записей за месяц</div>
-        </div>
+        <a href="{% url 'admin:core_appointment_changelist' %}" style="text-decoration: none; color: inherit;">
+            <div class="metric-card" style="background: linear-gradient(135deg, #F39C12 0%, #E67E22 100%);">
+                <div class="metric-number">{{ dashboard_data.appointments_month }}</div>
+                <div class="metric-label">Записей за месяц</div>
+            </div>
+        </a>
     </div>
     <div class="col-md-3">
-        <div class="metric-card" style="background: linear-gradient(135deg, #9B59B6 0%, #8E44AD 100%);">
-            <div class="metric-number">{{ dashboard_data.total_patients }}</div>
-            <div class="metric-label">Всего пациентов</div>
-        </div>
+        <a href="{% url 'admin:core_patient_changelist' %}" style="text-decoration: none; color: inherit;">
+            <div class="metric-card" style="background: linear-gradient(135deg, #9B59B6 0%, #8E44AD 100%);">
+                <div class="metric-number">{{ dashboard_data.total_patients }}</div>
+                <div class="metric-label">Всего пациентов</div>
+            </div>
+        </a>
     </div>
 </div>
 
@@ -188,7 +220,11 @@
             {% for service in dashboard_data.popular_services %}
             <div class="service-item">
                 <div>
-                    <strong>{{ service.name }}</strong>
+                    <strong>
+                        <a href="{% url 'admin:core_service_change' service.id %}" style="text-decoration: none; color: inherit;">
+                            {{ service.name }}
+                        </a>
+                    </strong>
                     <div class="text-muted small">{{ service.price }}{{ service.currency }}</div>
                 </div>
                 <span class="count-badge">{{ service.appointment_count }}</span>
@@ -204,7 +240,11 @@
             {% for specialist in dashboard_data.specialists_stats %}
             <div class="specialist-item">
                 <div>
-                    <strong>{{ specialist.specialist__name }}</strong>
+                    <strong>
+                        <a href="{% url 'admin:core_specialist_change' specialist.specialist__id %}" style="text-decoration: none; color: inherit;">
+                            {{ specialist.specialist__name }}
+                        </a>
+                    </strong>
                     <div class="text-muted small">{{ specialist.specialist__specialty }}</div>
                 </div>
                 <span class="count-badge">{{ specialist.appointment_count }}</span>
