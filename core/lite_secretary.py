@@ -1046,7 +1046,7 @@ class LiteSmartSecretary:
 📞 Телефон: {entities['phone']}
 🏥 Услуга: {entities['service']}
 📅 Дата: {entities.get('date', 'завтра')}
-⏰ Время: {entities.get('time', '15:00')}
+⏰ Время: {entities.get('time', '❌ ОШИБКА: время не определено')}
 
 Мы свяжемся с вами для подтверждения!"""
     
@@ -1189,7 +1189,7 @@ class LiteSmartSecretary:
                 # НОВОЕ: Проверяем конкретно конфликт времени
                 time_conflict = any('время уже занято' in err.lower() or 'занят' in err.lower() 
                                    for err in validation_result['errors'])
-                weekend_error = any('не работает' in err.lower() or 'суббот' in err.lower() or 'воскресен' in err.lower()
+                weekend_error = any('не работает' in err.lower() or 'суббота' in err.lower() or 'воскресен' in err.lower()
                                    for err in validation_result['errors'])
                 
                 if time_conflict or weekend_error:
