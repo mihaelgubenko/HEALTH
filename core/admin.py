@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django.urls import path
 from django.shortcuts import redirect
+from django.contrib.auth.views import LogoutView
 from .models import Patient, Service, Specialist, Appointment, DialogLog, FAQ, ContactMessage
 from .admin_dashboard import dashboard
 
@@ -239,6 +240,7 @@ class CustomAdminSite(admin.AdminSite):
         urls = super().get_urls()
         custom_urls = [
             path('dashboard/', dashboard.dashboard_view, name='admin_dashboard'),
+            path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
         ]
         return custom_urls + urls
     
