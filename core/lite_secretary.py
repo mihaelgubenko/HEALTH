@@ -211,22 +211,36 @@ class LiteEntityExtractor:
             return f"{day}.{month}"
         
         # Относительные даты (только если нет точного формата)
+        # ИСПРАВЛЕНО: Возвращаем конкретные даты вместо строк
+        from django.utils import timezone
+        from datetime import timedelta
+        
+        today = timezone.now().date()
+        
         relative_dates = {
-            'сегодня': 'today',
-            'завтра': 'tomorrow', 
-            'послезавтра': 'day_after_tomorrow',
-            'понедельник': 'monday',
-            'вторник': 'tuesday', 
-            'среду': 'wednesday',
-            'четверг': 'thursday',
-            'пятницу': 'friday',
-            'субботу': 'saturday',
-            'воскресенье': 'sunday'
+            'сегодня': today.strftime('%Y-%m-%d'),
+            'завтра': (today + timedelta(days=1)).strftime('%Y-%m-%d'), 
+            'послезавтра': (today + timedelta(days=2)).strftime('%Y-%m-%d'),
+        }
+        
+        # Дни недели - находим следующий такой день
+        weekdays = {
+            'понедельник': 0, 'вторник': 1, 'среду': 2, 'четверг': 3, 
+            'пятницу': 4, 'субботу': 5, 'воскресенье': 6
         }
         
         for date_word, date_value in relative_dates.items():
             if date_word in text_lower:
                 return date_value
+        
+        # Обработка дней недели
+        for day_word, weekday in weekdays.items():
+            if day_word in text_lower:
+                days_ahead = weekday - today.weekday()
+                if days_ahead <= 0:  # Если день уже прошел на этой неделе
+                    days_ahead += 7
+                target_date = today + timedelta(days=days_ahead)
+                return target_date.strftime('%Y-%m-%d')
             
         return None
     
@@ -505,6 +519,21 @@ class LiteSmartSecretary:
         
         if not next_field:
             # Все данные собраны - создаем запись в БД
+            
+            # ОТЛАДКА: Детальное логирование перед созданием записи
+            logger.info(f"=== CREATING APPOINTMENT DEBUG ===")
+            logger.info(f"Session ID: {session_id}")
+            logger.info(f"Entities: {entities}")
+            logger.info(f"Name: {entities.get('name')}")
+            logger.info(f"Phone: {entities.get('phone')}")
+            logger.info(f"Service: {entities.get('service')}")
+            logger.info(f"Specialist: {entities.get('specialist')}")
+            logger.info(f"Date: {entities.get('date')} (type: {type(entities.get('date'))})")
+            logger.info(f"Time: {entities.get('time')} (type: {type(entities.get('time'))})")
+            logger.info(f"Current timezone.now(): {timezone.now()}")
+            logger.info(f"Current timezone.now().date(): {timezone.now().date()}")
+            logger.info(f"=== END DEBUG ===")
+            
             success, result = self.create_appointment(
                 session_id=session_id,
                 name=entities.get('name'),
