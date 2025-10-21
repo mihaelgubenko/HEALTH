@@ -103,7 +103,41 @@ class Appointment(models.Model):
         return f"{self.patient.name} - {self.specialist.name} ({self.start_time.strftime('%d.%m.%Y %H:%M')})"
 
 
-# УДАЛЕНО: Модель Reminder (напоминания не используются в минимальной конфигурации)
+class Reminder(models.Model):
+    """Модель напоминаний о записи"""
+    
+    REMINDER_TYPE_CHOICES = [
+        ('-24h', 'За 24 часа'),
+        ('-2h', 'За 2 часа'),
+    ]
+    
+    STATUS_CHOICES = [
+        ('scheduled', 'Запланировано'),
+        ('sent', 'Отправлено'),
+        ('failed', 'Ошибка'),
+        ('cancelled', 'Отменено'),
+    ]
+    
+    appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE, related_name='reminders', verbose_name='Запись')
+    reminder_type = models.CharField(max_length=10, choices=REMINDER_TYPE_CHOICES, verbose_name='Тип напоминания')
+    scheduled_at = models.DateTimeField(verbose_name='Время отправки')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='scheduled', verbose_name='Статус')
+    sent_at = models.DateTimeField(null=True, blank=True, verbose_name='Отправлено')
+    error_message = models.TextField(blank=True, verbose_name='Сообщение об ошибке')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
+    
+    class Meta:
+        verbose_name = 'Напоминание'
+        verbose_name_plural = 'Напоминания'
+        ordering = ['scheduled_at']
+        indexes = [
+            models.Index(fields=['appointment', 'reminder_type']),
+            models.Index(fields=['status', 'scheduled_at']),
+        ]
+    
+    def __str__(self):
+        return f"Напоминание {self.get_reminder_type_display()} для {self.appointment.patient.name}"
 
 
 class DialogLog(models.Model):

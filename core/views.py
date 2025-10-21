@@ -87,6 +87,13 @@ def appointment_form(request):
                 # Логируем ошибку, но не прерываем процесс
                 print(f"Ошибка отправки email: {e}")
             
+            # Создаем напоминания
+            try:
+                from .scheduler import schedule_reminders_for_appointment
+                schedule_reminders_for_appointment(appointment)
+            except Exception as e:
+                print(f"Ошибка создания напоминаний: {e}")
+            
             messages.success(request, 'Запись успешно создана! Мы свяжемся с вами для подтверждения.')
             return redirect('core:appointment_success')
     else:

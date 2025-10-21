@@ -8,6 +8,7 @@ from typing import Tuple, List, Dict, Optional, Any
 import pytz
 from django.utils import timezone
 from django.conf import settings
+from .work_hours import WorkHours
 
 
 class HolidayManager:
@@ -102,14 +103,8 @@ class HolidayManager:
     @staticmethod
     def is_weekend(check_date: date, country: str = 'IL') -> bool:
         """Проверка, является ли дата выходным днем"""
-        weekday = check_date.weekday()
-        
-        if country == 'IL':
-            # В Израиле выходные: пятница (4) и суббота (5)
-            return weekday in [4, 5]
-        else:
-            # В большинстве стран: суббота (5) и воскресенье (6)
-            return weekday in [5, 6]
+        # Используем WorkHours для определения рабочего дня
+        return not WorkHours.is_work_day(check_date)
     
     @staticmethod
     def get_next_working_day(start_date: date, country: str = 'IL') -> date:
@@ -307,16 +302,19 @@ class DateTimeValidator:
         return True, "OK"
     
     def validate_time(self, check_time: time, check_date: date) -> Tuple[bool, str]:
-        """Валидация времени"""
-        working_hours = self.working_hours.get(self.country, self.working_hours['IL'])
+        """Валидация времени с использованием WorkHours"""
+        
+        # Получаем рабочие часы для конкретной даты
+        work_hours = WorkHours.get_work_hours(check_date)
+        if work_hours is None:
+            day_info = WorkHours.get_day_info(check_date)
+            return False, f"{day_info}"
+        
+        start_hour, end_hour = work_hours
         
         # Проверка рабочих часов
-        if check_time.hour < working_hours['start'] or check_time.hour >= working_hours['end']:
-            return False, f"Центр работает с {working_hours['start']:02d}:00 до {working_hours['end']:02d}:00"
-        
-        # Проверка обеденного перерыва
-        if (working_hours['break_start'] <= check_time.hour < working_hours['break_end']):
-            return False, f"Обеденный перерыв с {working_hours['break_start']:02d}:00 до {working_hours['break_end']:02d}:00"
+        if check_time.hour < start_hour or check_time.hour >= end_hour:
+            return False, f"Центр работает с {start_hour:02d}:00 до {end_hour:02d}:00"
         
         # Проверка, что время не в прошлом (если дата сегодня)
         current_datetime = TimezoneManager.get_current_time(self.country)
@@ -390,7 +388,7 @@ class DateTimeValidator:
         return result
     
     def get_available_time_slots(self, check_date: date, duration_minutes: int = 60) -> List[Dict[str, Any]]:
-        """Получение доступных временных слотов на дату"""
+        """Получение доступных временных слотов на дату с использованием WorkHours"""
         slots = []
         
         # Проверяем, что дата валидна
@@ -398,27 +396,22 @@ class DateTimeValidator:
         if not date_valid:
             return slots
         
-        working_hours = self.working_hours.get(self.country, self.working_hours['IL'])
+        # Получаем рабочие часы для конкретной даты
+        work_hours = WorkHours.get_work_hours(check_date)
+        if work_hours is None:
+            return slots  # Нерабочий день
+        
+        start_hour, end_hour = work_hours
         current_datetime = TimezoneManager.get_current_time(self.country)
         
         # Генерируем слоты каждые 30 минут
         slot_duration = 30  # минут между слотами
-        
-        start_hour = working_hours['start']
-        end_hour = working_hours['end']
-        break_start = working_hours['break_start']
-        break_end = working_hours['break_end']
         
         current_time = datetime.combine(check_date, time(start_hour, 0))
         end_time = datetime.combine(check_date, time(end_hour, 0))
         
         while current_time < end_time:
             slot_time = current_time.time()
-            
-            # Пропускаем обеденный перерыв
-            if break_start <= slot_time.hour < break_end:
-                current_time += timedelta(minutes=slot_duration)
-                continue
             
             # Проверяем, что процедура поместится до конца рабочего дня
             procedure_end = current_time + timedelta(minutes=duration_minutes)

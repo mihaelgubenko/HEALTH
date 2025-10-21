@@ -11,6 +11,7 @@ from django.core.cache import cache
 from django.utils import timezone
 from .models import Specialist, Service, Appointment
 from .datetime_validator import DateTimeValidator, TimezoneManager
+from .work_hours import WorkHours
 
 logger = logging.getLogger(__name__)
 

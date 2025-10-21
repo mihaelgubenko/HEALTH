@@ -536,8 +536,10 @@ class LiteSmartSecretary:
             self.session_manager.clear_session(session_id)
             # Сбрасываем счетчик попыток исправления
             self.session_manager.reset_correction_attempts(session_id)
+            # Импортируем WorkHours
+            from .work_hours import WorkHours
             return {
-                'reply': '🔄 Хорошо, начинаем заново!\n\n👋 Здравствуйте! Я помогу вам записаться на приём в центр "Новая Жизнь".\n\n🏥 Выберите услугу:',
+                'reply': f'🔄 Хорошо, начинаем заново!\n\n👋 Здравствуйте! Я помогу вам записаться на приём в центр "Новая Жизнь".\n\n{WorkHours.get_schedule_text()}\n\n🏥 Выберите услугу:',
                 'intent': 'collect_service',
                 'session_id': session_id
             }
@@ -667,7 +669,7 @@ class LiteSmartSecretary:
                     session['state'] = DialogState.COLLECTING_TIME
                     reply = result  # Используем сообщение с предложенными слотами (БЕЗ префикса "Извините...")
                     intent = 'collect_time'
-                elif 'Центр не работает' in result or 'суббот' in result.lower() or 'воскресен' in result.lower():
+                elif 'Центр не работает' in result or 'суббота' in result.lower() or 'воскресен' in result.lower():
                     # Проблема с датой - сбрасываем дату и время
                     entities['date'] = None
                     entities['time'] = None
@@ -940,9 +942,16 @@ class LiteSmartSecretary:
         return specialists
     
     def _ask_for_service(self, user_message: str) -> str:
-        """Спрашивает услугу"""
-        if any(word in user_message.lower() for word in ['услуги', 'что у вас', 'расскажи']):
-            return """У нас доступны:
+        """Спрашивает услугу с информацией о часах работы"""
+        # Импортируем WorkHours для получения расписания
+        from .work_hours import WorkHours
+        
+        if any(word in user_message.lower() for word in ['услуги', 'что у вас', 'расскажи', 'привет', 'здравствуй', 'начать']):
+            return f"""👋 Здравствуйте! Я помогу вам записаться на приём в центр "Новая Жизнь".
+
+{WorkHours.get_schedule_text()}
+
+🏥 Доступные услуги:
 • Лечебный массаж - 250₪ (Авраам)
 • Консультация остеопата - 80₪ (Екатерина)  
 • Консультация реабилитолога - 80₪ (Екатерина)
@@ -1258,10 +1267,18 @@ class LiteSmartSecretary:
                 notes=f'Запись через ИИ-чат (сессия: {session_id})'
             )
 
-            # 5. Обновляем статистику
+            # 5. Создаем напоминания
+            try:
+                from .scheduler import schedule_reminders_for_appointment
+                schedule_reminders_for_appointment(appointment)
+                logger.info(f"Reminders scheduled for appointment {appointment.id}")
+            except Exception as e:
+                logger.error(f"Error scheduling reminders: {e}", exc_info=True)
+
+            # 6. Обновляем статистику
             self.stats['successful_bookings'] += 1
 
-            # 6. Обновляем сессию
+            # 7. Обновляем сессию
             session = self.session_manager.get_session(session_id)
             session['entities']['appointment_id'] = appointment.id
             session['state'] = DialogState.COMPLETED

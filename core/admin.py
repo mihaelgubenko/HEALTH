@@ -3,7 +3,7 @@ from django.utils.html import format_html
 from django.urls import path
 from django.shortcuts import redirect
 from django.contrib.auth.views import LogoutView
-from .models import Patient, Service, Specialist, Appointment, DialogLog, FAQ, ContactMessage
+from .models import Patient, Service, Specialist, Appointment, DialogLog, FAQ, ContactMessage, Reminder
 from .admin_dashboard import dashboard
 
 
@@ -217,10 +217,23 @@ class ContactMessageAdmin(admin.ModelAdmin):
         if len(obj.message) > 50:
             return obj.message[:50] + "..."
         return obj.message
-    message_preview.short_description = "Превью сообщения"
+
+
+class ReminderAdmin(admin.ModelAdmin):
+    """Админка для напоминаний"""
+    list_display = ['appointment_info', 'reminder_type', 'scheduled_at', 'status', 'sent_at']
+    list_filter = ['status', 'reminder_type', 'scheduled_at']
+    search_fields = ['appointment__patient__name', 'appointment__patient__phone']
+    readonly_fields = ['created_at', 'updated_at', 'sent_at']
+    ordering = ['-scheduled_at']
+    
+    def appointment_info(self, obj):
+        """Информация о записи"""
+        return f"{obj.appointment.patient.name} - {obj.appointment.start_time.strftime('%d.%m.%Y %H:%M')}"
+    appointment_info.short_description = 'Запись'
     
     def get_queryset(self, request):
-        return super().get_queryset(request)
+        return super().get_queryset(request).select_related('appointment', 'appointment__patient')
     
     # Добавляем счетчик непрочитанных сообщений в заголовок
     def changelist_view(self, request, extra_context=None):
@@ -264,6 +277,7 @@ admin_site.register(Appointment, AppointmentAdmin)
 admin_site.register(DialogLog, DialogLogAdmin)
 admin_site.register(FAQ, FAQAdmin)
 admin_site.register(ContactMessage, ContactMessageAdmin)
+admin_site.register(Reminder, ReminderAdmin)
 
 # Также регистрируем в стандартном сайте для совместимости
 admin.site.site_header = "Центр здоровья 'Новая Жизнь'"
