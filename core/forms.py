@@ -118,10 +118,16 @@ class AppointmentForm(forms.ModelForm):
 
     def clean_phone(self):
         phone = self.cleaned_data['phone']
-        # Простая валидация телефона
-        if not phone.startswith('+'):
-            phone = '+' + phone
-        return phone
+        
+        # Используем наш валидатор телефонов
+        from .validators import PhoneValidator
+        
+        is_valid, country, formatted_phone = PhoneValidator.validate_phone(phone)
+        
+        if not is_valid:
+            raise ValidationError(f'Некорректный номер телефона: {formatted_phone}')
+        
+        return formatted_phone
 
     def clean_preferred_date(self):
         date = self.cleaned_data['preferred_date']

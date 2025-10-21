@@ -370,10 +370,13 @@ class PhoneValidator:
         elif phone_clean.startswith('380'):
             return 'UA', phone_clean[3:]
         elif phone_clean.startswith('0') and len(phone_clean) == 10:
-            # Может быть украинский локальный формат
-            digits = phone_clean[1:]
-            if digits[:2] in PhoneValidator.COUNTRY_OPERATORS['UA']['mobile_prefixes']:
-                return 'UA', digits
+                # Может быть украинский локальный формат
+                digits = phone_clean[1:]
+                if digits[:2] in PhoneValidator.COUNTRY_OPERATORS['UA']['mobile_prefixes']:
+                    return 'UA', digits
+                # Если не украинский, проверяем израильский
+                elif len(phone_clean) >= 9 and digits[:2] in PhoneValidator.COUNTRY_OPERATORS['IL']['mobile_prefixes']:
+                    return 'IL', digits
         
         # США
         elif phone_clean.startswith('+1'):
