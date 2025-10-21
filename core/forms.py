@@ -25,7 +25,7 @@ class AppointmentForm(forms.ModelForm):
         label='Телефон',
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Израиль: +972541234567, Россия: +79161234567, Украина: +380671234567, США: +12125551234',
+            'placeholder': 'Введите ваш номер телефона',
             'required': True,
             'type': 'tel',
             'pattern': r'[\+]?[0-9\s\-\(\)]{7,20}',
@@ -106,16 +106,8 @@ class AppointmentForm(forms.ModelForm):
 
     def clean_phone(self):
         phone = self.cleaned_data['phone']
-        
-        # Используем наш валидатор телефонов
-        from .validators import PhoneValidator
-        
-        is_valid, country, formatted_phone = PhoneValidator.validate_phone(phone)
-        
-        if not is_valid:
-            raise ValidationError(f'Некорректный номер телефона: {formatted_phone}')
-        
-        return formatted_phone
+        # Простая очистка - убираем только лишние пробелы
+        return phone.strip()
 
     def clean_preferred_date(self):
         date = self.cleaned_data['preferred_date']
