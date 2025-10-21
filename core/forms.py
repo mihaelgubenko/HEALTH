@@ -25,10 +25,11 @@ class AppointmentForm(forms.ModelForm):
         label='Телефон',
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': '+972545270015',
+            'placeholder': 'Израиль: +972541234567, Россия: +79161234567, Украина: +380671234567, США: +12125551234',
             'required': True,
             'type': 'tel',
-            'pattern': r'[\+]?[0-9\s\-\(\)]{7,20}'
+            'pattern': r'[\+]?[0-9\s\-\(\)]{7,20}',
+            'title': 'Введите номер телефона в международном формате'
         })
     )
     
@@ -92,26 +93,13 @@ class AppointmentForm(forms.ModelForm):
         # Заполняем специалистов
         self.fields['specialist'].queryset = Specialist.objects.filter(is_active=True)
         
-        # Заполняем временные слоты (базовые, будут обновляться через JavaScript)
+        # Заполняем временные слоты
         time_choices = [('', 'Выберите время')]
         
-        # Генерируем слоты с учетом текущего времени
-        now = timezone.now()
-        today = now.date()
-        
-        # Если форма инициализируется для сегодняшней даты, фильтруем прошедшие слоты
+        # Генерируем все доступные слоты с 9:00 до 19:00
         for hour in range(9, 19):
             for minute in [0, 30]:
                 time_str = f'{hour:02d}:{minute:02d}'
-                slot_time = datetime.strptime(time_str, '%H:%M').time()
-                
-                # Для сегодняшней даты пропускаем прошедшие слоты
-                if today == now.date():
-                    slot_datetime = timezone.make_aware(datetime.combine(today, slot_time))
-                    buffer_time = now + timezone.timedelta(hours=1)
-                    if slot_datetime <= buffer_time:
-                        continue
-                
                 time_choices.append((time_str, time_str))
         
         self.fields['preferred_time'].choices = time_choices
@@ -136,6 +124,33 @@ class AppointmentForm(forms.ModelForm):
         if date < today:
             raise ValidationError('Дата не может быть в прошлом')
         return date
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        preferred_date = cleaned_data.get('preferred_date')
+        preferred_time = cleaned_data.get('preferred_time')
+        
+        if preferred_date and preferred_time:
+            # Проверяем, что время не в прошлом для сегодняшней даты
+            now = timezone.now()
+            today = now.date()
+            
+            if preferred_date == today:
+                try:
+                    slot_time = datetime.strptime(preferred_time, '%H:%M').time()
+                    slot_datetime = timezone.make_aware(datetime.combine(preferred_date, slot_time))
+                    buffer_time = now + timedelta(hours=1)
+                    
+                    if slot_datetime <= buffer_time:
+                        raise ValidationError({
+                            'preferred_time': 'Выберите время минимум через час от текущего времени'
+                        })
+                except ValueError:
+                    raise ValidationError({
+                        'preferred_time': 'Некорректный формат времени'
+                    })
+        
+        return cleaned_data
 
     def save(self, commit=True):
         appointment = super().save(commit=False)
