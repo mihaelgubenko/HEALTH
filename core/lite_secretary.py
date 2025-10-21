@@ -563,7 +563,7 @@ class LiteSmartSecretary:
             # Сбрасываем счетчик попыток при исправлении
             self.session_manager.reset_correction_attempts(session_id)
             return {
-                'reply': '📞 Хорошо, давайте исправим номер телефона.\n\nУкажите ваш номер в формате +972541234567 или 0541234567:',
+                'reply': '📞 Хорошо, давайте исправим номер телефона.\n\nУкажите ваш номер в любом удобном формате:',
                 'intent': 'collect_phone',
                 'session_id': session_id
             }

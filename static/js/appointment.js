@@ -87,26 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Валидация телефона в реальном времени
-    const phoneField = document.getElementById('id_phone');
-    if (phoneField) {
-        phoneField.addEventListener('input', function() {
-            const phone = this.value.replace(/\D/g, '');
-            
-            if (phone.length > 0) {
-                // Форматирование израильского номера
-                if (phone.startsWith('972') || phone.startsWith('0')) {
-                    let formatted = phone;
-                    if (phone.startsWith('0')) {
-                        formatted = '972' + phone.substring(1);
-                    }
-                    this.value = '+' + formatted;
-                } else if (!phone.startsWith('972')) {
-                    this.value = '+972' + phone;
-                }
-            }
-        });
-    }
+    // Убрана валидация телефона - пользователь вводит номер как есть
 
     // Обновление специалистов при выборе услуги
     const serviceField = document.getElementById('id_service');

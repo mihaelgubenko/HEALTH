@@ -223,16 +223,7 @@ def validate_patient_data(request):
                 if normalized_name != name.strip():
                     result['warnings'].append(f'Рекомендуется: {normalized_name}')
         
-        # Валидация телефона
-        if phone:
-            phone_valid, country, phone_result = PhoneValidator.validate_phone(phone)
-            if not phone_valid:
-                result['is_valid'] = False
-                result['errors'].append(f'Телефон: {phone_result}')
-                result['suggestions'].extend(PhoneValidator.suggest_corrections(phone))
-            else:
-                if phone_result != phone.strip():
-                    result['warnings'].append(f'Рекомендуется: {phone_result}')
+        # Валидация телефона убрана - принимаем любой формат
         
         # Проверка дубликатов телефона
         if phone and result['is_valid']:
