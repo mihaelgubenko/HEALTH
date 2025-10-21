@@ -47,16 +47,25 @@ def appointment_form(request):
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
         if form.is_valid():
-            # Создаем пациента
-            patient, created = Patient.objects.get_or_create(
-                phone=form.cleaned_data['phone'],
-                defaults={
-                    'name': form.cleaned_data['name'],
-                    'email': form.cleaned_data.get('email', ''),
-                    'country': 'Israel',
-                    'city': 'Иерусалим',
-                }
-            )
+            # Создаем или находим пациента (по телефону и имени)
+            phone = form.cleaned_data['phone']
+            name = form.cleaned_data['name']
+            
+            try:
+                # Пытаемся найти существующего пациента по телефону и имени
+                patient = Patient.objects.get(phone=phone, name=name)
+            except Patient.DoesNotExist:
+                # Если не найден, создаем нового
+                patient = Patient.objects.create(
+                    name=name,
+                    phone=phone,
+                    email=form.cleaned_data.get('email', ''),
+                    country='Israel',
+                    city='Иерусалим',
+                )
+            except Patient.MultipleObjectsReturned:
+                # Если найдено несколько, берем первого
+                patient = Patient.objects.filter(phone=phone, name=name).first()
             
             # Создаем запись
             appointment = form.save(commit=False)

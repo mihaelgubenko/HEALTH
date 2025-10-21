@@ -1,0 +1,145 @@
+{
+  "timestamp": "2025-10-21T13:46:29.351178",
+  "suites": {
+    "validation": {
+      "timestamp": "2025-10-21T13:46:29.486170",
+      "tests": {
+        "Валидация имен": {
+          "status": "PASSED",
+          "result": {
+            "passed": 13,
+            "total": 13
+          },
+          "execution_time": 0.014475822448730469,
+          "error": null
+        },
+        "Валидация телефонов": {
+          "status": "PASSED",
+          "result": {
+            "passed": 10,
+            "total": 10
+          },
+          "execution_time": 0.0006527900695800781,
+          "error": null
+        },
+        "Валидация даты/времени": {
+          "status": "PASSED",
+          "result": {
+            "passed": 10,
+            "total": 10
+          },
+          "execution_time": 1.049959421157837,
+          "error": null
+        },
+        "Валидация записей": {
+          "status": "PASSED",
+          "result": {
+            "valid_passed": true,
+            "invalid_passed": true
+          },
+          "execution_time": 0.1879591941833496,
+          "error": null
+        },
+        "Создание моделей": {
+          "status": "PASSED",
+          "result": {
+            "patient_id": 201,
+            "specialist_id": 14,
+            "service_id": 25,
+            "appointment_id": 299
+          },
+          "execution_time": 0.3994758129119873,
+          "error": null
+        },
+        "Связи моделей": {
+          "status": "FAILED",
+          "result": null,
+          "execution_time": 0.045334815979003906,
+          "error": "Связь со специалистом должна работать"
+        },
+        "Целостность данных": {
+          "status": "PASSED",
+          "result": {
+            "integrity_ok": true
+          },
+          "execution_time": 0.04803752899169922,
+          "error": null
+        },
+        "Веб-интерфейс": {
+          "status": "PASSED",
+          "result": {
+            "pages_loaded": 3
+          },
+          "execution_time": 0.7788176536560059,
+          "error": null
+        },
+        "Отправка формы": {
+          "status": "PASSED",
+          "result": {
+            "form_submitted": true,
+            "appointment_created": true
+          },
+          "execution_time": 0.783078670501709,
+          "error": null
+        },
+        "ИИ-чат": {
+          "status": "PASSED",
+          "result": {
+            "ai_responding": false,
+            "error": "ИИ должен отвечать на сообщения"
+          },
+          "execution_time": 0.023523330688476562,
+          "error": null
+        },
+        "Одновременные записи": {
+          "status": "PASSED",
+          "result": {
+            "successful_appointments": 10,
+            "total_attempted": 10
+          },
+          "execution_time": 1.1149954795837402,
+          "error": null
+        },
+        "Производительность валидации": {
+          "status": "PASSED",
+          "result": {
+            "total_time": 4.4867918491363525,
+            "avg_time": 0.044867918491363526,
+            "validations": 100
+          },
+          "execution_time": 4.486974477767944,
+          "error": null
+        },
+        "Граничные значения": {
+          "status": "FAILED",
+          "result": null,
+          "execution_time": 0.11294102668762207,
+          "error": "Запись в 9:00 должна быть валидной"
+        },
+        "Экстремальные значения": {
+          "status": "PASSED",
+          "result": {
+            "extreme_values_handled": true
+          },
+          "execution_time": 8.487701416015625e-05,
+          "error": null
+        }
+      },
+      "summary": {
+        "total": 14,
+        "passed": 12,
+        "failed": 2,
+        "errors": 0
+      }
+    }
+  },
+  "summary": {
+    "total_suites": 5,
+    "passed_suites": 4,
+    "total_tests": 14,
+    "passed_tests": 12,
+    "failed_tests": 2,
+    "error_tests": 0,
+    "execution_time": 9.540467023849487
+  }
+}

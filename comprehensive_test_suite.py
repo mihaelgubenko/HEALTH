@@ -193,18 +193,23 @@ class ValidationTestSuite:
     
     def test_appointment_validation(self):
         """Тестирование комплексной валидации записей"""
-        # Создаем тестовые данные
-        specialist = Specialist.objects.create(
+        # Используем существующие данные или создаем новые
+        specialist, _ = Specialist.objects.get_or_create(
             name="Тестовый Специалист",
-            specialty="Массаж",
-            is_active=True
+            defaults={
+                'specialty': "Массаж",
+                'is_active': True
+            }
         )
         
-        service = Service.objects.create(
+        service, _ = Service.objects.get_or_create(
             name="Тестовая Услуга",
-            price=100,
-            duration=60,
-            is_active=True
+            defaults={
+                'price': 100,
+                'duration': 60,
+                'is_active': True,
+                'catalog': 'A'
+            }
         )
         
         validator = ValidationManager()
@@ -511,18 +516,23 @@ class BoundaryTestSuite:
         # Тест записи на границе рабочего времени
         tomorrow = (timezone.now() + timedelta(days=1)).date().strftime('%Y-%m-%d')
         
-        # Создаем тестовые данные
-        specialist = Specialist.objects.create(
+        # Используем существующие данные или создаем новые
+        specialist, _ = Specialist.objects.get_or_create(
             name="Граничный Специалист",
-            specialty="Граничные случаи",
-            is_active=True
+            defaults={
+                'specialty': "Граничные случаи",
+                'is_active': True
+            }
         )
         
-        service = Service.objects.create(
+        service, _ = Service.objects.get_or_create(
             name="Граничная Услуга",
-            price=300,
-            duration=60,
-            is_active=True
+            defaults={
+                'price': 300,
+                'duration': 60,
+                'is_active': True,
+                'catalog': 'A'
+            }
         )
         
         # Тест записи в 9:00 (начало рабочего дня)
