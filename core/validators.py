@@ -397,8 +397,8 @@ class PhoneValidator:
             return False, f"Неверная длина номера для {country}. Ожидается {expected_length} цифр, получено {len(digits)}"
         
         # Проверка префикса оператора
-        mobile_prefixes = country_info['mobile_prefixes']
-        landline_prefixes = country_info['landline_prefixes']
+        mobile_prefixes = country_info.get('mobile_prefixes', [])
+        landline_prefixes = country_info.get('landline_prefixes', [])
         
         if country == 'IL':
             # Для Израиля проверяем первые 2 цифры
