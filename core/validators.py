@@ -406,9 +406,10 @@ class ValidationManager:
         
         # Логирование результата валидации
         if result['is_valid']:
-            logger.info(f"Validation successful for: {name}, {formatted_phone}")
+            logger.debug(f"Validation successful for: {name}, {formatted_phone}")
         else:
-            logger.warning(f"Validation failed: {result['errors']}")
+            # Используем debug вместо warning для уменьшения шума в логах
+            logger.debug(f"Validation failed: {result['errors']}")
         
         return result
     

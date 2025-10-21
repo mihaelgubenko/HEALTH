@@ -869,6 +869,45 @@ class LiteSmartSecretary:
             # ИСПРАВЛЕНО: Логирование начала создания записи
             logger.info(f"Creating appointment: {name}, {phone}, {service_name}, {specialist_name}, {day}, {time}")
 
+            # Предварительная проверка времени для избежания лишних ошибок валидации
+            try:
+                from datetime import datetime
+                import re
+                
+                # Очищаем дату от лишнего текста
+                date_clean = day.strip()
+                date_clean = re.sub(r'\s*\([^)]*\)', '', date_clean).strip()
+                
+                # Если это "сегодня" и время в прошлом, сразу предлагаем доступные слоты
+                if date_clean.lower() in ['сегодня', 'today']:
+                    try:
+                        time_obj = datetime.strptime(time, '%H:%M').time()
+                        now = timezone.now()
+                        current_time = now.time()
+                        buffer_time = (now + timezone.timedelta(hours=1)).time()
+                        
+                        if time_obj <= buffer_time:
+                            # Время в прошлом или слишком близко - предлагаем доступные слоты
+                            try:
+                                specialist = Specialist.objects.get(name__icontains=specialist_name)
+                                service = Service.objects.get(name__icontains=service_name)
+                                available_slots = self.validator.availability_validator.get_available_slots(
+                                    specialist, now.date(), service.duration
+                                )
+                                
+                                if available_slots:
+                                    slots_list = [slot['time'] for slot in available_slots[:5]]
+                                    slots_str = ", ".join(slots_list)
+                                    return False, f"⚠️ Время {time} уже прошло или слишком близко.\n\n✅ Доступные слоты на сегодня: {slots_str}\n\nВыберите удобное время:"
+                                else:
+                                    return False, "⚠️ На сегодня все слоты заняты. Попробуйте выбрать другой день."
+                            except (Specialist.DoesNotExist, Service.DoesNotExist):
+                                pass  # Продолжаем обычную валидацию
+                    except ValueError:
+                        pass  # Неправильный формат времени, продолжаем обычную валидацию
+            except Exception:
+                pass  # Любая ошибка в предварительной проверке - продолжаем обычную валидацию
+
             # ИСПРАВЛЕНО: Комплексная валидация всех данных
             validation_result = self.validator.validate_appointment_data(
                 name, phone, service_name, specialist_name, day, time
@@ -876,7 +915,10 @@ class LiteSmartSecretary:
             
             if not validation_result['is_valid']:
                 self.stats['validation_errors'] += 1
-                logger.warning(f"Validation failed: {validation_result['errors']}")
+                
+                # Более информативное логирование с контекстом
+                logger.info(f"Appointment validation failed for user request: name={name}, phone={phone}, service={service_name}, specialist={specialist_name}, day={day}, time={time}")
+                logger.debug(f"Validation errors: {validation_result['errors']}")
                 
                 # НОВОЕ: Проверяем конкретно конфликт времени
                 time_conflict = any('время уже занято' in err.lower() or 'занят' in err.lower() 
