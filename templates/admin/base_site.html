@@ -205,6 +205,20 @@
     .messagelist .warning {
         background: linear-gradient(135deg, #F39C12 0%, #E67E22 100%);
         color: white;
+        font-weight: 600;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    }
+    
+    /* Исправляем видимость предупреждений */
+    .messagelist li {
+        padding: 15px 20px;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+    
+    .messagelist .warning a {
+        color: white;
+        text-decoration: underline;
     }
     
     /* Пагинация */
@@ -246,5 +260,38 @@
 
 {% block extrahead %}
 {{ block.super }}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Защита от случайного массового действия
+    const actionSelect = document.querySelector('select[name="action"]');
+    const goButton = document.querySelector('button[name="index"]');
+    
+    if (actionSelect && goButton) {
+        goButton.addEventListener('click', function(e) {
+            const selectedAction = actionSelect.value;
+            const checkedBoxes = document.querySelectorAll('input[name="_selected_action"]:checked');
+            
+            if (selectedAction && checkedBoxes.length > 0) {
+                const actionText = actionSelect.options[actionSelect.selectedIndex].text;
+                const count = checkedBoxes.length;
+                
+                if (count > 10) {
+                    if (!confirm(`Вы уверены, что хотите выполнить действие "${actionText}" для ${count} записей?`)) {
+                        e.preventDefault();
+                        return false;
+                    }
+                }
+            }
+        });
+    }
+    
+    // Улучшаем видимость предупреждений
+    const warnings = document.querySelectorAll('.messagelist .warning');
+    warnings.forEach(function(warning) {
+        warning.style.fontSize = '16px';
+        warning.style.fontWeight = 'bold';
+    });
+});
+</script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 {% endblock %}

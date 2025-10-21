@@ -44,20 +44,35 @@ class AppointmentAdmin(admin.ModelAdmin):
     
     def confirm_appointments(self, request, queryset):
         """Подтвердить записи"""
+        count = queryset.count()
+        if count == 0:
+            self.message_user(request, 'Не выбрано ни одной записи', level='WARNING')
+            return
+        
         updated = queryset.update(status='confirmed')
-        self.message_user(request, f'Подтверждено записей: {updated}')
+        self.message_user(request, f'✅ Подтверждено записей: {updated}', level='SUCCESS')
     confirm_appointments.short_description = "✅ Подтвердить выбранные записи"
     
     def cancel_appointments(self, request, queryset):
         """Отменить записи"""
+        count = queryset.count()
+        if count == 0:
+            self.message_user(request, 'Не выбрано ни одной записи', level='WARNING')
+            return
+            
         updated = queryset.update(status='cancelled')
-        self.message_user(request, f'Отменено записей: {updated}')
+        self.message_user(request, f'❌ Отменено записей: {updated}', level='SUCCESS')
     cancel_appointments.short_description = "❌ Отменить выбранные записи"
     
     def complete_appointments(self, request, queryset):
         """Завершить записи"""
+        count = queryset.count()
+        if count == 0:
+            self.message_user(request, 'Не выбрано ни одной записи', level='WARNING')
+            return
+            
         updated = queryset.update(status='completed')
-        self.message_user(request, f'Завершено записей: {updated}')
+        self.message_user(request, f'✅ Завершено записей: {updated}', level='SUCCESS')
     complete_appointments.short_description = "✅ Завершить выбранные записи"
     
     def colored_status(self, obj):
