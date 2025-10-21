@@ -959,6 +959,12 @@ class LiteSmartSecretary:
                 name, phone, service_name, specialist_name, day, time
             )
             
+            # Детальное логирование для отладки
+            logger.info(f"Validation result for appointment: is_valid={validation_result['is_valid']}")
+            logger.info(f"Validation data keys: {list(validation_result['data'].keys())}")
+            if not validation_result['is_valid']:
+                logger.error(f"Validation errors: {validation_result['errors']}")
+            
             if not validation_result['is_valid']:
                 self.stats['validation_errors'] += 1
                 
@@ -1014,6 +1020,17 @@ class LiteSmartSecretary:
             # 2. Используем валидированные данные
             service = validation_result['data']['service']
             specialist = validation_result['data']['specialist']
+            
+            # Проверяем наличие всех необходимых данных
+            if 'date' not in validation_result['data'] or 'time' not in validation_result['data']:
+                missing_keys = []
+                if 'date' not in validation_result['data']:
+                    missing_keys.append('date')
+                if 'time' not in validation_result['data']:
+                    missing_keys.append('time')
+                logger.error(f"Missing validation data keys: {missing_keys}")
+                return False, f"Ошибка валидации: отсутствуют данные {', '.join(missing_keys)}"
+            
             start_datetime = timezone.make_aware(
                 datetime.combine(
                     validation_result['data']['date'],
