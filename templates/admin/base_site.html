@@ -22,9 +22,14 @@
             <i class="fas fa-cogs" style="margin-right: 8px;"></i>Управление
         </a>
         <div style="flex: 1;"></div>
-        <span style="color: rgba(255,255,255,0.9); font-size: 14px;">
+        <span style="color: rgba(255,255,255,0.9); font-size: 14px; margin-right: 20px;">
             <i class="fas fa-user" style="margin-right: 5px;"></i>{{ user.get_full_name|default:user.username }}
         </span>
+        <a href="{% url 'admin:logout' %}" style="color: white; text-decoration: none; font-weight: 600; background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 6px; transition: all 0.3s ease;" 
+           onmouseover="this.style.background='rgba(255,255,255,0.3)'" 
+           onmouseout="this.style.background='rgba(255,255,255,0.2)'">
+            <i class="fas fa-sign-out-alt" style="margin-right: 5px;"></i>Выйти
+        </a>
     </div>
 </div>
 {% endblock %}
@@ -106,7 +111,7 @@
     }
     
     input[type="text"], input[type="password"], input[type="email"], input[type="url"], 
-    input[type="number"], input[type="tel"], textarea, select {
+    input[type="number"], input[type="tel"], textarea {
         border: 2px solid #e8e8e8;
         border-radius: 8px;
         padding: 10px 15px;
@@ -115,9 +120,75 @@
     
     input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, 
     input[type="url"]:focus, input[type="number"]:focus, input[type="tel"]:focus, 
-    textarea:focus, select:focus {
+    textarea:focus {
         border-color: #4A90E2;
         box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+    }
+    
+    /* Специальные стили для select элементов в админке */
+    select {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 6px 8px;
+        background: white;
+        color: #333;
+        font-size: 13px;
+        min-height: 30px;
+        appearance: menulist;
+        -webkit-appearance: menulist;
+        -moz-appearance: menulist;
+    }
+    
+    select:focus {
+        border-color: #4A90E2;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+    }
+    
+    /* Исправляем стили для выпадающих списков в формах админки */
+    .form-row select, 
+    .field-box select,
+    .inline-related select,
+    .tabular select {
+        width: auto;
+        min-width: 200px;
+        max-width: 100%;
+        background-color: white !important;
+        color: #333 !important;
+        border: 1px solid #ccc !important;
+        padding: 6px 8px !important;
+        font-size: 13px !important;
+        line-height: 1.4 !important;
+    }
+    
+    /* Стили для option элементов */
+    select option {
+        background: white;
+        color: #333;
+        padding: 4px 8px;
+    }
+    
+    select option:checked,
+    select option:hover {
+        background: #4A90E2;
+        color: white;
+    }
+    
+    /* Исправляем автокомплит поля */
+    .select2-container .select2-selection--single {
+        height: 30px !important;
+        border: 1px solid #ccc !important;
+        border-radius: 4px !important;
+    }
+    
+    .select2-container .select2-selection--single .select2-selection__rendered {
+        line-height: 28px !important;
+        padding-left: 8px !important;
+        color: #333 !important;
+    }
+    
+    .select2-container .select2-selection--single .select2-selection__arrow {
+        height: 28px !important;
     }
     
     /* Навигация по разделам */
@@ -290,6 +361,44 @@ document.addEventListener('DOMContentLoaded', function() {
     warnings.forEach(function(warning) {
         warning.style.fontSize = '16px';
         warning.style.fontWeight = 'bold';
+    });
+    
+    // Исправляем проблемы с выпадающими списками
+    function fixSelectElements() {
+        const selects = document.querySelectorAll('select');
+        selects.forEach(function(select) {
+            // Убеждаемся что select видим
+            if (select.style.display === 'none') {
+                select.style.display = 'block';
+            }
+            
+            // Проверяем что у select есть опции
+            if (select.options.length === 0) {
+                console.warn('Select element has no options:', select);
+            }
+            
+            // Добавляем обработчик изменений
+            select.addEventListener('change', function() {
+                console.log('Select changed:', this.name, this.value);
+            });
+        });
+    }
+    
+    // Запускаем исправления
+    fixSelectElements();
+    
+    // Исправляем после AJAX загрузки (для автокомплита)
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList') {
+                fixSelectElements();
+            }
+        });
+    });
+    
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
     });
 });
 </script>
