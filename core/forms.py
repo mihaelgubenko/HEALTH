@@ -129,8 +129,10 @@ class AppointmentForm(forms.ModelForm):
         cleaned_data = super().clean()
         preferred_date = cleaned_data.get('preferred_date')
         preferred_time = cleaned_data.get('preferred_time')
+        specialist = cleaned_data.get('specialist')
+        service = cleaned_data.get('service')
         
-        if preferred_date and preferred_time:
+        if preferred_date and preferred_time and specialist and service:
             # Проверяем, что время не в прошлом для сегодняшней даты
             now = timezone.now()
             today = now.date()
@@ -149,6 +151,41 @@ class AppointmentForm(forms.ModelForm):
                     raise ValidationError({
                         'preferred_time': 'Некорректный формат времени'
                     })
+            
+            # ПРОВЕРКА КОНФЛИКТОВ ВРЕМЕНИ
+            try:
+                from .validators import ConflictValidator
+                
+                # Создаем datetime объекты для проверки
+                start_datetime = timezone.make_aware(
+                    datetime.combine(preferred_date, datetime.strptime(preferred_time, '%H:%M').time())
+                )
+                end_datetime = start_datetime + timedelta(minutes=service.duration)
+                
+                # Проверяем конфликты
+                has_conflicts, conflict_descriptions = ConflictValidator.check_appointment_conflicts(
+                    specialist, start_datetime, end_datetime
+                )
+                
+                if has_conflicts:
+                    # Получаем доступные слоты
+                    from .validators import DateTimeValidator
+                    dt_validator = DateTimeValidator()
+                    available_slots = dt_validator.get_available_time_slots(preferred_date, service.duration)
+                    
+                    if available_slots:
+                        slots_str = ", ".join([slot['time'] for slot in available_slots[:5]])
+                        error_msg = f"Это время уже занято. Доступные слоты: {slots_str}"
+                    else:
+                        error_msg = "Это время уже занято. Выберите другой день."
+                    
+                    raise ValidationError({
+                        'preferred_time': error_msg
+                    })
+                    
+            except Exception as e:
+                # Если ошибка в валидации, не блокируем создание записи
+                print(f"Ошибка проверки конфликтов: {e}")
         
         return cleaned_data
 

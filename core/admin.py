@@ -78,6 +78,30 @@ class AppointmentAdmin(admin.ModelAdmin):
             kwargs["queryset"] = Patient.objects.all().order_by('name')
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
     
+    def save_model(self, request, obj, form, change):
+        """Проверка конфликтов перед сохранением"""
+        from .validators import ConflictValidator
+        from django.contrib import messages
+        
+        # Проверяем конфликты только если есть все необходимые данные
+        if obj.specialist and obj.start_time and obj.end_time:
+            has_conflicts, conflict_descriptions = ConflictValidator.check_appointment_conflicts(
+                obj.specialist, 
+                obj.start_time, 
+                obj.end_time,
+                exclude_appointment_id=obj.id if change else None
+            )
+            
+            if has_conflicts:
+                # Показываем предупреждение администратору
+                messages.warning(
+                    request,
+                    f"⚠️ ВНИМАНИЕ! Конфликт времени:\n{conflict_descriptions[0]}\n\n"
+                    f"Запись сохранена, но специалист уже занят в это время!"
+                )
+        
+        super().save_model(request, obj, form, change)
+    
     def confirm_appointments(self, request, queryset):
         """Подтвердить записи"""
         count = queryset.count()
