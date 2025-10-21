@@ -94,15 +94,29 @@ class LiteEntityExtractor:
     
     @staticmethod  
     def extract_phone(text: str) -> Optional[str]:
-        """Извлекает телефон из текста"""
+        """Извлекает телефон из текста (поддержка: Израиль, Россия, Украина, США)"""
         # Удаляем все кроме цифр, плюса и дефисов
         clean_text = re.sub(r'[^\d\+\-\s]', '', text)
         
-        # Паттерны телефонов
+        # Паттерны телефонов по странам (порядок важен - от конкретного к общему)
         phone_patterns = [
-            r'\+?972[0-9\s\-]{8,12}',  # Израильский
-            r'0[5-9][0-9\s\-]{8}',     # Местный израильский  
-            r'\+?[0-9\s\-]{9,15}'      # Общий
+            # Россия: +7XXXXXXXXXX (11 цифр с кодом) или 8XXXXXXXXXX
+            r'\+?7[0-9\s\-]{10,11}',
+            r'8[0-9\s\-]{10}',
+            
+            # Израиль: +972XXXXXXXXX (12 цифр с кодом) или 0XXXXXXXXX
+            r'\+?972[0-9\s\-]{8,12}',
+            r'0[5-9][0-9\s\-]{8}',
+            
+            # Украина: +380XXXXXXXXX (12 цифр с кодом) или 0XXXXXXXXX
+            r'\+?380[0-9\s\-]{9,10}',
+            r'0[0-9\s\-]{9}',
+            
+            # США: +1XXXXXXXXXX (11 цифр с кодом)
+            r'\+?1[0-9\s\-]{10,11}',
+            
+            # Общий паттерн (если не подошло ничего выше)
+            r'\+?[0-9\s\-]{9,15}'
         ]
         
         for pattern in phone_patterns:
@@ -658,7 +672,23 @@ class LiteSmartSecretary:
 
             if success:
                 self.stats['successful_bookings'] += 1
+                
+                # Получаем информацию о других записях пациента (для уведомления)
+                from .validators import ConflictValidator
+                existing_appointments = ConflictValidator.get_patient_existing_appointments(
+                    entities.get('phone'),
+                    exclude_appointment_id=result.id  # result здесь - это объект appointment
+                )
+                
+                # Формируем базовое подтверждение
                 reply = self._create_final_confirmation(entities)
+                
+                # Добавляем уведомление о других записях (если есть)
+                if existing_appointments:
+                    reply += "\n\n📋 У вас также есть другие записи:\n"
+                    for apt in existing_appointments[:2]:  # Показываем максимум 2
+                        reply += f"• {apt['date_str']} в {apt['time']} к {apt['specialist']} ({apt['service']})\n"
+                
                 intent = 'booking_completed'
             else:
                 # ИСПРАВЛЕНО: При ошибке валидации НЕ сбрасываем диалог
@@ -1221,7 +1251,13 @@ class LiteSmartSecretary:
             if validation_result['warnings']:
                 logger.info(f"Validation warnings: {validation_result['warnings']}")
 
-            # 1. Находим или создаем пациента
+            # 1. Проверяем существующие записи пациента (для уведомления)
+            from .validators import ConflictValidator
+            existing_appointments = ConflictValidator.get_patient_existing_appointments(
+                validation_result['data']['phone']
+            )
+            
+            # 2. Находим или создаем пациента
             patient, created = Patient.objects.get_or_create(
                 phone=validation_result['data']['phone'],
                 defaults={
@@ -1231,7 +1267,7 @@ class LiteSmartSecretary:
                 }
             )
             
-            # 2. Используем валидированные данные
+            # 3. Используем валидированные данные
             service = validation_result['data']['service']
             specialist = validation_result['data']['specialist']
             

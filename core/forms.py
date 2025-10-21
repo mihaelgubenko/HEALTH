@@ -162,7 +162,7 @@ class AppointmentForm(forms.ModelForm):
                 )
                 end_datetime = start_datetime + timedelta(minutes=service.duration)
                 
-                # Проверяем конфликты
+                # 1. Проверяем конфликты специалиста (другой пациент на это же время)
                 has_conflicts, conflict_descriptions = ConflictValidator.check_appointment_conflicts(
                     specialist, start_datetime, end_datetime
                 )
@@ -182,7 +182,21 @@ class AppointmentForm(forms.ModelForm):
                     raise ValidationError({
                         'preferred_time': error_msg
                     })
+                
+                # 2. Проверяем двойное бронирование пациента (сам пациент уже записан на это время)
+                phone = cleaned_data.get('phone')
+                if phone:
+                    has_double_booking, double_booking_error = ConflictValidator.check_patient_double_booking(
+                        phone, start_datetime, end_datetime
+                    )
                     
+                    if has_double_booking:
+                        raise ValidationError({
+                            'preferred_time': double_booking_error
+                        })
+                    
+            except ValidationError:
+                raise  # Пробрасываем ValidationError дальше
             except Exception as e:
                 # Если ошибка в валидации, не блокируем создание записи
                 print(f"Ошибка проверки конфликтов: {e}")

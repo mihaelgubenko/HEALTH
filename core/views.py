@@ -67,6 +67,12 @@ def appointment_form(request):
                 # Если найдено несколько, берем первого
                 patient = Patient.objects.filter(phone=phone, name=name).first()
             
+            # Проверяем существующие записи пациента (для уведомления)
+            from .validators import ConflictValidator
+            existing_appointments = ConflictValidator.get_patient_existing_appointments(
+                phone, exclude_appointment_id=None  # Пока записи нет, так что ничего не исключаем
+            )
+            
             # Создаем запись
             appointment = form.save(commit=False)
             appointment.patient = patient
@@ -93,6 +99,16 @@ def appointment_form(request):
                 schedule_reminders_for_appointment(appointment)
             except Exception as e:
                 print(f"Ошибка создания напоминаний: {e}")
+            
+            # Уведомляем о других записях (если есть)
+            if existing_appointments:
+                other_appointments_msg = "Обратите внимание, у вас также есть другие записи: "
+                appointments_list = []
+                for apt in existing_appointments[:3]:  # Показываем максимум 3
+                    appointments_list.append(
+                        f"{apt['date_str']} в {apt['time']} к {apt['specialist']}"
+                    )
+                messages.info(request, other_appointments_msg + "; ".join(appointments_list))
             
             messages.success(request, 'Запись успешно создана! Мы свяжемся с вами для подтверждения.')
             return redirect('core:appointment_success')

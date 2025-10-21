@@ -375,11 +375,20 @@ class PhoneValidator:
             return 'US', phone_clean[2:]
         elif phone_clean.startswith('1') and len(phone_clean) == 11:
             return 'US', phone_clean[1:]
-        elif len(phone_clean) == 10:
-            return 'US', phone_clean
         
-        # По умолчанию считаем израильским
-        return 'IL', phone_clean
+        # Если не удалось точно определить, пробуем по длине
+        # 10 цифр могут быть: Россия (без кода), США (без кода), Израиль (невероятно)
+        # 9 цифр могут быть: Израиль (без 0), Украина (без 0)
+        elif len(phone_clean) == 10:
+            # Предполагаем США (или Россия без кода)
+            return 'US', phone_clean
+        elif len(phone_clean) == 9:
+            # Предполагаем Израиль
+            return 'IL', phone_clean
+        
+        # Если совсем не можем определить - возвращаем как есть без страны
+        # Валидация будет работать в упрощенном режиме
+        return 'IL', phone_clean  # По умолчанию Израиль (основная страна клиники)
     
     @staticmethod
     def validate_phone_by_country(country: str, digits: str) -> Tuple[bool, str]:
@@ -669,7 +678,8 @@ class ConflictValidator:
     def check_patient_double_booking(patient_phone: str, start_datetime: datetime, 
                                    end_datetime: datetime, exclude_appointment_id: Optional[int] = None) -> Tuple[bool, str]:
         """
-        Проверка двойного бронирования для одного пациента
+        Проверка двойного бронирования для одного пациента (КОНФЛИКТ времени)
+        Блокирует создание записи если у пациента уже есть запись на это же время
         """
         from .models import Patient
         
@@ -706,6 +716,51 @@ class ConflictValidator:
         except Exception as e:
             logger.error(f"Error checking patient double booking: {e}")
             return False, ""
+    
+    @staticmethod
+    def get_patient_existing_appointments(patient_phone: str, 
+                                        exclude_appointment_id: Optional[int] = None) -> List[Dict[str, Any]]:
+        """
+        Получить все существующие записи пациента (для УВЕДОМЛЕНИЙ, не блокирует)
+        Возвращает список записей с деталями: дата, время, специалист, услуга
+        """
+        from .models import Patient
+        
+        try:
+            # Ищем пациента по телефону
+            patients = Patient.objects.filter(phone=patient_phone)
+            if not patients.exists():
+                return []
+            
+            # Получаем все активные записи пациента
+            appointments_query = Appointment.objects.filter(
+                patient__in=patients,
+                status__in=['pending', 'confirmed']
+            ).select_related('specialist', 'service').order_by('start_time')
+            
+            if exclude_appointment_id:
+                appointments_query = appointments_query.exclude(id=exclude_appointment_id)
+            
+            # Формируем список записей
+            existing_appointments = []
+            for appointment in appointments_query:
+                existing_appointments.append({
+                    'id': appointment.id,
+                    'date': appointment.start_time.date(),
+                    'date_str': appointment.start_time.strftime('%d.%m.%Y'),
+                    'time': appointment.start_time.strftime('%H:%M'),
+                    'specialist': appointment.specialist.name,
+                    'service': appointment.service.name,
+                    'status': appointment.status,
+                    'start_datetime': appointment.start_time,
+                    'end_datetime': appointment.end_time
+                })
+            
+            return existing_appointments
+            
+        except Exception as e:
+            logger.error(f"Error getting patient existing appointments: {e}")
+            return []
     
     @staticmethod
     def find_alternative_slots(specialist: Specialist, preferred_date: datetime.date, 
