@@ -1,0 +1,5 @@
+{
+  "DJANGO_SETTINGS_MODULE": "smart_secretary.settings",
+  "DATABASE_URL": "",
+  "SECRET_KEY": ""
+}

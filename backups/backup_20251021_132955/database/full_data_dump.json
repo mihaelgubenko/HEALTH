@@ -1,0 +1,3613 @@
+[
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2025-09-22T12:35:01.521Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "1",
+    "object_repr": "Михаил Губенко - Авраам (24.09.2025 15:34)",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"\\u0412\\u0440\\u0435\\u043c\\u044f \\u043d\\u0430\\u0447\\u0430\\u043b\\u0430\", \"\\u0421\\u0442\\u0430\\u0442\\u0443\\u0441\", \"\\u0417\\u0430\\u043c\\u0435\\u0442\\u043a\\u0438\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 2,
+  "fields": {
+    "action_time": "2025-09-22T12:35:52.487Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "1",
+    "object_repr": "Михаил Губенко (+0504611186)",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 3,
+  "fields": {
+    "action_time": "2025-09-28T17:05:12.557Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "2",
+    "object_repr": "Миха Михеевич - Римма (12.10.2025 09:00)",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"\\u0421\\u0442\\u0430\\u0442\\u0443\\u0441\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 4,
+  "fields": {
+    "action_time": "2025-09-28T17:31:25.052Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "3",
+    "object_repr": "Давид Коэн - Авраам (29.09.2025 16:00)",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"\\u0421\\u0442\\u0430\\u0442\\u0443\\u0441\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 5,
+  "fields": {
+    "action_time": "2025-09-28T17:32:16.715Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "5",
+    "object_repr": "Алексей Смирнов - Екатерина (29.09.2025 10:00)",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"\\u0423\\u0441\\u043b\\u0443\\u0433\\u0430\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 6,
+  "fields": {
+    "action_time": "2025-09-28T17:32:45.515Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "7",
+    "object_repr": "Анна Петрова - Екатерина (30.09.2025 12:00)",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"\\u0421\\u043f\\u0435\\u0446\\u0438\\u0430\\u043b\\u0438\\u0441\\u0442\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 7,
+  "fields": {
+    "action_time": "2025-09-28T17:37:39.422Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "12",
+    "object_repr": "Caif Frag - Авраам (30.09.2025 12:00)",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"\\u0421\\u0442\\u0430\\u0442\\u0443\\u0441\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 8,
+  "fields": {
+    "action_time": "2025-09-28T18:17:47.025Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "5",
+    "object_repr": "Алексей Смирнов - Екатерина (29.09.2025 07:00)",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 9,
+  "fields": {
+    "action_time": "2025-09-28T18:18:15.547Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "14",
+    "object_repr": "Диагностика организма биорезонансным сканированием (VIP) - 550.00₪",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"\\u0426\\u0435\\u043d\\u0430\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 10,
+  "fields": {
+    "action_time": "2025-09-28T18:19:00.165Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "7",
+    "object_repr": "Анна Петрова - Екатерина (30.09.2025 12:00)",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"\\u0421\\u0442\\u0430\\u0442\\u0443\\u0441\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 11,
+  "fields": {
+    "action_time": "2025-09-28T18:19:34.097Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "7",
+    "object_repr": "Анна Петрова - Римма (30.09.2025 21:19)",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"\\u0421\\u043f\\u0435\\u0446\\u0438\\u0430\\u043b\\u0438\\u0441\\u0442\", \"\\u0412\\u0440\\u0435\\u043c\\u044f \\u043d\\u0430\\u0447\\u0430\\u043b\\u0430\", \"\\u0412\\u0440\\u0435\\u043c\\u044f \\u043e\\u043a\\u043e\\u043d\\u0447\\u0430\\u043d\\u0438\\u044f\", \"\\u0421\\u0442\\u0430\\u0442\\u0443\\u0441\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 12,
+  "fields": {
+    "action_time": "2025-09-28T18:19:43.382Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "7",
+    "object_repr": "Анна Петрова - Римма (30.09.2025 21:19)",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"\\u0417\\u0430\\u043c\\u0435\\u0442\\u043a\\u0438\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 13,
+  "fields": {
+    "action_time": "2025-10-19T17:04:42.901Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "20",
+    "object_repr": "Миза Маз - Римма (30.10.2025 09:00)",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 14,
+  "fields": {
+    "action_time": "2025-10-19T17:21:19.942Z",
+    "user": 1,
+    "content_type": 14,
+    "object_id": "2",
+    "object_repr": "Vfaiti Daff - 19.10.2025 17:20",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 15,
+  "fields": {
+    "action_time": "2025-10-19T21:20:37.814Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "3",
+    "object_repr": "Давид Коэн - Авраам (29.09.2025 13:00)",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 16,
+  "fields": {
+    "action_time": "2025-10-19T21:20:37.885Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "6",
+    "object_repr": "Мария Розенберг - Екатерина (30.09.2025 06:00)",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 17,
+  "fields": {
+    "action_time": "2025-10-19T21:20:37.933Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "11",
+    "object_repr": "Victor Rudenko - Авраам (30.09.2025 09:00)",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 18,
+  "fields": {
+    "action_time": "2025-10-19T21:20:37.984Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "21",
+    "object_repr": "Давид Коэн - Авраам (20.10.2025 07:00)",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 19,
+  "fields": {
+    "action_time": "2025-10-19T21:20:38.043Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "90",
+    "object_repr": "Авраам Коэн - Авраам (21.10.2025 06:00)",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 20,
+  "fields": {
+    "action_time": "2025-10-19T21:20:38.102Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "93",
+    "object_repr": "Рахель Гольдман - Авраам (21.10.2025 10:30)",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 21,
+  "fields": {
+    "action_time": "2025-10-19T21:20:38.146Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "94",
+    "object_repr": "Моше Розенберг - Авраам (21.10.2025 12:00)",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 22,
+  "fields": {
+    "action_time": "2025-10-19T21:20:38.186Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "95",
+    "object_repr": "Эстер Каплан - Авраам (21.10.2025 13:30)",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 23,
+  "fields": {
+    "action_time": "2025-10-19T21:20:38.225Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "96",
+    "object_repr": "Ицхак Фридман - Екатерина (22.10.2025 06:00)",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 24,
+  "fields": {
+    "action_time": "2025-10-19T21:20:38.259Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "29",
+    "object_repr": "Анна Петрова - Авраам (22.10.2025 07:00)",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 25,
+  "fields": {
+    "action_time": "2025-10-19T21:20:38.301Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "97",
+    "object_repr": "Рут Вайсман - Екатерина (22.10.2025 07:30)",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 26,
+  "fields": {
+    "action_time": "2025-10-19T21:20:38.342Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "99",
+    "object_repr": "Лея Штерн - Екатерина (22.10.2025 10:30)",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 27,
+  "fields": {
+    "action_time": "2025-10-19T21:20:38.384Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "100",
+    "object_repr": "Яков Блюм - Екатерина (22.10.2025 12:00)",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 28,
+  "fields": {
+    "action_time": "2025-10-19T21:20:38.427Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "19",
+    "object_repr": "Анна Петрова - Римма (22.10.2025 13:00)",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 29,
+  "fields": {
+    "action_time": "2025-10-19T21:20:38.459Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "101",
+    "object_repr": "Элиэзер Шварц - Екатерина (22.10.2025 15:00)",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 30,
+  "fields": {
+    "action_time": "2025-10-19T21:20:38.485Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "102",
+    "object_repr": "Хана Перлман - Римма (23.10.2025 06:00)",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$600000$YXFHC99GCmgXVSxhTDdXWs$LVmSqPlzeSkIILTSQjO8R7xW8QqRLqOZuYGMtuXGCws=",
+    "last_login": "2025-10-19T17:17:52.990Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "admin@example.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-09-21T21:53:06.472Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "asvys4xeeg9ndw1jsh8sh6fxlizn1riq",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hAGKC0u3fcMZGAGqRqalHZlvLtt0oVu_3vvv0XAbS1ha7yEicRVgLj8bhHTk-sB6IH1Pss013WZojwUedImx5n4dTvdv4OCrey1Reyi8gPoNKDOpK3zAMZlrRgS985Z54wHC2QY-8wKAXen08oTJyM-X8hNNzU:1v0hAG:4COVbqDlugPkjOmCwwNInSRGeXltKAWibIaO9T8dhss",
+    "expire_date": "2025-10-06T14:05:12.040Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "t57z2r1x1ejnt1pp39n4uo00rx1m45s1",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hCBKUNduu8ZyMBMpWpoUtqV8e7apAvd_vfef6lI21ri1mSJE6uLMur0uyXKD6k74DvV26zzXNdlSnpX9EGbHmaW5_Vw_w4KtfKtyfMogOB7J-wtBgsZkOHMKXQYUgJvHfmevENE6kTYgQnG2DRacla9P9b0N0w:1v2uns:pU3_oRQie-eBuiwLBnazYYMcTqRF_zdDiJh4tYpXlDg",
+    "expire_date": "2025-10-12T17:03:16.897Z"
+  }
+},
+{
+  "model": "core.patient",
+  "pk": 111,
+  "fields": {
+    "name": "Михаил Иванов",
+    "phone": "+972504611186",
+    "email": "mikhail@example.com",
+    "country": "Israel",
+    "city": null,
+    "notes": null,
+    "created_at": "2025-10-19T21:52:58.594Z",
+    "updated_at": "2025-10-19T21:52:58.594Z"
+  }
+},
+{
+  "model": "core.patient",
+  "pk": 112,
+  "fields": {
+    "name": "Анна Петрова",
+    "phone": "+972526784512",
+    "email": "anna@example.com",
+    "country": "Israel",
+    "city": null,
+    "notes": null,
+    "created_at": "2025-10-19T21:52:58.612Z",
+    "updated_at": "2025-10-19T21:52:58.612Z"
+  }
+},
+{
+  "model": "core.patient",
+  "pk": 113,
+  "fields": {
+    "name": "Давид Коэн",
+    "phone": "+972537894561",
+    "email": "david@example.com",
+    "country": "Israel",
+    "city": null,
+    "notes": null,
+    "created_at": "2025-10-19T21:52:58.630Z",
+    "updated_at": "2025-10-19T21:52:58.631Z"
+  }
+},
+{
+  "model": "core.patient",
+  "pk": 114,
+  "fields": {
+    "name": "Сара Леви",
+    "phone": "+972548965123",
+    "email": "sara@example.com",
+    "country": "Israel",
+    "city": null,
+    "notes": null,
+    "created_at": "2025-10-19T21:52:58.650Z",
+    "updated_at": "2025-10-19T21:52:58.650Z"
+  }
+},
+{
+  "model": "core.patient",
+  "pk": 115,
+  "fields": {
+    "name": "Алексей Смирнов",
+    "phone": "+972559632147",
+    "email": "alexey@example.com",
+    "country": "Israel",
+    "city": null,
+    "notes": null,
+    "created_at": "2025-10-19T21:52:58.671Z",
+    "updated_at": "2025-10-19T21:52:58.671Z"
+  }
+},
+{
+  "model": "core.patient",
+  "pk": 116,
+  "fields": {
+    "name": "Мария Розенберг",
+    "phone": "+972561234567",
+    "email": "maria@example.com",
+    "country": "Israel",
+    "city": null,
+    "notes": null,
+    "created_at": "2025-10-19T21:52:58.688Z",
+    "updated_at": "2025-10-19T21:52:58.688Z"
+  }
+},
+{
+  "model": "core.patient",
+  "pk": 117,
+  "fields": {
+    "name": "Игорь Волков",
+    "phone": "+972572345678",
+    "email": "igor@example.com",
+    "country": "Israel",
+    "city": null,
+    "notes": null,
+    "created_at": "2025-10-19T21:52:58.705Z",
+    "updated_at": "2025-10-19T21:52:58.706Z"
+  }
+},
+{
+  "model": "core.patient",
+  "pk": 118,
+  "fields": {
+    "name": "Ольга Гольдштейн",
+    "phone": "+972583456789",
+    "email": "olga@example.com",
+    "country": "Israel",
+    "city": null,
+    "notes": null,
+    "created_at": "2025-10-19T21:52:58.720Z",
+    "updated_at": "2025-10-19T21:52:58.720Z"
+  }
+},
+{
+  "model": "core.patient",
+  "pk": 119,
+  "fields": {
+    "name": "Trfnthbyf Atljhjdyf",
+    "phone": "+97297890766",
+    "email": null,
+    "country": "IL",
+    "city": "Иерусалим",
+    "notes": null,
+    "created_at": "2025-10-19T22:22:21.937Z",
+    "updated_at": "2025-10-19T22:22:21.937Z"
+  }
+},
+{
+  "model": "core.patient",
+  "pk": 172,
+  "fields": {
+    "name": "Анна Иванова",
+    "phone": "+972501234567",
+    "email": "anna@example.com",
+    "country": "Israel",
+    "city": null,
+    "notes": null,
+    "created_at": "2025-10-21T06:22:37.147Z",
+    "updated_at": "2025-10-21T06:22:37.147Z"
+  }
+},
+{
+  "model": "core.patient",
+  "pk": 173,
+  "fields": {
+    "name": "Михаил Петров",
+    "phone": "+972501234568",
+    "email": "mikhail@example.com",
+    "country": "Israel",
+    "city": null,
+    "notes": null,
+    "created_at": "2025-10-21T06:22:37.314Z",
+    "updated_at": "2025-10-21T06:22:37.314Z"
+  }
+},
+{
+  "model": "core.patient",
+  "pk": 174,
+  "fields": {
+    "name": "Елена Сидорова",
+    "phone": "+972501234569",
+    "email": "elena@example.com",
+    "country": "Israel",
+    "city": null,
+    "notes": null,
+    "created_at": "2025-10-21T06:22:37.497Z",
+    "updated_at": "2025-10-21T06:22:37.498Z"
+  }
+},
+{
+  "model": "core.patient",
+  "pk": 175,
+  "fields": {
+    "name": "Дмитрий Козлов",
+    "phone": "+972501234570",
+    "email": "dmitry@example.com",
+    "country": "Israel",
+    "city": null,
+    "notes": null,
+    "created_at": "2025-10-21T06:22:37.663Z",
+    "updated_at": "2025-10-21T06:22:37.663Z"
+  }
+},
+{
+  "model": "core.patient",
+  "pk": 176,
+  "fields": {
+    "name": "Ольга Новикова",
+    "phone": "+972501234571",
+    "email": "olga@example.com",
+    "country": "Israel",
+    "city": null,
+    "notes": null,
+    "created_at": "2025-10-21T06:22:37.902Z",
+    "updated_at": "2025-10-21T06:22:37.902Z"
+  }
+},
+{
+  "model": "core.patient",
+  "pk": 177,
+  "fields": {
+    "name": "Тест Пациент",
+    "phone": "+972501234567",
+    "email": "test@example.com",
+    "country": "Israel",
+    "city": null,
+    "notes": null,
+    "created_at": "2025-10-21T10:28:44.897Z",
+    "updated_at": "2025-10-21T10:28:44.897Z"
+  }
+},
+{
+  "model": "core.patient",
+  "pk": 178,
+  "fields": {
+    "name": "Уникальный Пациент",
+    "phone": "+972515843489",
+    "email": null,
+    "country": "Israel",
+    "city": null,
+    "notes": null,
+    "created_at": "2025-10-21T10:28:45.019Z",
+    "updated_at": "2025-10-21T10:28:45.024Z"
+  }
+},
+{
+  "model": "core.patient",
+  "pk": 179,
+  "fields": {
+    "name": "Стресс Пациент 0",
+    "phone": "+972500000000",
+    "email": null,
+    "country": "Israel",
+    "city": null,
+    "notes": null,
+    "created_at": "2025-10-21T10:28:46.210Z",
+    "updated_at": "2025-10-21T10:28:46.210Z"
+  }
+},
+{
+  "model": "core.patient",
+  "pk": 180,
+  "fields": {
+    "name": "Стресс Пациент 1",
+    "phone": "+972500000001",
+    "email": null,
+    "country": "Israel",
+    "city": null,
+    "notes": null,
+    "created_at": "2025-10-21T10:28:46.213Z",
+    "updated_at": "2025-10-21T10:28:46.213Z"
+  }
+},
+{
+  "model": "core.patient",
+  "pk": 181,
+  "fields": {
+    "name": "Стресс Пациент 5",
+    "phone": "+972500000005",
+    "email": null,
+    "country": "Israel",
+    "city": null,
+    "notes": null,
+    "created_at": "2025-10-21T10:28:46.247Z",
+    "updated_at": "2025-10-21T10:28:46.247Z"
+  }
+},
+{
+  "model": "core.patient",
+  "pk": 182,
+  "fields": {
+    "name": "Стресс Пациент 2",
+    "phone": "+972500000002",
+    "email": null,
+    "country": "Israel",
+    "city": null,
+    "notes": null,
+    "created_at": "2025-10-21T10:28:46.214Z",
+    "updated_at": "2025-10-21T10:28:46.215Z"
+  }
+},
+{
+  "model": "core.patient",
+  "pk": 183,
+  "fields": {
+    "name": "Стресс Пациент 7",
+    "phone": "+972500000007",
+    "email": null,
+    "country": "Israel",
+    "city": null,
+    "notes": null,
+    "created_at": "2025-10-21T10:28:46.332Z",
+    "updated_at": "2025-10-21T10:28:46.332Z"
+  }
+},
+{
+  "model": "core.patient",
+  "pk": 184,
+  "fields": {
+    "name": "Стресс Пациент 6",
+    "phone": "+972500000006",
+    "email": null,
+    "country": "Israel",
+    "city": null,
+    "notes": null,
+    "created_at": "2025-10-21T10:28:46.246Z",
+    "updated_at": "2025-10-21T10:28:46.246Z"
+  }
+},
+{
+  "model": "core.patient",
+  "pk": 185,
+  "fields": {
+    "name": "Стресс Пациент 9",
+    "phone": "+972500000009",
+    "email": null,
+    "country": "Israel",
+    "city": null,
+    "notes": null,
+    "created_at": "2025-10-21T10:28:46.245Z",
+    "updated_at": "2025-10-21T10:28:46.245Z"
+  }
+},
+{
+  "model": "core.patient",
+  "pk": 186,
+  "fields": {
+    "name": "Стресс Пациент 3",
+    "phone": "+972500000003",
+    "email": null,
+    "country": "Israel",
+    "city": null,
+    "notes": null,
+    "created_at": "2025-10-21T10:28:46.219Z",
+    "updated_at": "2025-10-21T10:28:46.219Z"
+  }
+},
+{
+  "model": "core.patient",
+  "pk": 187,
+  "fields": {
+    "name": "Стресс Пациент 8",
+    "phone": "+972500000008",
+    "email": null,
+    "country": "Israel",
+    "city": null,
+    "notes": null,
+    "created_at": "2025-10-21T10:28:46.276Z",
+    "updated_at": "2025-10-21T10:28:46.276Z"
+  }
+},
+{
+  "model": "core.patient",
+  "pk": 188,
+  "fields": {
+    "name": "Стресс Пациент 4",
+    "phone": "+972500000004",
+    "email": null,
+    "country": "Israel",
+    "city": null,
+    "notes": null,
+    "created_at": "2025-10-21T10:28:46.271Z",
+    "updated_at": "2025-10-21T10:28:46.272Z"
+  }
+},
+{
+  "model": "core.service",
+  "pk": 1,
+  "fields": {
+    "name": "Консультация реабилитолога",
+    "description": "Включает комплексное обследование пациента, сбор анамнеза, физический осмотр, оценку двигательных функций и разработку индивидуальной программы реабилитации. На консультации реабилитолог объясняет суть травмы или болезни, определяет реабилитационный прогноз и составляет план восстановительных мероприятий, который может включать ЛФК, физиотерапию, массаж и другие методики.",
+    "price": "80.00",
+    "currency": "₪",
+    "duration": 20,
+    "catalog": "A",
+    "is_active": true,
+    "created_at": "2025-09-21T21:47:46.581Z"
+  }
+},
+{
+  "model": "core.service",
+  "pk": 2,
+  "fields": {
+    "name": "Консультация нутрициолога",
+    "description": "Включает первичный сбор информации (анкета о здоровье и питании, анализ текущего рациона, обсуждение целей), анализ данных (изучение анамнеза, при необходимости — назначение анализов или биоимпедансный анализ тела), разработку индивидуального плана питания (персональные рекомендации по рациону, режима питания, добавкам) и поддержку и контроль (коррекция плана, ответы на вопросы, помощь в формировании полезных привычек).",
+    "price": "450.00",
+    "currency": "₪",
+    "duration": 60,
+    "catalog": "A",
+    "is_active": true,
+    "created_at": "2025-09-21T21:47:46.623Z"
+  }
+},
+{
+  "model": "core.service",
+  "pk": 3,
+  "fields": {
+    "name": "Консультация остеопата",
+    "description": "Включает сбор анамнеза (расспрос о симптомах, проблемах со здоровьем, перенесенных травмах и заболеваниях), диагностику (визуальный осмотр, пальпация, определение ограничений подвижности тканей, мышц, костей и связок) и план лечения (описание техник, которые будут использоваться, и прогноз результата).",
+    "price": "80.00",
+    "currency": "₪",
+    "duration": 20,
+    "catalog": "A",
+    "is_active": true,
+    "created_at": "2025-09-21T21:47:46.661Z"
+  }
+},
+{
+  "model": "core.service",
+  "pk": 4,
+  "fields": {
+    "name": "Лечебный массаж для мужчин (классический шведский)",
+    "description": "Классический шведский массаж для мужчин и парней-подростков. Длительность 50-60 минут.",
+    "price": "250.00",
+    "currency": "₪",
+    "duration": 60,
+    "catalog": "A",
+    "is_active": true,
+    "created_at": "2025-09-21T21:47:46.705Z"
+  }
+},
+{
+  "model": "core.service",
+  "pk": 5,
+  "fields": {
+    "name": "Лечебный массаж для женщин (классический шведский)",
+    "description": "Классический шведский массаж для женщин, девушек-подростков и детей. Длительность 50-60 минут.",
+    "price": "250.00",
+    "currency": "₪",
+    "duration": 60,
+    "catalog": "A",
+    "is_active": true,
+    "created_at": "2025-09-21T21:47:46.771Z"
+  }
+},
+{
+  "model": "core.service",
+  "pk": 6,
+  "fields": {
+    "name": "Массаж грудным детям",
+    "description": "Специальный массаж для грудных детей. Длительность 20-30 минут.",
+    "price": "70.00",
+    "currency": "₪",
+    "duration": 30,
+    "catalog": "A",
+    "is_active": true,
+    "created_at": "2025-09-21T21:47:46.806Z"
+  }
+},
+{
+  "model": "core.service",
+  "pk": 7,
+  "fields": {
+    "name": "Массаж беременным (от 5 месяцев)",
+    "description": "Специальный массаж для беременных женщин от 5 месяцев. Длительность 30-40 минут.",
+    "price": "180.00",
+    "currency": "₪",
+    "duration": 40,
+    "catalog": "A",
+    "is_active": true,
+    "created_at": "2025-09-21T21:47:46.853Z"
+  }
+},
+{
+  "model": "core.service",
+  "pk": 8,
+  "fields": {
+    "name": "Кинезиотейпирование",
+    "description": "Применяется для профилактики и реабилитации травм мышц, связок и суставов, снижения болей, отеков и улучшения кровообращения, а также в спорте для предотвращения травм и ускорения восстановления.",
+    "price": "50.00",
+    "currency": "₪",
+    "duration": 30,
+    "catalog": "A",
+    "is_active": true,
+    "created_at": "2025-09-21T21:47:46.890Z"
+  }
+},
+{
+  "model": "core.service",
+  "pk": 9,
+  "fields": {
+    "name": "Диагностика организма биорезонансным сканированием (базовая)",
+    "description": "Современная диагностика для тех, кто хочет понять, что происходит в организме — уже сегодня. Без боли, без уколов, без облучения. Полная распечатка результата без эпикриза.",
+    "price": "300.00",
+    "currency": "₪",
+    "duration": 60,
+    "catalog": "A",
+    "is_active": true,
+    "created_at": "2025-09-21T21:47:46.940Z"
+  }
+},
+{
+  "model": "core.service",
+  "pk": 10,
+  "fields": {
+    "name": "Диагностика организма биорезонансным сканированием (расширенная)",
+    "description": "Современная диагностика с выявлением проблем, эпикризом и рекомендациями.",
+    "price": "750.00",
+    "currency": "₪",
+    "duration": 90,
+    "catalog": "A",
+    "is_active": true,
+    "created_at": "2025-09-21T21:47:46.990Z"
+  }
+},
+{
+  "model": "core.service",
+  "pk": 11,
+  "fields": {
+    "name": "Подбор комплекса упражнений",
+    "description": "Подбор и демонстрация комплекса упражнений для реабилитации после травм, после родов, удаления гипоксии и др.",
+    "price": "100.00",
+    "currency": "₪",
+    "duration": 45,
+    "catalog": "A",
+    "is_active": true,
+    "created_at": "2025-09-21T21:47:47.033Z"
+  }
+},
+{
+  "model": "core.service",
+  "pk": 12,
+  "fields": {
+    "name": "Массаж детский",
+    "description": "Детский массаж для детей. Длительность 40-50 минут.",
+    "price": "150.00",
+    "currency": "₪",
+    "duration": 50,
+    "catalog": "A",
+    "is_active": true,
+    "created_at": "2025-09-22T14:58:01.209Z"
+  }
+},
+{
+  "model": "core.service",
+  "pk": 13,
+  "fields": {
+    "name": "Массаж после родов",
+    "description": "Массаж после родов от 1 месяца. Длительность 50-60 минут.",
+    "price": "250.00",
+    "currency": "₪",
+    "duration": 60,
+    "catalog": "A",
+    "is_active": true,
+    "created_at": "2025-09-22T14:58:01.510Z"
+  }
+},
+{
+  "model": "core.service",
+  "pk": 14,
+  "fields": {
+    "name": "Диагностика организма биорезонансным сканированием (VIP)",
+    "description": "Диагностика организма биорезонансным сканированием - пакет VIP.",
+    "price": "5500.00",
+    "currency": "₪",
+    "duration": 120,
+    "catalog": "A",
+    "is_active": true,
+    "created_at": "2025-09-22T14:58:01.878Z"
+  }
+},
+{
+  "model": "core.service",
+  "pk": 15,
+  "fields": {
+    "name": "Тестовая Услуга",
+    "description": "",
+    "price": "100.00",
+    "currency": "₪",
+    "duration": 60,
+    "catalog": "A",
+    "is_active": true,
+    "created_at": "2025-10-21T10:28:44.797Z"
+  }
+},
+{
+  "model": "core.service",
+  "pk": 16,
+  "fields": {
+    "name": "Тест Услуга",
+    "description": "",
+    "price": "100.00",
+    "currency": "₪",
+    "duration": 60,
+    "catalog": "A",
+    "is_active": true,
+    "created_at": "2025-10-21T10:28:44.942Z"
+  }
+},
+{
+  "model": "core.service",
+  "pk": 17,
+  "fields": {
+    "name": "Форма Услуга",
+    "description": "",
+    "price": "150.00",
+    "currency": "₪",
+    "duration": 60,
+    "catalog": "A",
+    "is_active": true,
+    "created_at": "2025-10-21T10:28:45.860Z"
+  }
+},
+{
+  "model": "core.service",
+  "pk": 18,
+  "fields": {
+    "name": "Стресс Услуга",
+    "description": "",
+    "price": "200.00",
+    "currency": "₪",
+    "duration": 30,
+    "catalog": "A",
+    "is_active": true,
+    "created_at": "2025-10-21T10:28:46.178Z"
+  }
+},
+{
+  "model": "core.service",
+  "pk": 19,
+  "fields": {
+    "name": "Граничная Услуга",
+    "description": "",
+    "price": "300.00",
+    "currency": "₪",
+    "duration": 60,
+    "catalog": "A",
+    "is_active": true,
+    "created_at": "2025-10-21T10:28:51.635Z"
+  }
+},
+{
+  "model": "core.specialist",
+  "pk": 1,
+  "fields": {
+    "name": "Екатерина",
+    "specialty": "Врач-реабилитолог, врач спортивной медицины, остеопат",
+    "description": "Стаж работы с 2010 года. Основные направления: травмы и заболевания ОДА, восстановление после операций, реабилитация спортсменов, онкореабилитация, детская реабилитация.",
+    "working_hours": {
+      "monday": {
+        "start": "09:00",
+        "end": "19:00"
+      },
+      "tuesday": {
+        "start": "09:00",
+        "end": "19:00"
+      },
+      "wednesday": {
+        "start": "09:00",
+        "end": "19:00"
+      },
+      "thursday": {
+        "start": "09:00",
+        "end": "19:00"
+      },
+      "friday": {
+        "start": "09:00",
+        "end": "15:00"
+      },
+      "saturday": {
+        "start": "09:00",
+        "end": "14:00"
+      },
+      "sunday": {
+        "start": "10:00",
+        "end": "16:00"
+      }
+    },
+    "is_active": true,
+    "created_at": "2025-09-21T21:47:47.072Z"
+  }
+},
+{
+  "model": "core.specialist",
+  "pk": 2,
+  "fields": {
+    "name": "Римма",
+    "specialty": "Врач педиатр, врач нутрициолог",
+    "description": "Кандидат медицинских наук. Опыт работы 40 лет. Обладает глубокими знаниями в области детского и взрослого здоровья, питания и доказательной медицины.",
+    "working_hours": {
+      "monday": {
+        "start": "10:00",
+        "end": "18:00"
+      },
+      "tuesday": {
+        "start": "10:00",
+        "end": "18:00"
+      },
+      "wednesday": {
+        "start": "10:00",
+        "end": "18:00"
+      },
+      "thursday": {
+        "start": "10:00",
+        "end": "18:00"
+      },
+      "friday": {
+        "start": "10:00",
+        "end": "15:00"
+      },
+      "saturday": {
+        "start": "10:00",
+        "end": "14:00"
+      },
+      "sunday": {
+        "start": "10:00",
+        "end": "14:00"
+      }
+    },
+    "is_active": true,
+    "created_at": "2025-09-21T21:47:47.123Z"
+  }
+},
+{
+  "model": "core.specialist",
+  "pk": 3,
+  "fields": {
+    "name": "Авраам",
+    "specialty": "Массажист",
+    "description": "Специализируется на мануальной терапии, лечебном массаже, акупунктуре, вакуумных банках и кинезиотейпировании.",
+    "working_hours": {
+      "monday": {
+        "start": "09:00",
+        "end": "19:00"
+      },
+      "tuesday": {
+        "start": "09:00",
+        "end": "19:00"
+      },
+      "wednesday": {
+        "start": "09:00",
+        "end": "19:00"
+      },
+      "thursday": {
+        "start": "09:00",
+        "end": "19:00"
+      },
+      "friday": {
+        "start": "09:00",
+        "end": "15:00"
+      },
+      "saturday": {
+        "start": "09:00",
+        "end": "14:00"
+      },
+      "sunday": {
+        "start": "10:00",
+        "end": "16:00"
+      }
+    },
+    "is_active": true,
+    "created_at": "2025-09-21T21:47:47.183Z"
+  }
+},
+{
+  "model": "core.specialist",
+  "pk": 4,
+  "fields": {
+    "name": "Тестовый Специалист",
+    "specialty": "Массаж",
+    "description": null,
+    "working_hours": {},
+    "is_active": true,
+    "created_at": "2025-10-21T10:28:44.762Z"
+  }
+},
+{
+  "model": "core.specialist",
+  "pk": 5,
+  "fields": {
+    "name": "Тест Специалист",
+    "specialty": "Тестовая специальность",
+    "description": null,
+    "working_hours": {},
+    "is_active": true,
+    "created_at": "2025-10-21T10:28:44.924Z"
+  }
+},
+{
+  "model": "core.specialist",
+  "pk": 6,
+  "fields": {
+    "name": "Форма Специалист",
+    "specialty": "Тестирование",
+    "description": null,
+    "working_hours": {},
+    "is_active": true,
+    "created_at": "2025-10-21T10:28:45.842Z"
+  }
+},
+{
+  "model": "core.specialist",
+  "pk": 7,
+  "fields": {
+    "name": "Стресс Специалист",
+    "specialty": "Нагрузочное тестирование",
+    "description": null,
+    "working_hours": {},
+    "is_active": true,
+    "created_at": "2025-10-21T10:28:46.147Z"
+  }
+},
+{
+  "model": "core.specialist",
+  "pk": 8,
+  "fields": {
+    "name": "Граничный Специалист",
+    "specialty": "Граничные случаи",
+    "description": null,
+    "working_hours": {},
+    "is_active": true,
+    "created_at": "2025-10-21T10:28:51.616Z"
+  }
+},
+{
+  "model": "core.appointment",
+  "pk": 160,
+  "fields": {
+    "patient": 119,
+    "specialist": 1,
+    "service": 8,
+    "start_time": "2025-10-21T10:30:00Z",
+    "end_time": "2025-10-21T11:00:00Z",
+    "status": "pending",
+    "notes": "Запись через ИИ-чат (сессия: session_1760912495843_v2can8gmo)",
+    "channel": "web",
+    "created_at": "2025-10-19T22:22:21.946Z",
+    "updated_at": "2025-10-19T22:22:21.946Z"
+  }
+},
+{
+  "model": "core.appointment",
+  "pk": 267,
+  "fields": {
+    "patient": 176,
+    "specialist": 3,
+    "service": 14,
+    "start_time": "2025-10-21T16:22:38.668Z",
+    "end_time": "2025-10-21T17:22:38.668Z",
+    "status": "pending",
+    "notes": "Тестовая запись 1",
+    "channel": "web",
+    "created_at": "2025-10-21T06:22:38.699Z",
+    "updated_at": "2025-10-21T06:22:38.699Z"
+  }
+},
+{
+  "model": "core.appointment",
+  "pk": 268,
+  "fields": {
+    "patient": 175,
+    "specialist": 1,
+    "service": 9,
+    "start_time": "2025-10-22T17:22:38.905Z",
+    "end_time": "2025-10-22T18:22:38.905Z",
+    "status": "confirmed",
+    "notes": "Тестовая запись 2",
+    "channel": "web",
+    "created_at": "2025-10-21T06:22:38.939Z",
+    "updated_at": "2025-10-21T06:22:38.939Z"
+  }
+},
+{
+  "model": "core.appointment",
+  "pk": 269,
+  "fields": {
+    "patient": 174,
+    "specialist": 2,
+    "service": 10,
+    "start_time": "2025-10-23T18:22:39.357Z",
+    "end_time": "2025-10-23T19:22:39.357Z",
+    "status": "pending",
+    "notes": "Тестовая запись 3",
+    "channel": "web",
+    "created_at": "2025-10-21T06:22:39.385Z",
+    "updated_at": "2025-10-21T06:22:39.385Z"
+  }
+},
+{
+  "model": "core.appointment",
+  "pk": 270,
+  "fields": {
+    "patient": 173,
+    "specialist": 3,
+    "service": 8,
+    "start_time": "2025-10-24T19:22:39.805Z",
+    "end_time": "2025-10-24T20:22:39.805Z",
+    "status": "confirmed",
+    "notes": "Тестовая запись 4",
+    "channel": "web",
+    "created_at": "2025-10-21T06:22:39.839Z",
+    "updated_at": "2025-10-21T06:22:39.839Z"
+  }
+},
+{
+  "model": "core.appointment",
+  "pk": 271,
+  "fields": {
+    "patient": 172,
+    "specialist": 1,
+    "service": 2,
+    "start_time": "2025-10-25T20:22:39.988Z",
+    "end_time": "2025-10-25T21:22:39.988Z",
+    "status": "pending",
+    "notes": "Тестовая запись 5",
+    "channel": "web",
+    "created_at": "2025-10-21T06:22:40.002Z",
+    "updated_at": "2025-10-21T06:22:40.002Z"
+  }
+},
+{
+  "model": "core.appointment",
+  "pk": 272,
+  "fields": {
+    "patient": 119,
+    "specialist": 2,
+    "service": 3,
+    "start_time": "2025-10-26T21:22:40.108Z",
+    "end_time": "2025-10-26T22:22:40.108Z",
+    "status": "confirmed",
+    "notes": "Тестовая запись 6",
+    "channel": "web",
+    "created_at": "2025-10-21T06:22:40.125Z",
+    "updated_at": "2025-10-21T06:22:40.125Z"
+  }
+},
+{
+  "model": "core.appointment",
+  "pk": 273,
+  "fields": {
+    "patient": 118,
+    "specialist": 3,
+    "service": 1,
+    "start_time": "2025-10-27T22:22:40.474Z",
+    "end_time": "2025-10-27T23:22:40.474Z",
+    "status": "pending",
+    "notes": "Тестовая запись 7",
+    "channel": "web",
+    "created_at": "2025-10-21T06:22:40.519Z",
+    "updated_at": "2025-10-21T06:22:40.519Z"
+  }
+},
+{
+  "model": "core.appointment",
+  "pk": 274,
+  "fields": {
+    "patient": 117,
+    "specialist": 1,
+    "service": 5,
+    "start_time": "2025-10-28T23:22:40.572Z",
+    "end_time": "2025-10-29T00:22:40.572Z",
+    "status": "confirmed",
+    "notes": "Тестовая запись 8",
+    "channel": "web",
+    "created_at": "2025-10-21T06:22:40.583Z",
+    "updated_at": "2025-10-21T06:22:40.583Z"
+  }
+},
+{
+  "model": "core.appointment",
+  "pk": 275,
+  "fields": {
+    "patient": 116,
+    "specialist": 2,
+    "service": 4,
+    "start_time": "2025-10-29T16:22:40.792Z",
+    "end_time": "2025-10-29T17:22:40.792Z",
+    "status": "pending",
+    "notes": "Тестовая запись 9",
+    "channel": "web",
+    "created_at": "2025-10-21T06:22:40.816Z",
+    "updated_at": "2025-10-21T06:22:40.816Z"
+  }
+},
+{
+  "model": "core.appointment",
+  "pk": 276,
+  "fields": {
+    "patient": 115,
+    "specialist": 3,
+    "service": 7,
+    "start_time": "2025-10-30T17:22:40.904Z",
+    "end_time": "2025-10-30T18:22:40.904Z",
+    "status": "confirmed",
+    "notes": "Тестовая запись 10",
+    "channel": "web",
+    "created_at": "2025-10-21T06:22:40.921Z",
+    "updated_at": "2025-10-21T06:22:40.921Z"
+  }
+},
+{
+  "model": "core.appointment",
+  "pk": 277,
+  "fields": {
+    "patient": 177,
+    "specialist": 5,
+    "service": 16,
+    "start_time": "2025-10-22T10:28:44.961Z",
+    "end_time": "2025-10-22T11:28:44.961Z",
+    "status": "pending",
+    "notes": null,
+    "channel": "web",
+    "created_at": "2025-10-21T10:28:44.962Z",
+    "updated_at": "2025-10-21T10:28:44.962Z"
+  }
+},
+{
+  "model": "core.appointment",
+  "pk": 278,
+  "fields": {
+    "patient": 180,
+    "specialist": 7,
+    "service": 18,
+    "start_time": "2025-10-22T10:58:46.261Z",
+    "end_time": "2025-10-22T11:28:46.261Z",
+    "status": "pending",
+    "notes": null,
+    "channel": "web",
+    "created_at": "2025-10-21T10:28:46.262Z",
+    "updated_at": "2025-10-21T10:28:46.262Z"
+  }
+},
+{
+  "model": "core.appointment",
+  "pk": 279,
+  "fields": {
+    "patient": 179,
+    "specialist": 7,
+    "service": 18,
+    "start_time": "2025-10-22T10:28:46.241Z",
+    "end_time": "2025-10-22T10:58:46.241Z",
+    "status": "pending",
+    "notes": null,
+    "channel": "web",
+    "created_at": "2025-10-21T10:28:46.243Z",
+    "updated_at": "2025-10-21T10:28:46.243Z"
+  }
+},
+{
+  "model": "core.appointment",
+  "pk": 280,
+  "fields": {
+    "patient": 184,
+    "specialist": 7,
+    "service": 18,
+    "start_time": "2025-10-22T13:28:46.415Z",
+    "end_time": "2025-10-22T13:58:46.415Z",
+    "status": "pending",
+    "notes": null,
+    "channel": "web",
+    "created_at": "2025-10-21T10:28:46.416Z",
+    "updated_at": "2025-10-21T10:28:46.416Z"
+  }
+},
+{
+  "model": "core.appointment",
+  "pk": 281,
+  "fields": {
+    "patient": 181,
+    "specialist": 7,
+    "service": 18,
+    "start_time": "2025-10-22T12:58:46.328Z",
+    "end_time": "2025-10-22T13:28:46.328Z",
+    "status": "pending",
+    "notes": null,
+    "channel": "web",
+    "created_at": "2025-10-21T10:28:46.329Z",
+    "updated_at": "2025-10-21T10:28:46.329Z"
+  }
+},
+{
+  "model": "core.appointment",
+  "pk": 282,
+  "fields": {
+    "patient": 183,
+    "specialist": 7,
+    "service": 18,
+    "start_time": "2025-10-22T13:58:46.389Z",
+    "end_time": "2025-10-22T14:28:46.389Z",
+    "status": "pending",
+    "notes": null,
+    "channel": "web",
+    "created_at": "2025-10-21T10:28:46.393Z",
+    "updated_at": "2025-10-21T10:28:46.393Z"
+  }
+},
+{
+  "model": "core.appointment",
+  "pk": 283,
+  "fields": {
+    "patient": 182,
+    "specialist": 7,
+    "service": 18,
+    "start_time": "2025-10-22T11:28:46.374Z",
+    "end_time": "2025-10-22T11:58:46.374Z",
+    "status": "pending",
+    "notes": null,
+    "channel": "web",
+    "created_at": "2025-10-21T10:28:46.376Z",
+    "updated_at": "2025-10-21T10:28:46.376Z"
+  }
+},
+{
+  "model": "core.appointment",
+  "pk": 284,
+  "fields": {
+    "patient": 185,
+    "specialist": 7,
+    "service": 18,
+    "start_time": "2025-10-22T14:58:46.470Z",
+    "end_time": "2025-10-22T15:28:46.470Z",
+    "status": "pending",
+    "notes": null,
+    "channel": "web",
+    "created_at": "2025-10-21T10:28:46.471Z",
+    "updated_at": "2025-10-21T10:28:46.471Z"
+  }
+},
+{
+  "model": "core.appointment",
+  "pk": 285,
+  "fields": {
+    "patient": 187,
+    "specialist": 7,
+    "service": 18,
+    "start_time": "2025-10-22T14:28:46.610Z",
+    "end_time": "2025-10-22T14:58:46.610Z",
+    "status": "pending",
+    "notes": null,
+    "channel": "web",
+    "created_at": "2025-10-21T10:28:46.611Z",
+    "updated_at": "2025-10-21T10:28:46.611Z"
+  }
+},
+{
+  "model": "core.appointment",
+  "pk": 286,
+  "fields": {
+    "patient": 188,
+    "specialist": 7,
+    "service": 18,
+    "start_time": "2025-10-22T12:28:46.655Z",
+    "end_time": "2025-10-22T12:58:46.655Z",
+    "status": "pending",
+    "notes": null,
+    "channel": "web",
+    "created_at": "2025-10-21T10:28:46.655Z",
+    "updated_at": "2025-10-21T10:28:46.656Z"
+  }
+},
+{
+  "model": "core.appointment",
+  "pk": 287,
+  "fields": {
+    "patient": 186,
+    "specialist": 7,
+    "service": 18,
+    "start_time": "2025-10-22T11:58:46.592Z",
+    "end_time": "2025-10-22T12:28:46.592Z",
+    "status": "pending",
+    "notes": null,
+    "channel": "web",
+    "created_at": "2025-10-21T10:28:46.593Z",
+    "updated_at": "2025-10-21T10:28:46.593Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 1,
+  "fields": {
+    "session_id": "session_1758550710831_mtvp0k17e",
+    "user_message": "привет,",
+    "ai_response": "Привет! Чем могу помочь?",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {},
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-22T14:43:48.751Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 2,
+  "fields": {
+    "session_id": "session_1758550710831_mtvp0k17e",
+    "user_message": "хочу запись к специалисту.",
+    "ai_response": "Понял, вы хотите записаться к специалисту. У нас есть несколько специалистов: Екатерина (врач-реабилитолог, остеопат), Римма (врач-педиатр, нутрициолог) и Авраам (массажист). Какого специалиста вы бы хотели выбрать для записи?",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {},
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-22T14:44:07.520Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 3,
+  "fields": {
+    "session_id": "session_1758550710831_mtvp0k17e",
+    "user_message": "массаж",
+    "ai_response": "Отлично! У нас есть несколько видов массажа: лечебный массаж за 250₪ (50-60 мин) и массажист Авраам (мужчины). Какой из них вам подходит?",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {},
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-22T14:44:22.285Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 4,
+  "fields": {
+    "session_id": "session_1758550710831_mtvp0k17e",
+    "user_message": "авраам",
+    "ai_response": "Отлично! Вы хотите записаться к массажисту Аврааму. Какую услугу вы бы хотели получить у Авраама: лечебный массаж за 250₪ (50-60 мин) или другую услугу?",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {},
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-22T14:45:56.748Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 5,
+  "fields": {
+    "session_id": "session_1758550710831_mtvp0k17e",
+    "user_message": "да эту за 250 шекелей",
+    "ai_response": "Понял, вы хотите записаться на лечебный массаж за 250₪. Отличный выбор! Для проведения лечебного массажа вам подойдет специалист Авраам. Какое удобное для вас время для записи?",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {},
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-22T14:46:18.894Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 6,
+  "fields": {
+    "session_id": "session_1758550710831_mtvp0k17e",
+    "user_message": "какое есть время",
+    "ai_response": "Рад приветствовать вас в медицинском центре \"Новая Жизнь\"! Мы работаем с понедельника по пятницу с 9:00 до 19:00. В какое время вам было бы удобно записаться на прием к массажисту Аврааму?",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {},
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-22T14:46:36.973Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 7,
+  "fields": {
+    "session_id": "session_1758550710831_mtvp0k17e",
+    "user_message": "в 12 часов в пятницу",
+    "ai_response": "Извините за недоразумение, но у массажиста Авраама в пятницу в 12:00 уже занято. Могу предложить вам другие доступные слоты на пятницу или другие дни. Как вам подходит время?",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {},
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-22T14:47:01.691Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 8,
+  "fields": {
+    "session_id": "session_1758550710831_mtvp0k17e",
+    "user_message": "может на 9 в пятницу?",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"offer_slots\",\n  \"next_field\": \"time\",\n  \"reply\": \"У массажиста Авраама есть свободный слот на пятницу в 9:00. Это время вам подходит?\",\n  \"offer_slots\": [\"09:00\"],\n  \"day\": \"пятница\"\n}",
+    "intent": "offer_slots",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {},
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-22T14:47:25.944Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 9,
+  "fields": {
+    "session_id": "session_1758550710831_mtvp0k17e",
+    "user_message": "09:00",
+    "ai_response": "У массажиста Авраама есть свободный слот на пятницу в 9:00. Хотели бы записаться на это время?",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {},
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-22T14:47:34.706Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 10,
+  "fields": {
+    "session_id": "session_1758550710831_mtvp0k17e",
+    "user_message": "да",
+    "ai_response": "Извините за недоразумение, но у массажиста Авраама в пятницу в 12:00 уже занято. Могу предложить вам другие доступные слоты на этот день или другие дни. Как вам подойдет время или день?",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {},
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-22T14:47:44.078Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 11,
+  "fields": {
+    "session_id": "session_1758553125450_poc6q7ggj",
+    "user_message": "привет, да мне нужна запись на прием к спецалисту",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"greet\",\n  \"next_field\": \"none\",\n  \"reply\": \"Здравствуйте! Чем могу помочь?\"\n}",
+    "intent": "greet",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {},
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-22T14:59:15.853Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 12,
+  "fields": {
+    "session_id": "session_1758553125450_poc6q7ggj",
+    "user_message": "запиши меня на прием к специалисту",
+    "ai_response": "Конечно, для записи на прием мне нужно собрать несколько данных. Давай начнем с вашего имени, пожалуйста.",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {},
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-22T14:59:46.764Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 13,
+  "fields": {
+    "session_id": "session_1758553125450_poc6q7ggj",
+    "user_message": "михаил губенко",
+    "ai_response": "Отлично, Михаил! Теперь мне понадобится ваш контактный номер телефона, чтобы мы могли связаться с вами для подтверждения записи. Пожалуйста, укажите ваш номер телефона.",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {},
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-22T15:00:48.868Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 14,
+  "fields": {
+    "session_id": "session_1758553125450_poc6q7ggj",
+    "user_message": "0504611186",
+    "ai_response": "Отлично, спасибо за предоставленный номер телефона. Теперь давайте выберем услугу и специалиста для записи. Какая услуга вас интересует?",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {},
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-22T15:01:03.803Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 15,
+  "fields": {
+    "session_id": "session_1758553125450_poc6q7ggj",
+    "user_message": "какие услуги и специалисты есть?",
+    "ai_response": "Здравствуйте! В нашем центре здоровья \"Новая Жизнь\" предоставляются следующие услуги и специалисты:\n\n1. Консультация реабилитолога: включает комплексное обследование пациента, сбор анамнеза, физический осмотр, оценку двигательных функций и разработку индивидуальной программы реабилитации. Специалист - Екатерина.\n2. Консультация остеопата: включает сбор анамнеза, диагностику и план лечения. Специалист - Екатерина.\n3. Консультация нутрициолога: включает первичный сбор информации, анализ данных, разработку индивидуального плана питания и поддержку. Специалист - Римма.\n4. Лечебный массаж для мужчин и парней-подростков: различные виды массажа. Специалист - Авраам.\n5. Лечебный массаж для женщин, девушек-подростков и детей: также разнообразные виды массажа. Специалист - Екатерина.\n6. Кинезиотейпирование: применяется для профилактики и реабилитации травм мышц, связок и суставов. Специалист - Авраам.\n7. Диагностика организма биорезонансным сканированием: безболезненный метод сканирования организма. \n\nПожалуйста, уточните, какую услугу вы бы хотели выбрать для записи, и я помогу вам с этим.",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {},
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-22T15:01:28.396Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 16,
+  "fields": {
+    "session_id": "session_1758553125450_poc6q7ggj",
+    "user_message": "массаж",
+    "ai_response": "Здравствуйте! Рада помочь вам с записью на массаж. Для начала уточните, к какому специалисту вы бы хотели записаться: к Аврааму на мужской массаж или к Екатерине на женский массаж?",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {},
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-22T15:01:55.574Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 17,
+  "fields": {
+    "session_id": "session_1758553125450_poc6q7ggj",
+    "user_message": "на мужскоймассаж",
+    "ai_response": "Отлично! Для записи на массаж мне нужно уточнить, к какому специалисту вы бы хотели записаться: к Аврааму на мужской массаж или к Екатерине на женский массаж. Какой вариант вам больше подходит?",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {},
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-22T15:02:12.572Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 18,
+  "fields": {
+    "session_id": "session_1758553125450_poc6q7ggj",
+    "user_message": "к аврааму",
+    "ai_response": "Отлично! Вы выбрали лечебный массаж для мужчин у специалиста Авраама. Стоимость данной процедуры составляет 250₪ за 50–60 минут. Какой день и время вам удобны для записи на массаж к Аврааму?",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {},
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-22T15:02:26.761Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 19,
+  "fields": {
+    "session_id": "session_1758553125450_poc6q7ggj",
+    "user_message": "можно показать вариантыи свободное время?",
+    "ai_response": "Извините за недоразумение. Для записи на массаж у меня есть следующие свободные слоты:\n\n- Утро: 09:00, 10:00, 11:00, 12:00\n- После обеда: 15:00, 16:00, 17:00\n- Вечер: 18:00, 19:00\n\nПожалуйста, выберите удобное для вас время из этого списка.",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {},
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-22T15:02:54.422Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 20,
+  "fields": {
+    "session_id": "session_1758553125450_poc6q7ggj",
+    "user_message": "в 9 часов утра а на какие дни?",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"offer_slots\",\n  \"next_field\": \"day\",\n  \"reply\": \"На какой день вам нужно записаться на массаж у специалиста Авраама в 9:00 утра?\",\n  \"offer_slots\": [\"10:00\", \"11:00\", \"12:00\"],\n  \"day\": \"none\"\n}",
+    "intent": "offer_slots",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {},
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-22T15:03:25.459Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 21,
+  "fields": {
+    "session_id": "session_1758553125450_poc6q7ggj",
+    "user_message": "привет",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"greet\",\n  \"reply\": \"Здравствуйте! Чем могу помочь?\"\n}",
+    "intent": "greet",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {},
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-22T15:13:02.341Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 22,
+  "fields": {
+    "session_id": "session_1758553125450_poc6q7ggj",
+    "user_message": "какие есть услуги что ты умеешь",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"service_info\",\n  \"reply\": \"В нашем центре предоставляются следующие услуги:\\n- Консультация реабилитолога\\n- Консультация остеопата\\n- Консультация нутрициолога\\n- Лечебный массаж для мужчин и парней-подростков\\n- Лечебный массаж для женщин, девушек-подростков и детей\\n- Лечебный массаж грудным детям\\n- Лечебный массаж детский\\n- Лечебный массаж беременным от 5 месяцев\\n- Лечебный массаж после родов\\n- Кинезиотейпирование\\n- Диагностика организма биорезонансным сканированием\",\n  \"service\": \"\"\n}",
+    "intent": "service_info",
+    "service": "",
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {},
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-22T15:13:27.841Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 23,
+  "fields": {
+    "session_id": "session_1759081228475_48i6dpg2c",
+    "user_message": "ghbdtn/",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"greet\",\n  \"reply\": \"Здравствуйте! Чем могу помочь?\"\n}",
+    "intent": "greet",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "greet",
+      "reply": "Здравствуйте! Чем могу помочь?"
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T17:40:42.774Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 24,
+  "fields": {
+    "session_id": "session_1759081228475_48i6dpg2c",
+    "user_message": "привет.",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"greet\",\n  \"reply\": \"Здравствуйте! Чем могу помочь?\"\n}",
+    "intent": "greet",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "greet",
+      "reply": "Здравствуйте! Чем могу помочь?"
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T17:40:53.297Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 25,
+  "fields": {
+    "session_id": "session_1759081228475_48i6dpg2c",
+    "user_message": "я хочу записаться на прием к специалисту",
+    "ai_response": "Отлично! Для начала мне понадобится некоторая информация. Как вас зовут?",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "clarify",
+      "next_field": "none",
+      "reply": "Отлично! Для начала мне понадобится некоторая информация. Как вас зовут?",
+      "service": null,
+      "specialist": null,
+      "offer_slots": [],
+      "day": null,
+      "time": null
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T17:41:12.025Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 26,
+  "fields": {
+    "session_id": "session_1759081228475_48i6dpg2c",
+    "user_message": "Вася Пупкин",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"collect_name\",\n  \"next_field\": \"phone\",\n  \"reply\": \"Отлично, Вася! Назовите, пожалуйста, ваш номер телефона для связи.\"\n}",
+    "intent": "collect_name",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "collect_name",
+      "next_field": "phone",
+      "reply": "Отлично, Вася! Назовите, пожалуйста, ваш номер телефона для связи."
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T17:41:25.603Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 27,
+  "fields": {
+    "session_id": "session_1759081228475_48i6dpg2c",
+    "user_message": "0903467892",
+    "ai_response": "Отлично, Вася! Спасибо за предоставленный номер телефона. Теперь давайте выберем удобный для вас день и время. На какой день вы бы хотели записаться? Вот доступные дни для записи: \"понедельник\", \"вторник\", \"среда\", \"четверг\", \"пятница\", \"суббота\".",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "clarify",
+      "next_field": "none",
+      "reply": "Отлично, Вася! Спасибо за предоставленный номер телефона. Теперь давайте выберем удобный для вас день и время. На какой день вы бы хотели записаться? Вот доступные дни для записи: \"понедельник\", \"вторник\", \"среда\", \"четверг\", \"пятница\", \"суббота\".",
+      "service": null,
+      "specialist": null,
+      "offer_slots": [],
+      "day": null,
+      "time": null
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T17:41:36.059Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 28,
+  "fields": {
+    "session_id": "session_1759081228475_48i6dpg2c",
+    "user_message": "на какие даты?",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"collect_day\",\n  \"next_field\": \"time\",\n  \"reply\": \"На какой день вы бы хотели записаться? Например, 'сегодня', 'завтра', 'понедельник' и т.д.\",\n  \"offer_slots\": [\"понедельник\", \"вторник\", \"среда\", \"четверг\", \"пятница\", \"суббота\"]\n}",
+    "intent": "collect_day",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "collect_day",
+      "next_field": "time",
+      "reply": "На какой день вы бы хотели записаться? Например, 'сегодня', 'завтра', 'понедельник' и т.д.",
+      "offer_slots": [
+        "понедельник",
+        "вторник",
+        "среда",
+        "четверг",
+        "пятница",
+        "суббота"
+      ]
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T17:42:21.322Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 29,
+  "fields": {
+    "session_id": "session_1759081228475_48i6dpg2c",
+    "user_message": "какие даты не дни недели есть?",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"offer_slots\",\n  \"next_field\": \"day\",\n  \"reply\": \"У нас есть свободные слоты на следующие дни: 'сегодня', 'завтра' и конечно, дни недели: 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'. Выберите удобный вариант.\"\n}",
+    "intent": "offer_slots",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "offer_slots",
+      "next_field": "day",
+      "reply": "У нас есть свободные слоты на следующие дни: 'сегодня', 'завтра' и конечно, дни недели: 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'. Выберите удобный вариант."
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T17:42:47.650Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 30,
+  "fields": {
+    "session_id": "session_1759081228475_48i6dpg2c",
+    "user_message": "на 30 число этого месяца в этом году",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"collect_time\",\n  \"next_field\": \"none\",\n  \"reply\": \"Какое время вам удобно на 30 число этого месяца?\"\n}",
+    "intent": "collect_time",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "collect_time",
+      "next_field": "none",
+      "reply": "Какое время вам удобно на 30 число этого месяца?"
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T17:43:19.742Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 31,
+  "fields": {
+    "session_id": "session_1759081228475_48i6dpg2c",
+    "user_message": "на 12 часов дня",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"collect_time\",\n  \"next_field\": \"none\",\n  \"reply\": \"Отлично! Вас записываем на 12:00 на 30 число этого месяца. Как вас зовут?\"\n}",
+    "intent": "collect_time",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "collect_time",
+      "next_field": "none",
+      "reply": "Отлично! Вас записываем на 12:00 на 30 число этого месяца. Как вас зовут?"
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T17:43:33.017Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 32,
+  "fields": {
+    "session_id": "session_1759081228475_48i6dpg2c",
+    "user_message": "вася пупкин",
+    "ai_response": "Извините, Вася Пупкин, но я не смогу найти информацию о вас без указания дополнительных данных. Как я могу помочь вам сегодня?",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "clarify",
+      "next_field": "none",
+      "reply": "Извините, Вася Пупкин, но я не смогу найти информацию о вас без указания дополнительных данных. Как я могу помочь вам сегодня?",
+      "service": null,
+      "specialist": null,
+      "offer_slots": [],
+      "day": null,
+      "time": null
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T17:43:44.652Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 33,
+  "fields": {
+    "session_id": "session_1759081228475_48i6dpg2c",
+    "user_message": "какие данные тебе еще нужны?",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"collect_name\",\n  \"next_field\": \"name\",\n  \"reply\": \"Для завершения записи, пожалуйста, укажите ваше имя.\"\n}",
+    "intent": "collect_name",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "collect_name",
+      "next_field": "name",
+      "reply": "Для завершения записи, пожалуйста, укажите ваше имя."
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T17:44:06.651Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 34,
+  "fields": {
+    "session_id": "session_1759081228475_48i6dpg2c",
+    "user_message": "я тебе уже указывал",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"clarify\",\n  \"reply\": \"Прошу прощения за недоразумение. Какую информацию вы уже предоставили? Могли бы вы повторить ваше имя и номер телефона для подтверждения?\"\n}",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "clarify",
+      "reply": "Прошу прощения за недоразумение. Какую информацию вы уже предоставили? Могли бы вы повторить ваше имя и номер телефона для подтверждения?"
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T17:44:21.845Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 35,
+  "fields": {
+    "session_id": "health_check_session",
+    "user_message": "тест",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"greet\",\n  \"reply\": \"Здравствуйте! Чем могу помочь?\"\n}",
+    "intent": "greet",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "greet",
+      "reply": "Здравствуйте! Чем могу помочь?"
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T17:50:40.416Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 36,
+  "fields": {
+    "session_id": "memory_test_1759082947",
+    "user_message": "Меня зовут Владимир",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"collect_name\",\n  \"next_field\": \"phone\",\n  \"reply\": \"Привет, Владимир! Для записи на прием мне понадобится ваш номер телефона. Пожалуйста, укажите его.\",\n  \"offer_slots\": []\n}",
+    "intent": "collect_name",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "collect_name",
+      "next_field": "phone",
+      "reply": "Привет, Владимир! Для записи на прием мне понадобится ваш номер телефона. Пожалуйста, укажите его.",
+      "offer_slots": []
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:09:11.534Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 37,
+  "fields": {
+    "session_id": "memory_test_1759082947",
+    "user_message": "Как меня зовут?",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"clarify\",\n  \"reply\": \"Вас зовут Владимир. Как я могу помочь вам сегодня?\",\n  \"next_field\": \"none\"\n}",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "clarify",
+      "reply": "Вас зовут Владимир. Как я могу помочь вам сегодня?",
+      "next_field": "none"
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:09:13.328Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 38,
+  "fields": {
+    "session_id": "health_check_session",
+    "user_message": "тест",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"service_info\",\n  \"reply\": \"Понимаю, вы хотите узнать информацию о наших услугах. Могу предложить консультацию реабилитолога, консультацию остеопата, консультацию нутрициолога, лечебный массаж для мужчин и парней-подростков, лечебный массаж для женщин, девушек-подростков и детей, кинезиотейпирование, а также диагностику организма биорезонансным сканированием. Какая услуга вас интересует?\"\n}",
+    "intent": "service_info",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "service_info",
+      "reply": "Понимаю, вы хотите узнать информацию о наших услугах. Могу предложить консультацию реабилитолога, консультацию остеопата, консультацию нутрициолога, лечебный массаж для мужчин и парней-подростков, лечебный массаж для женщин, девушек-подростков и детей, кинезиотейпирование, а также диагностику организма биорезонансным сканированием. Какая услуга вас интересует?"
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:10:23.342Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 39,
+  "fields": {
+    "session_id": "memory_test_1759083058",
+    "user_message": "Меня зовут Владимир",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"collect_name\",\n  \"next_field\": \"phone\",\n  \"reply\": \"Привет, Владимир! Для записи на прием мне понадобится ваш номер телефона. Пожалуйста, укажите его.\",\n  \"offer_slots\": []\n}",
+    "intent": "collect_name",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "collect_name",
+      "next_field": "phone",
+      "reply": "Привет, Владимир! Для записи на прием мне понадобится ваш номер телефона. Пожалуйста, укажите его.",
+      "offer_slots": []
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:11:00.467Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 40,
+  "fields": {
+    "session_id": "memory_test_1759083058",
+    "user_message": "Как меня зовут?",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"collect_name\",\n  \"next_field\": \"phone\",\n  \"reply\": \"Привет, Владимир! Для записи на прием мне понадобится ваш номер телефона. Пожалуйста, укажите ваш номер телефона.\"\n}",
+    "intent": "collect_name",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "collect_name",
+      "next_field": "phone",
+      "reply": "Привет, Владимир! Для записи на прием мне понадобится ваш номер телефона. Пожалуйста, укажите ваш номер телефона."
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:11:01.415Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 41,
+  "fields": {
+    "session_id": "health_check_session",
+    "user_message": "тест",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"service_info\",\n  \"reply\": \"Понимаю, вы хотите узнать информацию о наших услугах. Могу предложить консультацию реабилитолога, консультацию остеопата, консультацию нутрициолога, лечебный массаж для мужчин и парней-подростков, лечебный массаж для женщин, девушек-подростков и детей, кинезиотейпирование, а также диагностику организма биорезонансным сканированием. Какую услугу вас интересует?\"\n}",
+    "intent": "service_info",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "service_info",
+      "reply": "Понимаю, вы хотите узнать информацию о наших услугах. Могу предложить консультацию реабилитолога, консультацию остеопата, консультацию нутрициолога, лечебный массаж для мужчин и парней-подростков, лечебный массаж для женщин, девушек-подростков и детей, кинезиотейпирование, а также диагностику организма биорезонансным сканированием. Какую услугу вас интересует?"
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:14:24.131Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 43,
+  "fields": {
+    "session_id": "memory_test_1759083284",
+    "user_message": "Меня зовут Владимир",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"collect_name\",\n  \"next_field\": \"phone\",\n  \"reply\": \"Привет, Владимир! Для записи на прием мне понадобится ваш номер телефона. Пожалуйста, укажите его.\",\n  \"offer_slots\": []\n}",
+    "intent": "collect_name",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "collect_name",
+      "next_field": "phone",
+      "reply": "Привет, Владимир! Для записи на прием мне понадобится ваш номер телефона. Пожалуйста, укажите его.",
+      "offer_slots": []
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:14:46.771Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 44,
+  "fields": {
+    "session_id": "memory_test_1759083284",
+    "user_message": "Как меня зовут?",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"clarify\",\n  \"reply\": \"Вас зовут Владимир. Для записи на прием мне понадобится ваш номер телефона. Пожалуйста, укажите его.\",\n  \"next_field\": \"phone\"\n}",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "clarify",
+      "reply": "Вас зовут Владимир. Для записи на прием мне понадобится ваш номер телефона. Пожалуйста, укажите его.",
+      "next_field": "phone"
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:14:47.874Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 45,
+  "fields": {
+    "session_id": "memory_test_1759083316",
+    "user_message": "Привет, хочу записаться",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"collect_name\",\n  \"next_field\": \"phone\",\n  \"reply\": \"Здравствуйте! Для записи на прием, пожалуйста, укажите ваше имя.\"\n}",
+    "intent": "collect_name",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "collect_name",
+      "next_field": "phone",
+      "reply": "Здравствуйте! Для записи на прием, пожалуйста, укажите ваше имя."
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:15:18.499Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 46,
+  "fields": {
+    "session_id": "memory_test_1759083316",
+    "user_message": "А на что я хотел записаться? Не помню уже",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"offer_slots\",\n  \"reply\": \"Понимаю, иногда это случается. Могу предложить вам несколько вариантов услуг: консультация реабилитолога, консультация остеопата, лечебный массаж для мужчин, лечебный массаж для женщин, кинезиотейпирование или диагностика организма биорезонансным сканированием. Какая из этих услуг вас интересует?\"\n}",
+    "intent": "offer_slots",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "offer_slots",
+      "reply": "Понимаю, иногда это случается. Могу предложить вам несколько вариантов услуг: консультация реабилитолога, консультация остеопата, лечебный массаж для мужчин, лечебный массаж для женщин, кинезиотейпирование или диагностика организма биорезонансным сканированием. Какая из этих услуг вас интересует?"
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:15:20.919Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 47,
+  "fields": {
+    "session_id": "memory_test_1759083316",
+    "user_message": "Ах да, вспомнил. Меня зовут Михаил",
+    "ai_response": "Отлично, Михаил! Спасибо за напоминание. Теперь мне нужен ваш номер телефона, чтобы завершить процесс записи. Пожалуйста, укажите ваш номер телефона.",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "clarify",
+      "next_field": "none",
+      "reply": "Отлично, Михаил! Спасибо за напоминание. Теперь мне нужен ваш номер телефона, чтобы завершить процесс записи. Пожалуйста, укажите ваш номер телефона.",
+      "service": null,
+      "specialist": null,
+      "offer_slots": [],
+      "day": null,
+      "time": null
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:15:22.763Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 48,
+  "fields": {
+    "session_id": "memory_test_1759083316",
+    "user_message": "А как меня зовут? И на что я хотел записаться?",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"clarify\",\n  \"reply\": \"Вас зовут Михаил. Вы хотели записаться на массаж спины. Для мужчин массаж ведет Авраам, стоимость 250₪ за 50–60 минут. На какой день вам удобно записаться?\",\n  \"offer_slots\": [\"понедельник\", \"вторник\", \"среда\", \"четверг\", \"пятница\", \"суббота\"]\n}",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "clarify",
+      "reply": "Вас зовут Михаил. Вы хотели записаться на массаж спины. Для мужчин массаж ведет Авраам, стоимость 250₪ за 50–60 минут. На какой день вам удобно записаться?",
+      "offer_slots": [
+        "понедельник",
+        "вторник",
+        "среда",
+        "четверг",
+        "пятница",
+        "суббота"
+      ]
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:15:24.747Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 49,
+  "fields": {
+    "session_id": "catalog_test_1759083326",
+    "user_message": "У вас есть стоматолог?",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"service_info\",\n  \"reply\": \"У нас нет стоматолога. Мы специализируемся на реабилитации, массаже, остеопатии, нутрициологии и других услугах. Могу предложить вам консультацию остеопата, если у вас есть проблемы с опорно-двигательным аппаратом. Чем еще могу помочь?\",\n  \"service\": \"\"\n}",
+    "intent": "service_info",
+    "service": "",
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "service_info",
+      "reply": "У нас нет стоматолога. Мы специализируемся на реабилитации, массаже, остеопатии, нутрициологии и других услугах. Могу предложить вам консультацию остеопата, если у вас есть проблемы с опорно-двигательным аппаратом. Чем еще могу помочь?",
+      "service": ""
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:15:28.527Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 50,
+  "fields": {
+    "session_id": "catalog_test_1759083326",
+    "user_message": "А пластический хирург?",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"service_info\",\n  \"reply\": \"У нас нет пластического хирурга. Наш Центр специализируется на реабилитации, массаже, остеопатии, нутрициологии, кинезиотейпировании и биорезонансной диагностике. Могу предложить консультацию реабилитолога, остеопата или нутрициолога. Возможно, одна из этих услуг будет интересна вам?\"\n}",
+    "intent": "service_info",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "service_info",
+      "reply": "У нас нет пластического хирурга. Наш Центр специализируется на реабилитации, массаже, остеопатии, нутрициологии, кинезиотейпировании и биорезонансной диагностике. Могу предложить консультацию реабилитолога, остеопата или нутрициолога. Возможно, одна из этих услуг будет интересна вам?"
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:15:31.112Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 51,
+  "fields": {
+    "session_id": "catalog_test_1759083326",
+    "user_message": "А что у вас вообще есть?",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"service_info\",\n  \"reply\": \"У нас в Центре здоровья 'Новая Жизнь' предоставляются следующие услуги: консультация реабилитолога, консультация остеопата, консультация нутрициолога, лечебный массаж для мужчин и женщин, кинезиотейпирование, диагностика организма биорезонансным сканированием. Мы специализируемся на реабилитации, массаже, остеопатии, нутрициологии и других методах поддержания здоровья.\",\n  \"service\": null\n}",
+    "intent": "service_info",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "service_info",
+      "reply": "У нас в Центре здоровья 'Новая Жизнь' предоставляются следующие услуги: консультация реабилитолога, консультация остеопата, консультация нутрициолога, лечебный массаж для мужчин и женщин, кинезиотейпирование, диагностика организма биорезонансным сканированием. Мы специализируемся на реабилитации, массаже, остеопатии, нутрициологии и других методах поддержания здоровья.",
+      "service": null
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:15:34.102Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 52,
+  "fields": {
+    "session_id": "price_test_1759083335",
+    "user_message": "Сколько стоит массаж?",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"service_info\",\n  \"reply\": \"Массаж стоит 250₪ за 50-60 минут. У нас есть различные виды массажа для мужчин и женщин. Какой вид массажа вас интересует?\",\n  \"action\": \"none\"\n}",
+    "intent": "service_info",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "service_info",
+      "reply": "Массаж стоит 250₪ за 50-60 минут. У нас есть различные виды массажа для мужчин и женщин. Какой вид массажа вас интересует?",
+      "action": "none"
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:15:36.881Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 53,
+  "fields": {
+    "session_id": "price_test_1759083335",
+    "user_message": "Очень дорого! У конкурентов дешевле",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"offer_slots\",\n  \"reply\": \"Понимаю вашу озабоченность ценой. Наш центр предлагает высокое качество услуг и опытных специалистов. Мы гарантируем комплексный подход к вашему здоровью. После первой процедуры мы можем обсудить возможные скидки или пакетные предложения. Как вам удобно записаться?\",\n  \"action\": \"get_availability\"\n}",
+    "intent": "offer_slots",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "offer_slots",
+      "reply": "Ошибка: Ошибка получения слотов: name 'timedelta' is not defined",
+      "action": "get_availability"
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:15:38.928Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 54,
+  "fields": {
+    "session_id": "price_test_1759083335",
+    "user_message": "Не, все равно дорого. Сделайте скидку",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"offer_slots\",\n  \"reply\": \"Все вопросы о скидках решаются только после первой процедуры. Предлагаю выбрать удобное время для записи. Какой день вам подходит?\",\n  \"offer_slots\": [\"понедельник\", \"вторник\", \"среда\", \"четверг\", \"пятница\", \"суббота\"]\n}",
+    "intent": "offer_slots",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "offer_slots",
+      "reply": "Все вопросы о скидках решаются только после первой процедуры. Предлагаю выбрать удобное время для записи. Какой день вам подходит?",
+      "offer_slots": [
+        "понедельник",
+        "вторник",
+        "среда",
+        "четверг",
+        "пятница",
+        "суббота"
+      ]
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:15:40.812Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 55,
+  "fields": {
+    "session_id": "price_test_1759083335",
+    "user_message": "Ну хоть немного уступите в цене",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"offer_slots\",\n  \"reply\": \"Понимаю вашу просьбу. Наш центр предлагает высокое качество услуг и опытных специалистов. После первой процедуры мы можем обсудить возможные варианты скидок или специальных предложений. Для начала предлагаю выбрать удобное время для записи. Какой день вам подходит?\"\n}",
+    "intent": "offer_slots",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "offer_slots",
+      "reply": "Понимаю вашу просьбу. Наш центр предлагает высокое качество услуг и опытных специалистов. После первой процедуры мы можем обсудить возможные варианты скидок или специальных предложений. Для начала предлагаю выбрать удобное время для записи. Какой день вам подходит?"
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:15:42.702Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 56,
+  "fields": {
+    "session_id": "reluctant_test_1759083344",
+    "user_message": "Расскажите про ваши услуги",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"service_info\",\n  \"reply\": \"Здравствуйте! Мы предлагаем широкий спектр услуг: консультации реабилитолога, остеопата, нутрициолога, лечебный массаж для мужчин и женщин, кинезиотейпирование, а также диагностику организма биорезонансным сканированием. Чем могу помочь подробнее?\"\n}",
+    "intent": "service_info",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "service_info",
+      "reply": "Здравствуйте! Мы предлагаем широкий спектр услуг: консультации реабилитолога, остеопата, нутрициолога, лечебный массаж для мужчин и женщин, кинезиотейпирование, а также диагностику организма биорезонансным сканированием. Чем могу помочь подробнее?"
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:15:45.692Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 57,
+  "fields": {
+    "session_id": "reluctant_test_1759083344",
+    "user_message": "Интересно. А кто у вас работает?",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"service_info\",\n  \"reply\": \"У нас работают опытные специалисты: \n1. Екатерина - врач-реабилитолог, врач спортивной медицины, остеопат. Стаж работы с 2010 года. Основные направления: травмы и заболевания ОДА, восстановление после операций, реабилитация спортсменов, онкореабилитация, реабилитация во время беременности и после родов, детская реабилитация (включая РАС и ДЦП).\n2. Римма - врач педиатр, врач нутрициолог. Кандидат медицинских наук. Опыт работы 40 лет. Обладает глубокими знаниями в области детского и взрослого здоровья, питания и доказательной медицины.\n3. Авраам - массажист. Применяемые методы: мануальная терапия в вертебрологии, лечебный массаж, акупунктура, вакуумные банки, кинезиотейпирование.\"\n}",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "clarify",
+      "next_field": "none",
+      "reply": "{\n  \"language\": \"ru\",\n  \"intent\": \"service_info\",\n  \"reply\": \"У нас работают опытные специалисты: \n1. Екатерина - врач-реабилитолог, врач спортивной медицины, остеопат. Стаж работы с 2010 года. Основные направления: травмы и заболевания ОДА, восстановление после операций, реабилитация спортсменов, онкореабилитация, реабилитация во время беременности и после родов, детская реабилитация (включая РАС и ДЦП).\n2. Римма - врач педиатр, врач нутрициолог. Кандидат медицинских наук. Опыт работы 40 лет. Обладает глубокими знаниями в области детского и взрослого здоровья, питания и доказательной медицины.\n3. Авраам - массажист. Применяемые методы: мануальная терапия в вертебрологии, лечебный массаж, акупунктура, вакуумные банки, кинезиотейпирование.\"\n}",
+      "service": null,
+      "specialist": null,
+      "offer_slots": [],
+      "day": null,
+      "time": null
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:15:49.435Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 58,
+  "fields": {
+    "session_id": "reluctant_test_1759083344",
+    "user_message": "А где вы находитесь?",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"service_info\",\n  \"reply\": \"Мы находимся в Израиле, в городе Тель-Авив. Наш адрес: ул. Цветной бульвар, д. 15. Вы можете связаться с нами по телефону +972-XX-XXXXXXX или написать на почту info@novayazhizn.co.il\"\n}",
+    "intent": "service_info",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "service_info",
+      "reply": "Мы находимся в Израиле, в городе Тель-Авив. Наш адрес: ул. Цветной бульвар, д. 15. Вы можете связаться с нами по телефону +972-XX-XXXXXXX или написать на почту info@novayazhizn.co.il"
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:15:51.252Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 59,
+  "fields": {
+    "session_id": "reluctant_test_1759083344",
+    "user_message": "Спасибо, просто интересовался",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"offer_slots\",\n  \"reply\": \"Пожалуйста! Если у вас возникнут дополнительные вопросы или вам потребуется помощь с записью на прием, не стесняйтесь обращаться. Я всегда рад помочь!\",\n  \"offer_slots\": []\n}",
+    "intent": "offer_slots",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "offer_slots",
+      "reply": "Пожалуйста! Если у вас возникнут дополнительные вопросы или вам потребуется помощь с записью на прием, не стесняйтесь обращаться. Я всегда рад помочь!",
+      "offer_slots": []
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:15:52.757Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 60,
+  "fields": {
+    "session_id": "playbook_test_1759083354",
+    "user_message": "Сколько стоит диагностика?",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"service_info\",\n  \"reply\": \"Диагностика организма биорезонансным сканированием включает полную распечатку результата и стоит 300₪. Также есть варианты с дополнительными услугами: с выявлением проблем, эпикризом и рекомендациями за 750₪, а также пакет VIP за 5500₪.\",\n  \"service\": \"Диагностика организма биорезонансным сканированием\"\n}",
+    "intent": "service_info",
+    "service": "Диагностика организма биорезонансным сканированием",
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "service_info",
+      "reply": "Диагностика организма биорезонансным сканированием включает полную распечатку результата и стоит 300₪. Также есть варианты с дополнительными услугами: с выявлением проблем, эпикризом и рекомендациями за 750₪, а также пакет VIP за 5500₪.",
+      "service": "Диагностика организма биорезонансным сканированием"
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:15:55.866Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 61,
+  "fields": {
+    "session_id": "playbook_test_1759083354",
+    "user_message": "А остеопат - это больно?",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"service_info\",\n  \"reply\": \"Остеопатия - это мягкий и безопасный метод лечения, который не должен быть болезненным. Остеопат проводит деликатные манипуляции для восстановления баланса в теле, улучшения подвижности и облегчения боли. Если у вас есть какие-либо опасения или вопросы, специалист всегда готов ответить на них перед началом процедуры.\"\n}",
+    "intent": "service_info",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "service_info",
+      "reply": "Остеопатия - это мягкий и безопасный метод лечения, который не должен быть болезненным. Остеопат проводит деликатные манипуляции для восстановления баланса в теле, улучшения подвижности и облегчения боли. Если у вас есть какие-либо опасения или вопросы, специалист всегда готов ответить на них перед началом процедуры."
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:15:58.718Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 62,
+  "fields": {
+    "session_id": "playbook_test_1759083354",
+    "user_message": "А популярна ли эта процедура?",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"service_info\",\n  \"reply\": \"Диагностика организма биорезонансным сканированием довольно популярна среди тех, кто ценит безболезненные и нетравматичные методы диагностики. Этот метод позволяет получить информацию о состоянии организма без боли, уколов и облучения. Он также может быть полезен для тех, кто ищет альтернативные методы диагностики и хочет получить дополнительные данные о своем здоровье.\"\n}",
+    "intent": "service_info",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "service_info",
+      "reply": "Диагностика организма биорезонансным сканированием довольно популярна среди тех, кто ценит безболезненные и нетравматичные методы диагностики. Этот метод позволяет получить информацию о состоянии организма без боли, уколов и облучения. Он также может быть полезен для тех, кто ищет альтернативные методы диагностики и хочет получить дополнительные данные о своем здоровье."
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:16:00.730Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 63,
+  "fields": {
+    "session_id": "aggressive_test_1759083362",
+    "user_message": "У вас все дорого и плохо!",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"offer_slots\",\n  \"reply\": \"Понимаю вашу озабоченность. Позвольте предложить другой взгляд: наши специалисты - опытные профессионалы, которые предлагают качественные услуги для вашего здоровья. Мы ценим каждого клиента и стремимся к наилучшим результатам. Могу предложить вам свободные слоты для записи. Какой день вам удобен?\",\n  \"action\": \"get_availability\"\n}",
+    "intent": "offer_slots",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "offer_slots",
+      "reply": "Ошибка: Ошибка получения слотов: name 'timedelta' is not defined",
+      "action": "get_availability"
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:16:04.540Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 64,
+  "fields": {
+    "session_id": "aggressive_test_1759083362",
+    "user_message": "Я читал плохие отзывы о вас",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"offer_slots\",\n  \"reply\": \"Понимаю вашу озабоченность. Позвольте предложить другой взгляд: наши специалисты - опытны...\n\nКакая услуга вас интересует? Я могу предложить консультацию реабилитолога, остеопата, нутрициолога или лечебный массаж. Какой вариант вас больше заинтересует?\" \n}",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "clarify",
+      "next_field": "none",
+      "reply": "{\n  \"language\": \"ru\",\n  \"intent\": \"offer_slots\",\n  \"reply\": \"Понимаю вашу озабоченность. Позвольте предложить другой взгляд: наши специалисты - опытны...\n\nКакая услуга вас интересует? Я могу предложить консультацию реабилитолога, остеопата, нутрициолога или лечебный массаж. Какой вариант вас больше заинтересует?\" \n}",
+      "service": null,
+      "specialist": null,
+      "offer_slots": [],
+      "day": null,
+      "time": null
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:16:06.777Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 65,
+  "fields": {
+    "session_id": "aggressive_test_1759083362",
+    "user_message": "Зачем мне ваши услуги вообще?",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"offer_slots\",\n  \"reply\": \"Понимаю ваше сомнение. Наш центр здоровья предлагает высококачественные услуги, которые помогут вам решить проблемы со здоровьем и благополучием. Наши специалисты имеют обширный опыт и глубокие знания в своих областях. Мы стремимся к комплексному подходу к здоровью каждого пациента, обеспечивая индивидуальный подход и эффективные решения. Мы готовы помочь вам достичь оптимального состояния здоровья и благополучия. Могу предложить вам конкретную услугу или консультацию для начала?\"\n}",
+    "intent": "offer_slots",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "offer_slots",
+      "reply": "Понимаю ваше сомнение. Наш центр здоровья предлагает высококачественные услуги, которые помогут вам решить проблемы со здоровьем и благополучием. Наши специалисты имеют обширный опыт и глубокие знания в своих областях. Мы стремимся к комплексному подходу к здоровью каждого пациента, обеспечивая индивидуальный подход и эффективные решения. Мы готовы помочь вам достичь оптимального состояния здоровья и благополучия. Могу предложить вам конкретную услугу или консультацию для начала?"
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:16:09.898Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 66,
+  "fields": {
+    "session_id": "session_1759083804260_kxc3xjydp",
+    "user_message": "ghbdtn",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"greet\",\n  \"reply\": \"Здравствуйте! Чем могу помочь?\"\n}",
+    "intent": "greet",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "greet",
+      "reply": "Здравствуйте! Чем могу помочь?"
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:23:33.871Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 67,
+  "fields": {
+    "session_id": "session_1759083804260_kxc3xjydp",
+    "user_message": "привет . хочу записсать ся на прием к специалисту",
+    "ai_response": "Отлично! Для записи на прием мне нужно собрать несколько данных. Начнем с вашего имени. Как вас зовут?",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "clarify",
+      "next_field": "none",
+      "reply": "Отлично! Для записи на прием мне нужно собрать несколько данных. Начнем с вашего имени. Как вас зовут?",
+      "service": null,
+      "specialist": null,
+      "offer_slots": [],
+      "day": null,
+      "time": null
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:24:01.278Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 68,
+  "fields": {
+    "session_id": "session_1759083804260_kxc3xjydp",
+    "user_message": "миза Микаев",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"collect_name\",\n  \"next_field\": \"phone\",\n  \"reply\": \"Спасибо! Уточните, пожалуйста, ваш номер телефона для связи.\"\n}",
+    "intent": "collect_name",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "collect_name",
+      "next_field": "phone",
+      "reply": "Спасибо! Уточните, пожалуйста, ваш номер телефона для связи."
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:24:15.469Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 69,
+  "fields": {
+    "session_id": "session_1759083804260_kxc3xjydp",
+    "user_message": "095673456",
+    "ai_response": "Отлично, спасибо за предоставленную информацию. Теперь выберем удобный для вас день и время. На какой день вам удобно записаться? Если нужно, могу предложить свободные слоты на разные дни.",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "clarify",
+      "next_field": "none",
+      "reply": "Отлично, спасибо за предоставленную информацию. Теперь выберем удобный для вас день и время. На какой день вам удобно записаться? Если нужно, могу предложить свободные слоты на разные дни.",
+      "service": null,
+      "specialist": null,
+      "offer_slots": [],
+      "day": null,
+      "time": null
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:24:28.540Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 70,
+  "fields": {
+    "session_id": "session_1759083804260_kxc3xjydp",
+    "user_message": "да предложи мне",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"offer_slots\",\n  \"reply\": \"Конечно! Для какой услуги вы хотели бы записаться? У нас есть консультация реабилитолога, консультация остеопата, консультация нутрициолога, лечебный массаж для мужчин и парней-подростков, лечебный массаж для женщин, девушек-подростков и детей, кинезиотейпирование, и диагностика организма биорезонансным сканированием. Какую услугу вы бы хотели выбрать?\"\n}",
+    "intent": "offer_slots",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "offer_slots",
+      "reply": "Конечно! Для какой услуги вы хотели бы записаться? У нас есть консультация реабилитолога, консультация остеопата, консультация нутрициолога, лечебный массаж для мужчин и парней-подростков, лечебный массаж для женщин, девушек-подростков и детей, кинезиотейпирование, и диагностика организма биорезонансным сканированием. Какую услугу вы бы хотели выбрать?"
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:24:46.748Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 71,
+  "fields": {
+    "session_id": "session_1759083804260_kxc3xjydp",
+    "user_message": "на массаж",
+    "ai_response": "Отлично! Для записи на массаж мне нужно собрать несколько данных. \n\n1. Пожалуйста, укажите ваш номер телефона для связи.",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "clarify",
+      "next_field": "none",
+      "reply": "Отлично! Для записи на массаж мне нужно собрать несколько данных. \n\n1. Пожалуйста, укажите ваш номер телефона для связи.",
+      "service": null,
+      "specialist": null,
+      "offer_slots": [],
+      "day": null,
+      "time": null
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:24:57.566Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 72,
+  "fields": {
+    "session_id": "session_1759083804260_kxc3xjydp",
+    "user_message": "я тебе уже указывал",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"collect_day\",\n  \"offer_slots\": [\"понедельник\", \"вторник\", \"среда\", \"четверг\", \"пятница\", \"суббота\"],\n  \"reply\": \"Извините за недоразумение. На какой день вам удобно записаться? Пожалуйста, выберите из предложенных вариантов: понедельник, вторник, среда, четверг, пятница, суббота.\"\n}",
+    "intent": "collect_day",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "collect_day",
+      "offer_slots": [
+        "понедельник",
+        "вторник",
+        "среда",
+        "четверг",
+        "пятница",
+        "суббота"
+      ],
+      "reply": "Извините за недоразумение. На какой день вам удобно записаться? Пожалуйста, выберите из предложенных вариантов: понедельник, вторник, среда, четверг, пятница, суббота."
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:25:14.871Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 73,
+  "fields": {
+    "session_id": "session_1759083804260_kxc3xjydp",
+    "user_message": "какие это числа",
+    "ai_response": "Извините за недоразумение. Для записи на массаж, пожалуйста, укажите ваш номер телефона для связи.",
+    "intent": "clarify",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "clarify",
+      "next_field": "none",
+      "reply": "Извините за недоразумение. Для записи на массаж, пожалуйста, укажите ваш номер телефона для связи.",
+      "service": null,
+      "specialist": null,
+      "offer_slots": [],
+      "day": null,
+      "time": null
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:25:30.723Z"
+  }
+},
+{
+  "model": "core.dialoglog",
+  "pk": 74,
+  "fields": {
+    "session_id": "session_1759083804260_kxc3xjydp",
+    "user_message": "опять вернулся на тот же вопрос",
+    "ai_response": "{\n  \"language\": \"ru\",\n  \"intent\": \"collect_phone\",\n  \"reply\": \"Понял, извините за недоразумение. Пожалуйста, укажите ваш номер телефона для связи.\",\n  \"next_field\": \"phone\"\n}",
+    "intent": "collect_phone",
+    "service": null,
+    "specialist": null,
+    "channel": "web",
+    "patient": null,
+    "transcript": null,
+    "entities": {
+      "language": "ru",
+      "intent": "collect_phone",
+      "reply": "Понял, извините за недоразумение. Пожалуйста, укажите ваш номер телефона для связи.",
+      "next_field": "phone"
+    },
+    "response": null,
+    "language": "ru",
+    "duration": null,
+    "applied_playbooks": [],
+    "created_at": "2025-09-28T18:25:52.984Z"
+  }
+},
+{
+  "model": "core.contactmessage",
+  "pk": 1,
+  "fields": {
+    "name": "Vamo Vani",
+    "phone": "093450679",
+    "email": "nhgtr@gmail.com",
+    "message": "now is ok",
+    "created_at": "2025-10-19T17:19:30.331Z",
+    "is_read": false
+  }
+},
+{
+  "model": "core.contactmessage",
+  "pk": 6,
+  "fields": {
+    "name": "Надежда Михайлов",
+    "phone": "+972544877539",
+    "email": "надежда.михайлов@example.com",
+    "message": "Можно ли перенести мою запись на другое время?",
+    "created_at": "2025-10-20T21:39:55.229Z",
+    "is_read": false
+  }
+},
+{
+  "model": "core.contactmessage",
+  "pk": 7,
+  "fields": {
+    "name": "Татьяна Козлов",
+    "phone": "+972545245931",
+    "email": "татьяна.козлов@example.com",
+    "message": "Можно ли перенести мою запись на другое время?",
+    "created_at": "2025-10-20T21:39:55.272Z",
+    "is_read": false
+  }
+},
+{
+  "model": "core.contactmessage",
+  "pk": 8,
+  "fields": {
+    "name": "Павел Богданов",
+    "phone": "+972541899656",
+    "email": "павел.богданов@example.com",
+    "message": "Можно ли перенести мою запись на другое время?",
+    "created_at": "2025-10-20T21:39:55.313Z",
+    "is_read": true
+  }
+},
+{
+  "model": "core.contactmessage",
+  "pk": 9,
+  "fields": {
+    "name": "Людмила Романов",
+    "phone": "+972547422049",
+    "email": "людмила.романов@example.com",
+    "message": "Принимаете ли вы страховку?",
+    "created_at": "2025-10-20T21:39:55.439Z",
+    "is_read": false
+  }
+},
+{
+  "model": "core.contactmessage",
+  "pk": 10,
+  "fields": {
+    "name": "Евгений Иванов",
+    "phone": "+972542514050",
+    "email": "евгений.иванов@example.com",
+    "message": "Работаете ли вы в выходные дни?",
+    "created_at": "2025-10-20T21:39:55.596Z",
+    "is_read": false
+  }
+},
+{
+  "model": "core.contactmessage",
+  "pk": 11,
+  "fields": {
+    "name": "Зоя Михайлов",
+    "phone": "+972548317544",
+    "email": "зоя.михайлов@example.com",
+    "message": "Можно ли перенести мою запись на другое время?",
+    "created_at": "2025-10-20T21:39:55.648Z",
+    "is_read": false
+  }
+},
+{
+  "model": "core.contactmessage",
+  "pk": 12,
+  "fields": {
+    "name": "Светлана Комаров",
+    "phone": "+972546221965",
+    "email": "светлана.комаров@example.com",
+    "message": "Какие услуги вы предоставляете?",
+    "created_at": "2025-10-20T21:39:55.687Z",
+    "is_read": false
+  }
+},
+{
+  "model": "core.contactmessage",
+  "pk": 13,
+  "fields": {
+    "name": "Татьяна Романов",
+    "phone": "+972548233908",
+    "email": "татьяна.романов@example.com",
+    "message": "Сколько стоит консультация врача?",
+    "created_at": "2025-10-20T21:39:55.712Z",
+    "is_read": true
+  }
+},
+{
+  "model": "core.contactmessage",
+  "pk": 16,
+  "fields": {
+    "name": "Павел Кириллов",
+    "phone": "+972549235117",
+    "email": "павел.кириллов@example.com",
+    "message": "Где находится ваш центр?",
+    "created_at": "2025-10-20T21:39:55.814Z",
+    "is_read": true
+  }
+},
+{
+  "model": "core.contactmessage",
+  "pk": 17,
+  "fields": {
+    "name": "Виктор Богданов",
+    "phone": "+972544567118",
+    "email": "виктор.богданов@example.com",
+    "message": "Как долго длится прием у специалиста?",
+    "created_at": "2025-10-20T21:39:55.849Z",
+    "is_read": true
+  }
+},
+{
+  "model": "core.contactmessage",
+  "pk": 18,
+  "fields": {
+    "name": "Валентина Новиков",
+    "phone": "+972548629945",
+    "email": "валентина.новиков@example.com",
+    "message": "Здравствуйте! Хотел бы записаться на прием к специалисту.",
+    "created_at": "2025-10-20T21:39:55.897Z",
+    "is_read": false
+  }
+},
+{
+  "model": "core.contactmessage",
+  "pk": 20,
+  "fields": {
+    "name": "Владимир Тарасов",
+    "phone": "+972541695786",
+    "email": "владимир.тарасов@example.com",
+    "message": "Какие услуги вы предоставляете?",
+    "created_at": "2025-10-20T21:39:56.005Z",
+    "is_read": true
+  }
+},
+{
+  "model": "core.contactmessage",
+  "pk": 21,
+  "fields": {
+    "name": "Наталья Орлов",
+    "phone": "+972548421945",
+    "email": "наталья.орлов@example.com",
+    "message": "Можно ли получить справку после приема?",
+    "created_at": "2025-10-20T21:39:56.037Z",
+    "is_read": true
+  }
+}
+]
