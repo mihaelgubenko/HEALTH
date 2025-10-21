@@ -1021,7 +1021,8 @@ class ValidationManager:
             if validation_result['alternatives']:
                 message += f"\n📅 Альтернативные даты:"
                 for alt in validation_result['alternatives'][:3]:
-                    message += f"\n  • {alt['date_str']} ({alt['weekday']}) в {alt['time']}"
+                    time_str = alt.get('time', 'доступное время')
+                    message += f"\n  • {alt['date_str']} ({alt['weekday']}) в {time_str}"
             
             return message.strip()
     

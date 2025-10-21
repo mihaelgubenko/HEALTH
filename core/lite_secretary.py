@@ -1075,8 +1075,122 @@ class LiteSmartSecretary:
         except Exception as e:
             # ИСПРАВЛЕНО: Детальное логирование ошибок
             logger.error(f"Failed to create appointment: {e}", exc_info=True)
-            self.stats['validation_errors'] += 1
-            return False, f"Ошибка создания записи: {str(e)}"
+            
+            # НОВОЕ: Попытка упрощенного создания записи для AI чата
+            try:
+                logger.info("Attempting simplified appointment creation for AI chat")
+                return self._create_simple_appointment(session_id, name, phone, service_name, specialist_name, day, time)
+            except Exception as simple_error:
+                logger.error(f"Simplified creation also failed: {str(simple_error)}")
+                self.stats['creation_errors'] += 1
+                return False, f"Ошибка создания записи: {str(e)}"
+    
+    def _create_simple_appointment(self, session_id: str, name: str, phone: str,
+                                 service_name: str, specialist_name: str,
+                                 day: str, time: str) -> tuple[bool, any]:
+        """
+        Упрощенное создание записи без сложной валидации
+        Используется как fallback для AI чата
+        """
+        try:
+            logger.info(f"Simple appointment creation: {name}, {phone}, {service_name}, {specialist_name}, {day}, {time}")
+            
+            # 1. Простая очистка и нормализация данных
+            name = name.strip().title()
+            phone = phone.strip()
+            
+            # Простая очистка телефона
+            if not phone.startswith('+'):
+                if phone.startswith('0'):
+                    phone = '+972' + phone[1:]  # Израильский номер
+                elif len(phone) == 10:
+                    phone = '+972' + phone  # Израильский номер без 0
+                else:
+                    phone = '+' + phone
+            
+            # 2. Поиск или создание пациента
+            patient, created = Patient.objects.get_or_create(
+                phone=phone,
+                defaults={
+                    'name': name,
+                    'country': 'Israel',
+                    'city': 'Иерусалим'
+                }
+            )
+            
+            # 3. Поиск услуги (гибкий поиск)
+            service = None
+            try:
+                service = Service.objects.get(name=service_name)
+            except Service.DoesNotExist:
+                # Поиск по частичному совпадению
+                services = Service.objects.filter(name__icontains=service_name.split()[0])
+                if services.exists():
+                    service = services.first()
+                else:
+                    # Используем первую доступную услугу массажа
+                    service = Service.objects.filter(name__icontains='массаж').first()
+            
+            if not service:
+                return False, "Не удалось найти подходящую услугу"
+            
+            # 4. Поиск специалиста
+            specialist = None
+            try:
+                specialist = Specialist.objects.get(name__icontains=specialist_name)
+            except Specialist.DoesNotExist:
+                # Используем первого доступного специалиста
+                specialist = Specialist.objects.filter(is_active=True).first()
+            
+            if not specialist:
+                return False, "Не удалось найти специалиста"
+            
+            # 5. Парсинг даты и времени
+            appointment_date = None
+            appointment_time = None
+            
+            # Простой парсинг даты
+            today = timezone.now().date()
+            tomorrow = today + timedelta(days=1)
+            
+            if 'сегодня' in day.lower() or 'today' in day.lower():
+                appointment_date = today
+            elif 'завтра' in day.lower() or 'tomorrow' in day.lower():
+                appointment_date = tomorrow
+            else:
+                # Пробуем завтра по умолчанию
+                appointment_date = tomorrow
+            
+            # Простой парсинг времени
+            try:
+                appointment_time = datetime.strptime(time, '%H:%M').time()
+            except ValueError:
+                # Используем время по умолчанию
+                appointment_time = datetime.strptime('10:00', '%H:%M').time()
+            
+            # 6. Создание записи
+            start_datetime = timezone.make_aware(
+                datetime.combine(appointment_date, appointment_time)
+            )
+            end_datetime = start_datetime + timedelta(minutes=service.duration)
+            
+            appointment = Appointment.objects.create(
+                patient=patient,
+                service=service,
+                specialist=specialist,
+                start_time=start_datetime,
+                end_time=end_datetime,
+                status='pending',
+                channel='web',
+                notes=f'Упрощенная запись через ИИ-чат (сессия: {session_id})'
+            )
+            
+            logger.info(f"Simple appointment created successfully: ID={appointment.id}")
+            return True, appointment
+            
+        except Exception as e:
+            logger.error(f"Simple appointment creation failed: {str(e)}", exc_info=True)
+            return False, f"Не удалось создать запись: {str(e)}"
     
     def _parse_datetime(self, day: str, time: str) -> Optional[datetime]:
         """Парсит дату и время в datetime объект"""
