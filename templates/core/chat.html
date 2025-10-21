@@ -486,7 +486,10 @@ function handleAIResponse(response) {
     if (response.intent && (response.intent.includes('collect_') || response.intent === 'error')) {
         if (response.reply && (response.reply.includes('Что хотите исправить?') || 
                               response.reply.includes('номер телефона') || 
-                              response.reply.includes('имя'))) {
+                              response.reply.includes('имя') ||
+                              response.reply.includes('исправить') ||
+                              response.reply.includes('некорректный') ||
+                              response.reply.includes('ошибка'))) {
             showNavigationButtons(response.intent);
         }
     }
@@ -928,18 +931,22 @@ function showNavigationButtons(intent) {
     
     if (intent === 'collect_phone' || intent.includes('phone')) {
         buttons.push({text: '📞 Исправить телефон', action: 'fix_phone'});
+        buttons.push({text: '⬅️ Шаг назад', action: 'step_back'});
         buttons.push({text: '🔄 Начать заново', action: 'restart'});
     } else if (intent === 'collect_name' || intent.includes('name')) {
         buttons.push({text: '👤 Исправить имя', action: 'fix_name'});
+        buttons.push({text: '⬅️ Шаг назад', action: 'step_back'});
         buttons.push({text: '🔄 Начать заново', action: 'restart'});
     } else if (intent === 'collect_time' || intent.includes('time')) {
         buttons.push({text: '⏰ Выбрать другое время', action: 'fix_time'});
         buttons.push({text: '📅 Изменить дату', action: 'fix_date'});
+        buttons.push({text: '⬅️ Шаг назад', action: 'step_back'});
         buttons.push({text: '🔄 Начать заново', action: 'restart'});
     } else {
         // Общие кнопки для любых ошибок
         buttons.push({text: '📞 Исправить телефон', action: 'fix_phone'});
         buttons.push({text: '👤 Исправить имя', action: 'fix_name'});
+        buttons.push({text: '⬅️ Шаг назад', action: 'step_back'});
         buttons.push({text: '🔄 Начать заново', action: 'restart'});
     }
     
@@ -1000,6 +1007,9 @@ function handleNavigationAction(action, buttonsDiv) {
             break;
         case 'fix_date':
             message = 'Хочу изменить дату';
+            break;
+        case 'step_back':
+            message = 'Шаг назад';
             break;
         case 'restart':
             message = 'Начать заново';

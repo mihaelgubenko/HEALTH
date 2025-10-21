@@ -340,7 +340,7 @@ class PhoneValidator:
     @staticmethod
     def detect_country_by_phone(phone_clean: str) -> Tuple[str, str]:
         """
-        Определение страны по номеру телефона
+        Упрощенное определение страны по номеру телефона
         Возвращает: (country_code, remaining_digits)
         """
         # Израиль
@@ -349,10 +349,8 @@ class PhoneValidator:
         elif phone_clean.startswith('972'):
             return 'IL', phone_clean[3:]
         elif phone_clean.startswith('0') and len(phone_clean) >= 9:
-            # Локальный израильский формат
             return 'IL', phone_clean[1:]
-        elif len(phone_clean) == 9 and not phone_clean.startswith('1'):
-            # Израильский без префикса - принимаем все 9-значные номера кроме начинающихся с 1
+        elif len(phone_clean) == 9:
             return 'IL', phone_clean
         
         # Россия
@@ -361,30 +359,26 @@ class PhoneValidator:
         elif phone_clean.startswith('7') and len(phone_clean) == 11:
             return 'RU', phone_clean[1:]
         elif phone_clean.startswith('8') and len(phone_clean) == 11:
-            # 8 вместо +7 в России
             return 'RU', phone_clean[1:]
+        elif len(phone_clean) == 10:
+            return 'RU', phone_clean
         
         # Украина
         elif phone_clean.startswith('+380'):
             return 'UA', phone_clean[4:]
         elif phone_clean.startswith('380'):
             return 'UA', phone_clean[3:]
-        elif phone_clean.startswith('0') and len(phone_clean) == 10:
-                # Может быть украинский локальный формат
-                digits = phone_clean[1:]
-                if digits[:2] in PhoneValidator.COUNTRY_OPERATORS['UA']['mobile_prefixes']:
-                    return 'UA', digits
-                # Если не украинский, проверяем израильский
-                elif len(phone_clean) >= 9 and digits[:2] in PhoneValidator.COUNTRY_OPERATORS['IL']['mobile_prefixes']:
-                    return 'IL', digits
         
         # США
         elif phone_clean.startswith('+1'):
             return 'US', phone_clean[2:]
         elif phone_clean.startswith('1') and len(phone_clean) == 11:
             return 'US', phone_clean[1:]
+        elif len(phone_clean) == 10:
+            return 'US', phone_clean
         
-        return 'UNKNOWN', phone_clean
+        # По умолчанию считаем израильским
+        return 'IL', phone_clean
     
     @staticmethod
     def validate_phone_by_country(country: str, digits: str) -> Tuple[bool, str]:
@@ -491,19 +485,33 @@ class PhoneValidator:
     @classmethod
     def validate_phone(cls, phone: str) -> Tuple[bool, str, str]:
         """
-        Основной метод валидации телефона
-        Возвращает: (is_valid, country_code, formatted_phone_or_error)
+        Упрощенная валидация телефона - только базовая очистка
+        Возвращает: (is_valid, country_code, formatted_phone)
         """
         if not phone or not phone.strip():
-            return False, "UNKNOWN", "Телефон не может быть пустым"
+            return False, '', ''
         
-        info = cls.get_phone_info(phone)
+        # Только базовая очистка
+        cleaned = cls.clean_phone(phone)
         
-        if info['is_valid']:
-            return True, info['country'], info['formatted']
-        else:
-            error_message = "; ".join(info['errors'])
-            return False, info['country'], error_message
+        # Минимальная длина
+        if len(cleaned) < 7:
+            return False, '', cleaned
+        
+        # Определяем страну (упрощенно)
+        country, remaining = cls.detect_country_by_phone(cleaned)
+        
+        if not country:
+            # Если не определили страну, считаем израильским
+            country = 'IL'
+            remaining = cleaned
+        
+        # Форматируем номер
+        country_config = cls.COUNTRY_OPERATORS.get(country, {})
+        country_code = country_config.get('country_code', '+972')
+        formatted = f"{country_code}{remaining}"
+        
+        return True, country, formatted
     
     @classmethod
     def suggest_corrections(cls, phone: str) -> List[str]:
@@ -873,22 +881,17 @@ class ValidationManager:
             if normalized_name != name.strip():
                 result['warnings'].append(f"Имя нормализовано: {normalized_name}")
         
-        # 2. Валидация телефона
+        # 2. Валидация телефона (упрощенная - не блокирует создание записи)
         phone_valid, country, formatted_phone = self.phone_validator.validate_phone(phone)
         if not phone_valid:
-            result['is_valid'] = False
-            result['errors'].append(f"Телефон: {formatted_phone}")
-            # Добавляем предложения по исправлению телефона
-            phone_suggestions = self.phone_validator.suggest_corrections(phone)
-            if phone_suggestions:
-                result['suggestions'].extend(phone_suggestions)
+            # Не блокируем создание записи, только предупреждаем
+            result['warnings'].append(f"Телефон может быть некорректным: {formatted_phone}")
+            # Используем исходный номер как есть
+            result['data']['phone'] = phone.strip()
+            result['data']['country'] = 'IL'  # По умолчанию
         else:
             result['data']['phone'] = formatted_phone
             result['data']['country'] = country
-            
-            # Получаем детальную информацию о телефоне
-            phone_info = self.phone_validator.get_phone_info(phone)
-            result['data']['phone_type'] = phone_info.get('type', 'unknown')
         
         # 3. Валидация услуги
         service_valid, service_error, service_obj = self.service_validator.validate_service(service_name)
@@ -992,47 +995,32 @@ class ValidationManager:
     
     def get_validation_summary(self, validation_result: Dict[str, Any]) -> str:
         """
-        Генерирует дружелюбное сообщение о результатах валидации
+        Генерирует упрощенное сообщение о результатах валидации
         """
         if validation_result['is_valid']:
-            message = "✅ Все данные корректны!"
-            if validation_result['warnings']:
-                message += f"\n⚠️ Предупреждения: {'; '.join(validation_result['warnings'])}"
-            return message
+            return "✅ Все данные корректны!"
         else:
-            # Делаем сообщения более дружелюбными
+            # Упрощенные сообщения об ошибках
             friendly_errors = []
             for error in validation_result['errors']:
-                if 'некорректный номер телефона' in error.lower():
-                    friendly_errors.append("📞 Пожалуйста, проверьте номер телефона. Укажите его в формате +972541234567 или 0541234567")
-                elif 'время' in error.lower() and ('занято' in error.lower() or 'прошедшую' in error.lower()):
-                    friendly_errors.append("⏰ Это время недоступно. Давайте выберем другое время")
-                elif 'специалист' in error.lower() and 'не найден' in error.lower():
-                    friendly_errors.append("👨‍⚕️ Не могу найти этого специалиста. Давайте выберем из доступных")
-                elif 'услуга' in error.lower() and 'не найдена' in error.lower():
-                    friendly_errors.append("🏥 Не могу найти эту услугу. Давайте выберем из каталога")
+                if 'телефон' in error.lower():
+                    friendly_errors.append("📞 Проверьте номер телефона")
+                elif 'время' in error.lower():
+                    friendly_errors.append("⏰ Время недоступно")
+                elif 'специалист' in error.lower():
+                    friendly_errors.append("👨‍⚕️ Специалист не найден")
+                elif 'услуга' in error.lower():
+                    friendly_errors.append("🏥 Услуга не найдена")
                 elif 'имя' in error.lower():
-                    friendly_errors.append("👤 Пожалуйста, укажите ваше имя (минимум 2 буквы)")
+                    friendly_errors.append("👤 Проверьте имя")
                 else:
-                    # Оставляем оригинальную ошибку, но убираем технические детали
-                    clean_error = error.replace('Неизвестный код оператора', 'Проверьте номер телефона')
-                    friendly_errors.append(f"⚠️ {clean_error}")
+                    friendly_errors.append("⚠️ Есть ошибка в данных")
             
-            message = "Давайте исправим несколько моментов:\n\n"
-            for i, error in enumerate(friendly_errors, 1):
-                message += f"{i}. {error}\n"
-            
-            if validation_result['suggestions']:
-                message += f"\n💡 Рекомендуемые времена: {', '.join(validation_result['suggestions'])}"
-            
-            if validation_result['alternatives']:
-                message += f"\n📅 Альтернативные даты:"
-                for alt in validation_result['alternatives'][:3]:
-                    time_str = alt.get('time', 'доступное время')
-                    message += f"\n  • {alt['date_str']} ({alt['weekday']}) в {time_str}"
-            
-            message += "\n\nЧто хотите исправить?"
-            return message.strip()
+            # Показываем только первую ошибку
+            if friendly_errors:
+                return f"{friendly_errors[0]}\n\nЧто хотите исправить?"
+            else:
+                return "⚠️ Есть ошибка в данных\n\nЧто хотите исправить?"
     
     def get_detailed_validation_report(self, validation_result: Dict[str, Any]) -> Dict[str, Any]:
         """

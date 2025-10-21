@@ -305,7 +305,8 @@ class LiteSessionManager:
                 },
                 'history': [],
                 'created_at': datetime.now(),
-                'last_update': datetime.now()
+                'last_update': datetime.now(),
+                'correction_attempts': 0  # Счетчик попыток исправления
             }
         return self.sessions[session_id]
     
@@ -395,6 +396,22 @@ class LiteSessionManager:
         completed = sum(1 for field in required if entities.get(field))
         
         return completed / len(required)
+    
+    def increment_correction_attempts(self, session_id: str) -> int:
+        """Увеличивает счетчик попыток исправления"""
+        session = self.get_session(session_id)
+        session['correction_attempts'] += 1
+        return session['correction_attempts']
+    
+    def get_correction_attempts(self, session_id: str) -> int:
+        """Получает количество попыток исправления"""
+        session = self.get_session(session_id)
+        return session.get('correction_attempts', 0)
+    
+    def reset_correction_attempts(self, session_id: str):
+        """Сбрасывает счетчик попыток исправления"""
+        session = self.get_session(session_id)
+        session['correction_attempts'] = 0
     
     def clear_session(self, session_id: str):
         """Полная очистка сессии"""
@@ -517,6 +534,8 @@ class LiteSmartSecretary:
         if 'начать заново' in user_message_lower:
             # Полный сброс сессии
             self.session_manager.clear_session(session_id)
+            # Сбрасываем счетчик попыток исправления
+            self.session_manager.reset_correction_attempts(session_id)
             return {
                 'reply': '🔄 Хорошо, начинаем заново!\n\n👋 Здравствуйте! Я помогу вам записаться на приём в центр "Новая Жизнь".\n\n🏥 Выберите услугу:',
                 'intent': 'collect_service',
@@ -525,6 +544,8 @@ class LiteSmartSecretary:
         elif 'исправить телефон' in user_message_lower or 'исправить номер' in user_message_lower:
             entities['phone'] = None
             session['state'] = DialogState.COLLECTING_PHONE
+            # Сбрасываем счетчик попыток при исправлении
+            self.session_manager.reset_correction_attempts(session_id)
             return {
                 'reply': '📞 Хорошо, давайте исправим номер телефона.\n\nУкажите ваш номер в формате +972541234567 или 0541234567:',
                 'intent': 'collect_phone',
@@ -533,6 +554,8 @@ class LiteSmartSecretary:
         elif 'исправить имя' in user_message_lower:
             entities['name'] = None
             session['state'] = DialogState.COLLECTING_NAME
+            # Сбрасываем счетчик попыток при исправлении
+            self.session_manager.reset_correction_attempts(session_id)
             return {
                 'reply': '👤 Хорошо, давайте исправим имя.\n\nКак вас зовут?',
                 'intent': 'collect_name',
@@ -1129,6 +1152,11 @@ class LiteSmartSecretary:
             except Exception:
                 pass  # Любая ошибка в предварительной проверке - продолжаем обычную валидацию
 
+            # Проверяем количество попыток исправления
+            attempts = self.session_manager.get_correction_attempts(session_id)
+            if attempts >= 2:
+                return False, "⚠️ Слишком много попыток исправления. Давайте начнем заново или обратитесь к администратору."
+            
             # ИСПРАВЛЕНО: Комплексная валидация всех данных
             validation_result = self.validator.validate_appointment_data(
                 name, phone, service_name, specialist_name, day, time
@@ -1141,6 +1169,8 @@ class LiteSmartSecretary:
                 logger.error(f"Validation errors: {validation_result['errors']}")
             
             if not validation_result['is_valid']:
+                # Увеличиваем счетчик попыток при ошибке валидации
+                self.session_manager.increment_correction_attempts(session_id)
                 self.stats['validation_errors'] += 1
                 
                 # Более информативное логирование с контекстом
@@ -1235,6 +1265,9 @@ class LiteSmartSecretary:
             session = self.session_manager.get_session(session_id)
             session['entities']['appointment_id'] = appointment.id
             session['state'] = DialogState.COMPLETED
+            
+            # Сбрасываем счетчик попыток исправления при успешном создании
+            self.session_manager.reset_correction_attempts(session_id)
 
             # ИСПРАВЛЕНО: Логирование успешного создания
             logger.info(f"Appointment created successfully: ID={appointment.id}, Patient={name}, Time={start_datetime}")
