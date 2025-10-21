@@ -481,6 +481,15 @@ function handleAIResponse(response) {
     if (response.intent === 'time_collected' || response.intent === 'booking_completed') {
         showAppointmentConfirmation(response.entities || currentAppointmentData);
     }
+    
+    // Показываем кнопки навигации при ошибках валидации
+    if (response.intent && (response.intent.includes('collect_') || response.intent === 'error')) {
+        if (response.reply && (response.reply.includes('Что хотите исправить?') || 
+                              response.reply.includes('номер телефона') || 
+                              response.reply.includes('имя'))) {
+            showNavigationButtons(response.intent);
+        }
+    }
 }
 
 function addMessage(text, sender) {
@@ -906,6 +915,127 @@ function showAppointmentConfirmation(data) {
     
     messagesContainer.appendChild(confirmationDiv);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+function showNavigationButtons(intent) {
+    const messagesContainer = document.getElementById('chatMessages');
+    const buttonsDiv = document.createElement('div');
+    buttonsDiv.className = 'interactive-buttons navigation-buttons';
+    buttonsDiv.style.marginTop = '15px';
+    
+    // Определяем какие кнопки показать в зависимости от контекста
+    const buttons = [];
+    
+    if (intent === 'collect_phone' || intent.includes('phone')) {
+        buttons.push({text: '📞 Исправить телефон', action: 'fix_phone'});
+        buttons.push({text: '🔄 Начать заново', action: 'restart'});
+    } else if (intent === 'collect_name' || intent.includes('name')) {
+        buttons.push({text: '👤 Исправить имя', action: 'fix_name'});
+        buttons.push({text: '🔄 Начать заново', action: 'restart'});
+    } else if (intent === 'collect_time' || intent.includes('time')) {
+        buttons.push({text: '⏰ Выбрать другое время', action: 'fix_time'});
+        buttons.push({text: '📅 Изменить дату', action: 'fix_date'});
+        buttons.push({text: '🔄 Начать заново', action: 'restart'});
+    } else {
+        // Общие кнопки для любых ошибок
+        buttons.push({text: '📞 Исправить телефон', action: 'fix_phone'});
+        buttons.push({text: '👤 Исправить имя', action: 'fix_name'});
+        buttons.push({text: '🔄 Начать заново', action: 'restart'});
+    }
+    
+    buttons.forEach(buttonInfo => {
+        const btn = document.createElement('button');
+        btn.className = 'nav-btn';
+        btn.innerHTML = buttonInfo.text;
+        btn.style.cssText = `
+            background: linear-gradient(135deg, #F39C12 0%, #E67E22 100%);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        `;
+        
+        btn.onmouseover = () => {
+            btn.style.transform = 'translateY(-2px)';
+            btn.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
+        };
+        
+        btn.onmouseout = () => {
+            btn.style.transform = 'translateY(0)';
+            btn.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+        };
+        
+        btn.onclick = () => handleNavigationAction(buttonInfo.action, buttonsDiv);
+        buttonsDiv.appendChild(btn);
+    });
+    
+    messagesContainer.appendChild(buttonsDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+function handleNavigationAction(action, buttonsDiv) {
+    // Отключаем кнопки
+    const buttons = buttonsDiv.querySelectorAll('button');
+    buttons.forEach(btn => {
+        btn.disabled = true;
+        btn.style.opacity = '0.5';
+    });
+    
+    let message = '';
+    
+    switch(action) {
+        case 'fix_phone':
+            message = 'Хочу исправить номер телефона';
+            break;
+        case 'fix_name':
+            message = 'Хочу исправить имя';
+            break;
+        case 'fix_time':
+            message = 'Хочу выбрать другое время';
+            break;
+        case 'fix_date':
+            message = 'Хочу изменить дату';
+            break;
+        case 'restart':
+            message = 'Начать заново';
+            // Очищаем данные записи
+            currentAppointmentData = {};
+            break;
+    }
+    
+    // Показываем выбор пользователя
+    addMessage(message, 'user');
+    
+    // Отправляем в AI
+    fetch('/api/chat/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            message: message,
+            session_id: sessionId
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Navigation Response:', data);
+        handleAIResponse(data);
+    })
+    .catch(error => {
+        addMessage('Извините, произошла ошибка: ' + error.message, 'ai');
+        console.error('Error:', error);
+    });
 }
 </script>
 {% endblock %}

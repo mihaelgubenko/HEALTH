@@ -388,6 +388,11 @@ class LiteSessionManager:
         completed = sum(1 for field in required if entities.get(field))
         
         return completed / len(required)
+    
+    def clear_session(self, session_id: str):
+        """Полная очистка сессии"""
+        if session_id in self.sessions:
+            del self.sessions[session_id]
 
 class LiteSmartSecretary:
     """Легкий умный секретарь без тяжелых зависимостей"""
@@ -500,6 +505,50 @@ class LiteSmartSecretary:
         session = self.session_manager.get_session(session_id)
         entities = session['entities']
         
+        # Обработка навигационных команд
+        user_message_lower = user_message.lower()
+        if 'начать заново' in user_message_lower:
+            # Полный сброс сессии
+            self.session_manager.clear_session(session_id)
+            return {
+                'reply': '🔄 Хорошо, начинаем заново!\n\n👋 Здравствуйте! Я помогу вам записаться на приём в центр "Новая Жизнь".\n\n🏥 Выберите услугу:',
+                'intent': 'collect_service',
+                'session_id': session_id
+            }
+        elif 'исправить телефон' in user_message_lower or 'исправить номер' in user_message_lower:
+            entities['phone'] = None
+            session['state'] = DialogState.COLLECTING_PHONE
+            return {
+                'reply': '📞 Хорошо, давайте исправим номер телефона.\n\nУкажите ваш номер в формате +972541234567 или 0541234567:',
+                'intent': 'collect_phone',
+                'session_id': session_id
+            }
+        elif 'исправить имя' in user_message_lower:
+            entities['name'] = None
+            session['state'] = DialogState.COLLECTING_NAME
+            return {
+                'reply': '👤 Хорошо, давайте исправим имя.\n\nКак вас зовут?',
+                'intent': 'collect_name',
+                'session_id': session_id
+            }
+        elif 'выбрать другое время' in user_message_lower or 'изменить время' in user_message_lower:
+            entities['time'] = None
+            session['state'] = DialogState.COLLECTING_TIME
+            return {
+                'reply': '⏰ Хорошо, давайте выберем другое время.\n\nВ какое время вам удобно?',
+                'intent': 'collect_time',
+                'session_id': session_id
+            }
+        elif 'изменить дату' in user_message_lower:
+            entities['date'] = None
+            entities['time'] = None
+            session['state'] = DialogState.COLLECTING_DATE
+            return {
+                'reply': '📅 Хорошо, давайте выберем другую дату.\n\nНа какую дату хотите записаться?',
+                'intent': 'collect_date',
+                'session_id': session_id
+            }
+        
         # ИСПРАВЛЕНО: Обновляем entities перед определением следующего шага
         # (update_entities уже вызван в _process_with_lite_logic, но проверим еще раз)
         if extracted:
@@ -565,6 +614,18 @@ class LiteSmartSecretary:
                     session['state'] = DialogState.COLLECTING_DATE
                     reply = f"{result}\n\nПожалуйста, выберите другую дату."
                     intent = 'collect_date'
+                elif 'номер телефона' in result.lower():
+                    # Проблема с телефоном - возвращаемся к сбору телефона
+                    entities['phone'] = None
+                    session['state'] = DialogState.COLLECTING_PHONE
+                    reply = f"{result}\n\n📞 Пожалуйста, укажите ваш номер телефона:"
+                    intent = 'collect_phone'
+                elif 'имя' in result.lower():
+                    # Проблема с именем - возвращаемся к сбору имени
+                    entities['name'] = None
+                    session['state'] = DialogState.COLLECTING_NAME
+                    reply = f"{result}\n\n👤 Как вас зовут?"
+                    intent = 'collect_name'
                 elif '💡 Рекомендуемые времена' in result:
                     # Валидатор предложил слоты (старый формат)
                     entities['time'] = None

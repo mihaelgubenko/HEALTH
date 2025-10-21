@@ -351,8 +351,8 @@ class PhoneValidator:
         elif phone_clean.startswith('0') and len(phone_clean) >= 9:
             # Локальный израильский формат
             return 'IL', phone_clean[1:]
-        elif len(phone_clean) == 9 and phone_clean[0] in ['5', '2', '3', '4', '8', '9']:
-            # Израильский без префикса
+        elif len(phone_clean) == 9 and not phone_clean.startswith('1'):
+            # Израильский без префикса - принимаем все 9-значные номера кроме начинающихся с 1
             return 'IL', phone_clean
         
         # Россия
@@ -388,52 +388,41 @@ class PhoneValidator:
     
     @staticmethod
     def validate_phone_by_country(country: str, digits: str) -> Tuple[bool, str]:
-        """Валидация номера для конкретной страны"""
+        """Упрощенная валидация номера для конкретной страны - только базовые проверки"""
         if country not in PhoneValidator.COUNTRY_OPERATORS:
             return False, f"Неподдерживаемая страна: {country}"
         
         country_info = PhoneValidator.COUNTRY_OPERATORS[country]
         expected_length = country_info['length']
         
-        # Проверка длины
+        # Проверка длины - основная проверка
         if len(digits) != expected_length:
             return False, f"Неверная длина номера для {country}. Ожидается {expected_length} цифр, получено {len(digits)}"
         
-        # Проверка префикса оператора
-        mobile_prefixes = country_info.get('mobile_prefixes', [])
-        landline_prefixes = country_info.get('landline_prefixes', [])
-        
+        # Упрощенные проверки - только очевидно неверные номера
         if country == 'IL':
-            # Для Израиля проверяем первые 2 цифры
-            prefix = digits[:2]
-            if prefix not in mobile_prefixes and prefix not in landline_prefixes:
-                return False, f"Неизвестный код оператора {prefix} для Израиля"
+            # Для Израиля - принимаем все номера правильной длины
+            # Убираем строгую проверку кодов операторов
+            pass
         
         elif country == 'RU':
-            # Для России проверяем первые 3 цифры
-            prefix = digits[:3]
-            if prefix not in mobile_prefixes:
-                # Проверяем региональные коды (для стационарных)
-                region_code = digits[:3]
-                if not (region_code.startswith('4') or region_code.startswith('8') or 
-                       region_code in ['495', '496', '498', '499']):  # Москва и область
-                    return False, f"Неизвестный код оператора {prefix} для России"
+            # Для России - проверяем что начинается с 9 (мобильный) или 4/8 (регион)
+            if not (digits[0] in ['9', '4', '8'] or digits[:3] in ['495', '496', '498', '499']):
+                return False, "Российский номер должен начинаться с 9 (мобильный) или кода региона"
         
         elif country == 'UA':
-            # Для Украины проверяем первые 2 цифры
-            prefix = digits[:2]
-            if prefix not in mobile_prefixes and prefix not in landline_prefixes:
-                return False, f"Неизвестный код оператора {prefix} для Украины"
+            # Для Украины - принимаем все номера правильной длины
+            # Убираем строгую проверку кодов операторов
+            pass
         
         elif country == 'US':
             # Для США проверяем что первая цифра не 0 или 1
             if digits[0] in ['0', '1']:
                 return False, "Номер в США не может начинаться с 0 или 1"
             
-            # Проверяем что код региона валиден (первые 3 цифры)
-            area_code = digits[:3]
-            if area_code[1] in ['0', '1']:
-                return False, f"Неверный код региона {area_code} для США"
+            # Проверяем что четвертая цифра не 0 или 1
+            if len(digits) >= 4 and digits[3] in ['0', '1']:
+                return False, "Неверный формат номера США"
         
         return True, "OK"
     
@@ -1003,7 +992,7 @@ class ValidationManager:
     
     def get_validation_summary(self, validation_result: Dict[str, Any]) -> str:
         """
-        Генерирует понятное сообщение о результатах валидации
+        Генерирует дружелюбное сообщение о результатах валидации
         """
         if validation_result['is_valid']:
             message = "✅ Все данные корректны!"
@@ -1011,9 +1000,27 @@ class ValidationManager:
                 message += f"\n⚠️ Предупреждения: {'; '.join(validation_result['warnings'])}"
             return message
         else:
-            message = "❌ Обнаружены ошибки:\n"
+            # Делаем сообщения более дружелюбными
+            friendly_errors = []
             for error in validation_result['errors']:
-                message += f"• {error}\n"
+                if 'некорректный номер телефона' in error.lower():
+                    friendly_errors.append("📞 Пожалуйста, проверьте номер телефона. Укажите его в формате +972541234567 или 0541234567")
+                elif 'время' in error.lower() and ('занято' in error.lower() or 'прошедшую' in error.lower()):
+                    friendly_errors.append("⏰ Это время недоступно. Давайте выберем другое время")
+                elif 'специалист' in error.lower() and 'не найден' in error.lower():
+                    friendly_errors.append("👨‍⚕️ Не могу найти этого специалиста. Давайте выберем из доступных")
+                elif 'услуга' in error.lower() and 'не найдена' in error.lower():
+                    friendly_errors.append("🏥 Не могу найти эту услугу. Давайте выберем из каталога")
+                elif 'имя' in error.lower():
+                    friendly_errors.append("👤 Пожалуйста, укажите ваше имя (минимум 2 буквы)")
+                else:
+                    # Оставляем оригинальную ошибку, но убираем технические детали
+                    clean_error = error.replace('Неизвестный код оператора', 'Проверьте номер телефона')
+                    friendly_errors.append(f"⚠️ {clean_error}")
+            
+            message = "Давайте исправим несколько моментов:\n\n"
+            for i, error in enumerate(friendly_errors, 1):
+                message += f"{i}. {error}\n"
             
             if validation_result['suggestions']:
                 message += f"\n💡 Рекомендуемые времена: {', '.join(validation_result['suggestions'])}"
@@ -1024,6 +1031,7 @@ class ValidationManager:
                     time_str = alt.get('time', 'доступное время')
                     message += f"\n  • {alt['date_str']} ({alt['weekday']}) в {time_str}"
             
+            message += "\n\nЧто хотите исправить?"
             return message.strip()
     
     def get_detailed_validation_report(self, validation_result: Dict[str, Any]) -> Dict[str, Any]:
