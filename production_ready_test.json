@@ -1,0 +1,147 @@
+{
+  "timestamp": "2025-10-21T14:17:33.571297",
+  "suites": {
+    "validation": {
+      "timestamp": "2025-10-21T14:17:33.608349",
+      "tests": {
+        "Валидация имен": {
+          "status": "PASSED",
+          "result": {
+            "passed": 13,
+            "total": 13
+          },
+          "execution_time": 0.008321523666381836,
+          "error": null
+        },
+        "Валидация телефонов": {
+          "status": "PASSED",
+          "result": {
+            "passed": 10,
+            "total": 10
+          },
+          "execution_time": 0.0009646415710449219,
+          "error": null
+        },
+        "Валидация даты/времени": {
+          "status": "PASSED",
+          "result": {
+            "passed": 10,
+            "total": 10
+          },
+          "execution_time": 0.9079315662384033,
+          "error": null
+        },
+        "Валидация записей": {
+          "status": "PASSED",
+          "result": {
+            "valid_passed": true,
+            "invalid_passed": true
+          },
+          "execution_time": 0.18411564826965332,
+          "error": null
+        },
+        "Создание моделей": {
+          "status": "PASSED",
+          "result": {
+            "patient_id": 238,
+            "specialist_id": 24,
+            "service_id": 35,
+            "appointment_id": 333
+          },
+          "execution_time": 0.1560962200164795,
+          "error": null
+        },
+        "Связи моделей": {
+          "status": "FAILED",
+          "result": null,
+          "execution_time": 0.050562381744384766,
+          "error": "Связь со специалистом должна работать"
+        },
+        "Целостность данных": {
+          "status": "PASSED",
+          "result": {
+            "integrity_ok": true
+          },
+          "execution_time": 0.06427001953125,
+          "error": null
+        },
+        "Веб-интерфейс": {
+          "status": "PASSED",
+          "result": {
+            "pages_loaded": 3
+          },
+          "execution_time": 1.6948370933532715,
+          "error": null
+        },
+        "Отправка формы": {
+          "status": "FAILED",
+          "result": null,
+          "execution_time": 0.9447689056396484,
+          "error": "Запись должна быть создана через форму"
+        },
+        "ИИ-чат": {
+          "status": "PASSED",
+          "result": {
+            "ai_responding": false,
+            "error": "ИИ должен отвечать на сообщения"
+          },
+          "execution_time": 0.055277347564697266,
+          "error": null
+        },
+        "Одновременные записи": {
+          "status": "PASSED",
+          "result": {
+            "successful_appointments": 10,
+            "total_attempted": 10
+          },
+          "execution_time": 1.7708830833435059,
+          "error": null
+        },
+        "Производительность валидации": {
+          "status": "PASSED",
+          "result": {
+            "total_time": 3.3892390727996826,
+            "avg_time": 0.033892390727996824,
+            "validations": 100
+          },
+          "execution_time": 3.3893418312072754,
+          "error": null
+        },
+        "Граничные значения": {
+          "status": "PASSED",
+          "result": {
+            "morning_valid": true,
+            "evening_valid": true,
+            "early_invalid": true,
+            "late_invalid": true
+          },
+          "execution_time": 0.4803173542022705,
+          "error": null
+        },
+        "Экстремальные значения": {
+          "status": "PASSED",
+          "result": {
+            "extreme_values_handled": true
+          },
+          "execution_time": 0.00011682510375976562,
+          "error": null
+        }
+      },
+      "summary": {
+        "total": 14,
+        "passed": 12,
+        "failed": 2,
+        "errors": 0
+      }
+    }
+  },
+  "summary": {
+    "total_suites": 5,
+    "passed_suites": 4,
+    "total_tests": 14,
+    "passed_tests": 12,
+    "failed_tests": 2,
+    "error_tests": 0,
+    "execution_time": 10.491021633148193
+  }
+}
