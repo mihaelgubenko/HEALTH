@@ -595,6 +595,36 @@ class LiteSmartSecretary:
                 'session_id': session_id
             }
         
+        # ИСПРАВЛЕНО: Обработка состояния booking_error
+        elif session.get('last_intent') == 'booking_error':
+            # Пользователь пытается исправить ошибку записи
+            if 'время' in user_message_lower or any(word in user_message_lower for word in ['часов', 'час', ':']):
+                # Пользователь указывает новое время
+                entities['time'] = None  # Сбрасываем старое время
+                session['state'] = DialogState.COLLECTING_TIME
+                return {
+                    'reply': '⏰ Понял, давайте выберем другое время. Какое время вам подойдет?',
+                    'intent': 'collect_time',
+                    'session_id': session_id
+                }
+            elif 'дата' in user_message_lower or any(word in user_message_lower for word in ['день', 'завтра', 'послезавтра']):
+                # Пользователь указывает новую дату
+                entities['date'] = None
+                entities['time'] = None
+                session['state'] = DialogState.COLLECTING_DATE
+                return {
+                    'reply': '📅 Понял, давайте выберем другую дату. На какой день хотите записаться?',
+                    'intent': 'collect_date',
+                    'session_id': session_id
+                }
+            else:
+                # Общий ответ на ошибку
+                return {
+                    'reply': 'Извините за ошибку. Что именно хотите исправить?\n\n• Время записи\n• Дату записи\n• Или начнем заново?',
+                    'intent': 'booking_error',
+                    'session_id': session_id
+                }
+        
         # Обработка уточнения пола для массажа
         if session.get('awaiting_gender_clarification'):
             if 'мужчина' in user_message_lower or 'мужской' in user_message_lower or 'м' == user_message_lower.strip():
@@ -690,6 +720,8 @@ class LiteSmartSecretary:
                         reply += f"• {apt['date_str']} в {apt['time']} к {apt['specialist']} ({apt['service']})\n"
                 
                 intent = 'booking_completed'
+                # Сохраняем последний интент в сессии
+                session['last_intent'] = 'booking_completed'
             else:
                 # ИСПРАВЛЕНО: При ошибке валидации НЕ сбрасываем диалог
                 # Проверяем есть ли в ответе предложение свободных слотов
@@ -728,6 +760,8 @@ class LiteSmartSecretary:
                     # Другая ошибка - сообщаем об ошибке
                     reply = f"Извините, произошла ошибка при создании записи: {result}"
                     intent = 'booking_error'
+                    # Сохраняем последний интент в сессии для обработки ошибок
+                    session['last_intent'] = 'booking_error'
             
         elif next_field == 'service':
             # ИСПРАВЛЕНО: После определения услуги автоматически определяем специалиста
@@ -1193,8 +1227,12 @@ class LiteSmartSecretary:
 
             # Проверяем количество попыток исправления
             attempts = self.session_manager.get_correction_attempts(session_id)
-            if attempts >= 2:
+            if attempts >= 5:  # Увеличиваем лимит с 2 до 5 попыток
                 return False, "⚠️ Слишком много попыток исправления. Давайте начнем заново или обратитесь к администратору."
+            
+            # ИСПРАВЛЕНО: Проверяем, есть ли время в запросе
+            if not time or time.strip() == '':
+                return False, "⚠️ Пожалуйста, укажите конкретное время для записи. Например: '14:00' или '2 часа дня'"
             
             # ИСПРАВЛЕНО: Комплексная валидация всех данных
             validation_result = self.validator.validate_appointment_data(
@@ -1206,6 +1244,8 @@ class LiteSmartSecretary:
             logger.info(f"Validation data keys: {list(validation_result['data'].keys())}")
             if not validation_result['is_valid']:
                 logger.error(f"Validation errors: {validation_result['errors']}")
+                print(f"DEBUG: Validation failed for {name} - {service_name} - {specialist_name} - {day} - {time}")
+                print(f"DEBUG: Errors: {validation_result['errors']}")
             
             if not validation_result['is_valid']:
                 # Увеличиваем счетчик попыток при ошибке валидации
@@ -1216,13 +1256,11 @@ class LiteSmartSecretary:
                 logger.info(f"Appointment validation failed for user request: name={name}, phone={phone}, service={service_name}, specialist={specialist_name}, day={day}, time={time}")
                 logger.debug(f"Validation errors: {validation_result['errors']}")
                 
-                # НОВОЕ: Проверяем конкретно конфликт времени
-                time_conflict = any('время уже занято' in err.lower() or 'занят' in err.lower() 
-                                   for err in validation_result['errors'])
-                weekend_error = any('не работает' in err.lower() or 'суббота' in err.lower() or 'воскресен' in err.lower()
-                                   for err in validation_result['errors'])
+                # ИСПРАВЛЕНО: Всегда пытаемся предложить альтернативы при ошибке времени
+                time_unavailable = any('время' in err.lower() and ('недоступно' in err.lower() or 'занято' in err.lower() or 'нельзя' in err.lower())
+                                      for err in validation_result['errors'])
                 
-                if time_conflict or weekend_error:
+                if time_unavailable:
                     # Предлагаем свободные слоты
                     try:
                         specialist = validation_result['data'].get('specialist')
@@ -1235,17 +1273,47 @@ class LiteSmartSecretary:
                             )
                             
                             if available_slots:
-                                slots_str = ", ".join(available_slots[:5])
-                                # ИСПРАВЛЕНО: Убираем "❌ Обнаружены ошибки:" из начала
-                                error_text = validation_result['errors'][0] if validation_result['errors'] else "Это время занято"
+                                slots_list = [slot['time'] for slot in available_slots[:5]]
+                                slots_str = ", ".join(slots_list)
+                                error_text = validation_result['errors'][0] if validation_result['errors'] else "Это время недоступно"
                                 error_message = f"⚠️ {error_text}\n\n✅ Доступные слоты на {day}: {slots_str}\n\nВыберите удобное время:"
                                 return False, error_message
+                            else:
+                                # Если нет слотов на эту дату, предлагаем другие даты
+                                alternatives = validation_result.get('alternatives', [])
+                                if alternatives:
+                                    alt_dates = []
+                                    for alt in alternatives[:3]:
+                                        alt_dates.append(f"{alt['date']} в {alt['time']}")
+                                    alt_str = ", ".join(alt_dates)
+                                    error_message = f"⚠️ {validation_result['errors'][0]}\n\n✅ Доступные альтернативы: {alt_str}\n\nВыберите удобную дату и время:"
+                                    return False, error_message
                     except Exception as e:
                         logger.error(f"Error getting available slots: {e}", exc_info=True)
                 
-                # Если не конфликт времени или не удалось получить слоты - возвращаем обычную ошибку
-                error_message = self.validator.get_validation_summary(validation_result)
-                return False, error_message
+                # ИСПРАВЛЕНО: Всегда пытаемся предложить альтернативы
+                alternatives = validation_result.get('alternatives', [])
+                suggestions = validation_result.get('suggestions', [])
+                
+                error_parts = []
+                if validation_result['errors']:
+                    error_parts.append(f"⚠️ {validation_result['errors'][0]}")
+                
+                if suggestions:
+                    error_parts.append(f"✅ Рекомендуемые времена: {', '.join(suggestions[:3])}")
+                
+                if alternatives:
+                    alt_dates = []
+                    for alt in alternatives[:3]:
+                        alt_dates.append(f"{alt['date']} в {alt['time']}")
+                    error_parts.append(f"📅 Альтернативные даты: {', '.join(alt_dates)}")
+                
+                if not error_parts:
+                    error_parts.append("⚠️ Произошла ошибка при создании записи")
+                
+                error_parts.append("\nЧто хотите исправить?")
+                
+                return False, "\n".join(error_parts)
             
             # Если есть предупреждения, логируем их
             if validation_result['warnings']:

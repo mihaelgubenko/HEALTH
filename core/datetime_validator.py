@@ -322,8 +322,8 @@ class DateTimeValidator:
         current_time = current_datetime.time()
         
         if check_date == current_date:
-            # Добавляем буфер времени для подготовки
-            buffer_minutes = 60  # 1 час
+            # Добавляем минимальный буфер времени для подготовки
+            buffer_minutes = 30  # 30 минут вместо 1 часа
             buffer_time = (current_datetime + timedelta(minutes=buffer_minutes)).time()
             
             if check_time <= buffer_time:
