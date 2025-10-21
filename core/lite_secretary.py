@@ -124,14 +124,14 @@ class LiteEntityExtractor:
             'Лечебный массаж (женщины) - классический шведский': ['массаж для женщин', 'женский массаж', 'массаж женщинам'],
             'Лечебный массаж (мужчины) - классический шведский': ['массаж для мужчин', 'мужской массаж', 'массаж мужчинам'],
             'Лечебный массаж (мужчины) - спортивный': ['спортивный массаж', 'массаж спортивный'],
-            'Лечебный массаж (мужчины) - лечебный': ['лечебный массаж', 'массаж лечебный'],
+            'Лечебный массаж (мужчины) - лечебный': ['массаж лечебный'],
             'Детский массаж': ['детский массаж', 'массаж детям', 'массаж ребенку'],
             'Массаж для грудных детей': ['массаж грудничкам', 'массаж младенцам', 'массаж грудным'],
             'Массаж для беременных': ['массаж беременным', 'беременным массаж', 'для беременных'],
             'Консультация остеопата': ['остеопат', 'кости', 'суставы', 'позвоночник', 'остео', 'к остеопату'],
             'Консультация реабилитолога': ['реабилитация', 'восстановление', 'травма', 'реабилитолог', 'к реабилитологу'],
             'Консультация нутрициолога': ['питание', 'диета', 'вес', 'нутрициолог', 'к нутрициологу'],
-            'Диагностика биорезонансным сканированием (базовая)': ['диагностика базовая', 'базовая диагностика', 'сканирование базовое'],
+            'Диагностика биорезонансным сканированием (базовая)': ['диагностика', 'диагностика организма', 'сканирование', 'биорезонанс', 'диагностика базовая', 'базовая диагностика', 'сканирование базовое'],
             'Диагностика биорезонансным сканированием (расширенная)': ['диагностика расширенная', 'расширенная диагностика', 'сканирование расширенное'],
             'Диагностика биорезонансным сканированием (VIP)': ['диагностика vip', 'vip диагностика', 'сканирование vip'],
             'Кинезиотейпирование': ['кинезио', 'тейпирование', 'тейпы', 'кинезиотейп'],
@@ -147,6 +147,13 @@ class LiteEntityExtractor:
         for service, keywords in services.items():
             if any(keyword in text_lower for keyword in keywords):
                 return service
+        
+        # Специальная обработка для общего слова "массаж"
+        if 'массаж' in text_lower and 'лечебный' in text_lower:
+            # Возвращаем специальное значение для общего массажа
+            return 'Лечебный массаж (общий)'
+        elif 'массаж' in text_lower:
+            return 'Лечебный массаж (общий)'
                 
         return None
     
@@ -358,7 +365,7 @@ class LiteSessionManager:
         session = self.get_session(session_id)
         entities = session['entities']
         
-        required_order = ['service', 'specialist', 'name', 'phone', 'date', 'time']
+        required_order = ['service', 'name', 'phone', 'date', 'time']
         
         for field in required_order:
             if not entities.get(field):
@@ -549,6 +556,35 @@ class LiteSmartSecretary:
                 'session_id': session_id
             }
         
+        # Обработка уточнения пола для массажа
+        if session.get('awaiting_gender_clarification'):
+            if 'мужчина' in user_message_lower or 'мужской' in user_message_lower or 'м' == user_message_lower.strip():
+                entities['specialist'] = 'Авраам'
+                entities['service'] = 'Лечебный массаж (мужчины) - классический шведский'
+                session['awaiting_gender_clarification'] = False
+                name = entities.get('name', '')
+                return {
+                    'reply': f"Понятно! Записываю {name} к Аврааму на массаж. Укажите ваш номер телефона:",
+                    'intent': 'collect_phone',
+                    'session_id': session_id
+                }
+            elif 'женщина' in user_message_lower or 'женский' in user_message_lower or 'ж' == user_message_lower.strip():
+                entities['specialist'] = 'Екатерина'
+                entities['service'] = 'Лечебный массаж (женщины) - классический шведский'
+                session['awaiting_gender_clarification'] = False
+                name = entities.get('name', '')
+                return {
+                    'reply': f"Понятно! Записываю {name} к Екатерине на массаж. Укажите ваш номер телефона:",
+                    'intent': 'collect_phone',
+                    'session_id': session_id
+                }
+            else:
+                return {
+                    'reply': 'Пожалуйста, уточните: вы мужчина или женщина? Напишите "мужчина" или "женщина".',
+                    'intent': 'clarify_gender',
+                    'session_id': session_id
+                }
+        
         # ИСПРАВЛЕНО: Обновляем entities перед определением следующего шага
         # (update_entities уже вызван в _process_with_lite_logic, но проверим еще раз)
         if extracted:
@@ -566,6 +602,7 @@ class LiteSmartSecretary:
         # Определяем следующий шаг (ПОСЛЕ автовыбора специалиста!)
         next_field = self.session_manager.get_next_required_field(session_id)
         progress = self.session_manager.get_progress(session_id)
+        
         
         if not next_field:
             # Все данные собраны - создаем запись в БД
@@ -638,68 +675,75 @@ class LiteSmartSecretary:
                     intent = 'booking_error'
             
         elif next_field == 'service':
-            # ИСПРАВЛЕНО: Проверяем, не указал ли пользователь услугу в сообщении
-            if 'консультация' in user_message.lower() or 'консультацию' in user_message.lower():
-                reply = "Отлично! На консультацию к какому специалисту хотите записаться?"
-                intent = 'collect_specialist'
-            elif 'массаж' in user_message.lower():
-                reply = "Отлично! На массаж к какому специалисту хотите записаться?"
-                intent = 'collect_specialist'
-            elif 'диагностика' in user_message.lower() or 'диагностику' in user_message.lower():
-                reply = "Отлично! На диагностику к какому специалисту хотите записаться?"
-                intent = 'collect_specialist'
+            # ИСПРАВЛЕНО: После определения услуги автоматически определяем специалиста
+            service_name = entities.get('service')
+            if service_name:
+                # Автоматически определяем специалиста по услуге
+                specialist = self._auto_determine_specialist(service_name)
+                if specialist:
+                    entities['specialist'] = specialist
+                    reply = f"Отлично! К {specialist}. Как вас зовут?"
+                    intent = 'collect_name'
+                elif 'массаж' in service_name.lower():
+                    # Для массажа специалист определяется по полу, спрашиваем имя
+                    reply = "Отлично! Как вас зовут?"
+                    intent = 'collect_name'
+                else:
+                    reply = self._ask_for_service(user_message)
+                    intent = 'collect_service'
             else:
                 reply = self._ask_for_service(user_message)
                 intent = 'collect_service'
             
-        elif next_field == 'specialist':
-            # ИСПРАВЛЕНО: Проверяем доступных специалистов для услуги
-            if entities.get('service'):
-                available_specialists = self._get_specialists_for_service(entities['service'])
+        elif next_field == 'name' or extracted.get('name'):
+            # Если получили имя, проверяем нужно ли определить специалиста по полу (для массажа)
+            if extracted.get('name'):
+                name = extracted['name']
+                service = entities.get('service', '')
                 
-                # АВТОВЫБОР: Если специалист только один - выбираем автоматически
-                if len(available_specialists) == 1:
-                    entities['specialist'] = available_specialists[0]
-                    # ИСПРАВЛЕНО: Сразу переходим к следующему полю (имени)
-                    next_field = 'name'
-                    reply = f"Отлично! К {available_specialists[0]}. Как вас зовут?"
-                    intent = 'collect_name'
-                else:
-                    # Проверяем, не указал ли пользователь специалиста в сообщении
-                    if 'к аврааму' in user_message.lower() or 'авраам' in user_message.lower():
+                # Если это массаж и специалист еще не определен, определяем по полу
+                specialist = entities.get('specialist')
+                
+                if 'массаж' in service.lower() and (not specialist or specialist == 'None'):
+                    gender = self._determine_gender_by_name(name)
+                    if gender == 'male':
                         entities['specialist'] = 'Авраам'
-                        next_field = 'name'
-                        reply = "Отлично! К Аврааму. Как вас зовут?"
-                        intent = 'collect_name'
-                    elif 'к екатерине' in user_message.lower() or 'екатерина' in user_message.lower():
+                        # Обновляем услугу на мужскую
+                        entities['service'] = 'Лечебный массаж (мужчины) - классический шведский'
+                        reply = f"Отлично, {name}! Записываю вас к Аврааму на массаж. Укажите ваш номер телефона:"
+                    elif gender == 'female':
                         entities['specialist'] = 'Екатерина'
-                        next_field = 'name'
-                        reply = "Отлично! К Екатерине. Как вас зовут?"
-                        intent = 'collect_name'
-                    elif 'к римме' in user_message.lower() or 'римма' in user_message.lower():
-                        entities['specialist'] = 'Римма'
-                        next_field = 'name'
-                        reply = "Отлично! К Римме. Как вас зовут?"
-                        intent = 'collect_name'
+                        # Обновляем услугу на женскую
+                        entities['service'] = 'Лечебный массаж (женщины) - классический шведский'
+                        reply = f"Отлично, {name}! Записываю вас к Екатерине на массаж. Укажите ваш номер телефона:"
                     else:
-                        specialists_str = ", ".join(available_specialists)
-                        reply = f"К какому специалисту хотите записаться? ({specialists_str})"
-                        intent = 'collect_specialist'
+                        # Если пол не определен, уточняем
+                        session['awaiting_gender_clarification'] = True
+                        reply = f"Спасибо, {name}! Уточните пожалуйста, вы мужчина или женщина? Это важно для выбора специалиста по массажу."
+                        intent = 'clarify_gender'
+                        return {
+                            'reply': reply,
+                            'intent': intent,
+                            'session_id': session_id
+                        }
+                    intent = 'collect_phone'
+                else:
+                    # Обычный сбор имени
+                    specialist = entities.get('specialist', '')
+                    if specialist:
+                        reply = f"Отлично, {name}! Записываю вас к {specialist}. Укажите ваш номер телефона:"
+                        intent = 'collect_phone'
+                    else:
+                        reply = f"Спасибо, {name}! Укажите ваш номер телефона:"
+                        intent = 'collect_phone'
             else:
-                reply = self._ask_for_specialist(user_message)
-                intent = 'collect_specialist'
-            
-        elif next_field == 'name':
-            # ИСПРАВЛЕНО: Если только что выбрали специалиста - упоминаем его
-            if extracted.get('service') or extracted.get('specialist'):
+                # Спрашиваем имя, учитывая уже определенного специалиста
                 specialist = entities.get('specialist', '')
                 if specialist:
                     reply = f"Отлично! К {specialist}. Как вас зовут?"
                 else:
                     reply = self._ask_for_name(extracted, entities)
-            else:
-                reply = self._ask_for_name(extracted, entities)
-            intent = 'collect_name'
+                intent = 'collect_name'
             
         elif next_field == 'phone':
             reply = self._ask_for_phone(extracted, entities)
@@ -814,6 +858,39 @@ class LiteSmartSecretary:
         # Если время не распознано, спрашиваем обычно
         return "Какое время вам подойдет?"
     
+    def _auto_determine_specialist(self, service_name: str) -> Optional[str]:
+        """Автоматически определяет специалиста по услуге согласно SmartSecretary.md"""
+        service_lower = service_name.lower()
+        
+        # Правила из SmartSecretary.md:
+        # 1. Массаж для мужчин → Авраам
+        # 2. Массаж для женщин → Екатерина (но определяется по полу имени)
+        # 3. Консультация реабилитолога/остеопата → Екатерина
+        # 4. Консультация нутрициолога → Римма
+        # 5. Диагностика биорезонансом → Екатерина
+        
+        if 'диагностика' in service_lower or 'биорезонанс' in service_lower:
+            return 'Екатерина'
+        elif 'консультация' in service_lower:
+            if 'нутрициолог' in service_lower or 'питание' in service_lower:
+                return 'Римма'
+            else:  # реабилитолог, остеопат
+                return 'Екатерина'
+        elif 'массаж' in service_lower:
+            # Для массажа специалист определяется по полу имени
+            # Если это конкретно женский массаж - сразу Екатерина
+            if 'женщин' in service_lower:
+                return 'Екатерина'
+            # Если это общий массаж - ждем получения имени для определения пола
+            elif 'общий' in service_lower:
+                return None
+            # Иначе ждем получения имени для определения пола
+            return None
+        elif 'кинезиотейпирование' in service_lower or 'упражнения' in service_lower:
+            return 'Екатерина'
+        
+        return None
+    
     def _get_specialists_for_service(self, service_name: str) -> list:
         """Получает список специалистов для услуги"""
         # Маппинг услуг на специалистов (точные названия из БД)
@@ -877,6 +954,43 @@ class LiteSmartSecretary:
         """Спрашивает имя"""
         # ИСПРАВЛЕНО: Всегда просто спрашиваем имя, без перехода к следующему полю
         return "Как вас зовут?"
+    
+    def _determine_gender_by_name(self, name: str) -> str:
+        """Определяет пол по имени согласно SmartSecretary.md"""
+        name_lower = name.lower().strip()
+        
+        # Мужские имена
+        male_names = [
+            'александр', 'алексей', 'андрей', 'антон', 'артем', 'борис', 'вадим', 'валентин',
+            'василий', 'виктор', 'владимир', 'владислав', 'вячеслав', 'геннадий', 'георгий',
+            'григорий', 'данил', 'даниил', 'денис', 'дмитрий', 'евгений', 'егор', 'иван',
+            'игорь', 'илья', 'кирилл', 'константин', 'леонид', 'максим', 'михаил', 'николай',
+            'олег', 'павел', 'петр', 'роман', 'сергей', 'станислав', 'степан', 'федор',
+            'юрий', 'ярослав', 'авраам', 'давид', 'исаак', 'моисей', 'самуил', 'соломон'
+        ]
+        
+        # Женские имена
+        female_names = [
+            'александра', 'алла', 'анастасия', 'анна', 'валентина', 'валерия', 'вера',
+            'виктория', 'галина', 'дарья', 'елена', 'екатерина', 'жанна', 'зоя', 'инна',
+            'ирина', 'кристина', 'лариса', 'лидия', 'любовь', 'людмила', 'марина', 'мария',
+            'надежда', 'наталья', 'нина', 'ольга', 'полина', 'раиса', 'светлана', 'татьяна',
+            'юлия', 'яна', 'сара', 'рахель', 'лея', 'мирьям', 'римма', 'эстер'
+        ]
+        
+        # Проверяем точное совпадение
+        if name_lower in male_names:
+            return 'male'
+        elif name_lower in female_names:
+            return 'female'
+        
+        # Проверяем окончания для русских имен
+        if name_lower.endswith(('а', 'я', 'ия')):
+            return 'female'
+        elif name_lower.endswith(('й', 'н', 'р', 'л', 'м', 'к', 'х')):
+            return 'male'
+        
+        return 'unknown'
     
     def _ask_for_phone(self, extracted: Dict, entities: Dict) -> str:
         """Спрашивает телефон"""
