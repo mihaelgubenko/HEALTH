@@ -8,7 +8,6 @@ class Patient(models.Model):
     name = models.CharField(max_length=100, verbose_name="Имя")
     phone = models.CharField(
         max_length=20,
-        validators=[RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Номер телефона должен быть в формате: '+999999999'. До 15 цифр.")],
         verbose_name="Телефон"
     )
     email = models.EmailField(blank=True, null=True, verbose_name="Email")

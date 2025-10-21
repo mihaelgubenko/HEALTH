@@ -1360,14 +1360,8 @@ class LiteSmartSecretary:
             name = name.strip().title()
             phone = phone.strip()
             
-            # Простая очистка телефона
-            if not phone.startswith('+'):
-                if phone.startswith('0'):
-                    phone = '+972' + phone[1:]  # Израильский номер
-                elif len(phone) == 10:
-                    phone = '+972' + phone  # Израильский номер без 0
-                else:
-                    phone = '+' + phone
+            # Простая очистка телефона - убираем только лишние пробелы
+            # НЕ добавляем никакие коды стран автоматически
             
             # 2. Поиск или создание пациента
             patient, created = Patient.objects.get_or_create(
