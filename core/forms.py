@@ -40,7 +40,7 @@ class AppointmentForm(forms.ModelForm):
         widget=forms.DateInput(attrs={
             'class': 'form-control',
             'type': 'date',
-            'min': datetime.now().strftime('%Y-%m-%d')
+            'min': timezone.now().date().strftime('%Y-%m-%d')
         })
     )
     
@@ -83,18 +83,28 @@ class AppointmentForm(forms.ModelForm):
         # Заполняем специалистов
         self.fields['specialist'].queryset = Specialist.objects.filter(is_active=True)
         
-        # Заполняем временные слоты
-        time_choices = [
-            ('09:00', '09:00'),
-            ('10:00', '10:00'),
-            ('11:00', '11:00'),
-            ('12:00', '12:00'),
-            ('15:00', '15:00'),
-            ('16:00', '16:00'),
-            ('17:00', '17:00'),
-            ('18:00', '18:00'),
-            ('19:00', '19:00'),
-        ]
+        # Заполняем временные слоты (базовые, будут обновляться через JavaScript)
+        time_choices = [('', 'Выберите время')]
+        
+        # Генерируем слоты с учетом текущего времени
+        now = timezone.now()
+        today = now.date()
+        
+        # Если форма инициализируется для сегодняшней даты, фильтруем прошедшие слоты
+        for hour in range(9, 19):
+            for minute in [0, 30]:
+                time_str = f'{hour:02d}:{minute:02d}'
+                slot_time = datetime.strptime(time_str, '%H:%M').time()
+                
+                # Для сегодняшней даты пропускаем прошедшие слоты
+                if today == now.date():
+                    slot_datetime = timezone.make_aware(datetime.combine(today, slot_time))
+                    buffer_time = now + timezone.timedelta(hours=1)
+                    if slot_datetime <= buffer_time:
+                        continue
+                
+                time_choices.append((time_str, time_str))
+        
         self.fields['preferred_time'].choices = time_choices
 
     def clean_phone(self):
@@ -106,7 +116,9 @@ class AppointmentForm(forms.ModelForm):
 
     def clean_preferred_date(self):
         date = self.cleaned_data['preferred_date']
-        if date < datetime.now().date():
+        # Используем локальное время пользователя (Israel timezone)
+        today = timezone.now().date()
+        if date < today:
             raise ValidationError('Дата не может быть в прошлом')
         return date
 

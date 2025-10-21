@@ -182,10 +182,20 @@ class AvailabilityValidator:
             if date.weekday() in [5, 6]:  # Сб, Вс
                 return False, "Центр не работает в субботу и воскресенье"
             
-            # Проверка, что дата не в прошлом
-            today = timezone.now().date()
+            # Проверка, что дата и время не в прошлом
+            now = timezone.now()
+            today = now.date()
+            
             if date < today:
                 return False, "Нельзя записаться на прошедшую дату"
+            
+            # Если дата сегодня, проверяем время
+            if date == today:
+                current_time = now.time()
+                # Добавляем буфер в 1 час для подготовки
+                buffer_time = (now + timezone.timedelta(hours=1)).time()
+                if time_obj <= buffer_time:
+                    return False, f"Нельзя записаться на время ранее {buffer_time.strftime('%H:%M')} (нужно время для подготовки)"
             
             # Проверка времени окончания процедуры
             end_time = datetime.combine(date, time_obj) + timezone.timedelta(minutes=duration)
@@ -241,12 +251,22 @@ class AvailabilityValidator:
             start_hour = 9
             end_hour = 19
             
+            # Получаем текущее время для фильтрации прошедших слотов
+            now = timezone.now()
+            today = now.date()
+            
             for hour in range(start_hour, end_hour):
                 for minute in [0, 30]:  # Слоты каждые 30 минут
                     slot_time = time(hour, minute)
                     slot_datetime = timezone.make_aware(datetime.combine(date, slot_time))
                     
-                    # Проверяем конфликты
+                    # Пропускаем прошедшие слоты для сегодняшней даты
+                    if date == today:
+                        buffer_time = now + timezone.timedelta(hours=1)
+                        if slot_datetime <= buffer_time:
+                            continue
+                    
+                    # Проверяем конфликты с существующими записями
                     slot_end = slot_datetime + timezone.timedelta(minutes=service_duration)
                     
                     has_conflict = False
