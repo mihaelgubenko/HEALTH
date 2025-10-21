@@ -164,7 +164,7 @@
         </a>
     </div>
     <div class="col-md-3">
-        <a href="{% url 'admin:core_appointment_changelist' %}" style="text-decoration: none; color: inherit;">
+        <a href="{% url 'admin:core_appointment_changelist' %}?start_time__date__gte={{ week_ago }}" style="text-decoration: none; color: inherit;">
             <div class="metric-card" style="background: linear-gradient(135deg, #27AE60 0%, #F39C12 100%);">
                 <div class="metric-number">{{ dashboard_data.appointments_week }}</div>
                 <div class="metric-label">Записей за неделю</div>
@@ -172,7 +172,7 @@
         </a>
     </div>
     <div class="col-md-3">
-        <a href="{% url 'admin:core_appointment_changelist' %}" style="text-decoration: none; color: inherit;">
+        <a href="{% url 'admin:core_appointment_changelist' %}?start_time__date__gte={{ month_ago }}" style="text-decoration: none; color: inherit;">
             <div class="metric-card" style="background: linear-gradient(135deg, #F39C12 0%, #E67E22 100%);">
                 <div class="metric-number">{{ dashboard_data.appointments_month }}</div>
                 <div class="metric-label">Записей за месяц</div>

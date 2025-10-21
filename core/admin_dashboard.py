@@ -90,10 +90,16 @@ class AdminDashboard:
     
     def dashboard_view(self, request):
         """Представление дашборда"""
+        today = timezone.now().date()
+        week_ago = today - timedelta(days=7)
+        month_ago = today - timedelta(days=30)
+        
         context = {
             'title': 'Дашборд',
             'dashboard_data': self.get_dashboard_data(),
-            'today': timezone.now().date(),
+            'today': today,
+            'week_ago': week_ago,
+            'month_ago': month_ago,
         }
         return render(request, 'admin/dashboard.html', context)
 
