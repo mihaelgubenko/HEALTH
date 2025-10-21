@@ -12,6 +12,11 @@ class PatientAdmin(admin.ModelAdmin):
     search_fields = ['name', 'phone', 'email']
     readonly_fields = ['created_at', 'updated_at']
     ordering = ['-created_at']
+    
+    # Для автокомплита
+    def get_search_results(self, request, queryset, search_term):
+        queryset, use_distinct = super().get_search_results(request, queryset, search_term)
+        return queryset, use_distinct
 
 
 class ServiceAdmin(admin.ModelAdmin):
@@ -38,9 +43,39 @@ class AppointmentAdmin(admin.ModelAdmin):
     ordering = ['start_time']
     actions = ['confirm_appointments', 'cancel_appointments', 'complete_appointments']
     list_per_page = 25
+    autocomplete_fields = ['patient']
+    raw_id_fields = []
+    
+    # Настройки формы
+    fieldsets = (
+        ('Основная информация', {
+            'fields': ('patient', 'specialist', 'service')
+        }),
+        ('Время', {
+            'fields': ('start_time', 'end_time')
+        }),
+        ('Дополнительно', {
+            'fields': ('status', 'notes', 'channel'),
+            'classes': ('collapse',)
+        }),
+        ('Системная информация', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
     
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('patient', 'specialist', 'service')
+    
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        """Фильтруем выпадающие списки"""
+        if db_field.name == "specialist":
+            kwargs["queryset"] = Specialist.objects.filter(is_active=True).order_by('name')
+        elif db_field.name == "service":
+            kwargs["queryset"] = Service.objects.filter(is_active=True).order_by('name')
+        elif db_field.name == "patient":
+            kwargs["queryset"] = Patient.objects.all().order_by('name')
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
     
     def confirm_appointments(self, request, queryset):
         """Подтвердить записи"""
