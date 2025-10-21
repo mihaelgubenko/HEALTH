@@ -126,20 +126,7 @@ def appointment_success(request):
     return render(request, 'core/appointment_success.html')
 
 
-def analytics_dashboard(request):
-    """Dashboard аналитики работы ИИ-секретаря"""
-    from .analytics import SecretaryAnalytics
-    
-    analytics = SecretaryAnalytics()
-    
-    context = {
-        'daily_stats': analytics.get_daily_stats(),
-        'success_rate': analytics.get_success_rate(),
-        'popular_services': analytics.get_popular_services(),
-        'peak_hours': analytics.get_peak_hours(),
-    }
-    
-    return render(request, 'core/analytics_dashboard.html', context)
+# Analytics функция удалена - упрощение архитектуры
 
 
 def contacts(request):

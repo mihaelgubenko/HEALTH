@@ -42,6 +42,5 @@ urlpatterns = [
     path('api/date-parser/', DateParserAPIView.as_view(), name='date_parser_api'),
     path('api/calendar-stats/', CalendarStatsAPIView.as_view(), name='calendar_stats_api'),
     
-    # Аналитика и мониторинг
-    path('analytics/', views.analytics_dashboard, name='analytics'),
+    # Аналитика удалена - упрощение архитектуры
 ]
