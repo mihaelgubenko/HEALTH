@@ -16,18 +16,33 @@ class AdminDashboard:
         week_ago = today - timedelta(days=7)
         month_ago = today - timedelta(days=30)
         
+        # Отладочная информация
+        print(f"DEBUG: Today is {today}")
+        print(f"DEBUG: All appointments today: {Appointment.objects.filter(start_time__date=today).count()}")
+        print(f"DEBUG: Active appointments today: {Appointment.objects.filter(start_time__date=today, status__in=['pending', 'confirmed']).count()}")
         
-        # Статистика записей
-        appointments_today = Appointment.objects.filter(
-            start_time__date=today
+        # Альтернативный способ подсчета (на случай проблем с часовыми поясами)
+        start_of_day = datetime.combine(today, datetime.min.time())
+        end_of_day = datetime.combine(today, datetime.max.time())
+        appointments_today_alt = Appointment.objects.filter(
+            start_time__gte=start_of_day,
+            start_time__lte=end_of_day,
+            status__in=['pending', 'confirmed']
         ).count()
+        print(f"DEBUG: Alternative count: {appointments_today_alt}")
+        
+        # Статистика записей (только активные статусы)
+        # Используем альтернативный способ для избежания проблем с часовыми поясами
+        appointments_today = appointments_today_alt
         
         appointments_week = Appointment.objects.filter(
-            start_time__date__gte=week_ago
+            start_time__date__gte=week_ago,
+            status__in=['pending', 'confirmed']
         ).count()
         
         appointments_month = Appointment.objects.filter(
-            start_time__date__gte=month_ago
+            start_time__date__gte=month_ago,
+            status__in=['pending', 'confirmed']
         ).count()
         
         # Статистика по статусам
