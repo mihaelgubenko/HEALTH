@@ -223,7 +223,7 @@ class ValidationTestSuite:
             service_name="Тестовая Услуга",
             specialist_name="Тестовый Специалист",
             date=tomorrow,
-            time_str="15:00"
+            time_str="12:00"  # Используем другое время
         )
         
         assert result['is_valid'], f"Валидация корректных данных должна проходить: {result['errors']}"
@@ -537,7 +537,7 @@ class BoundaryTestSuite:
         
         # Тест записи в 9:00 (начало рабочего дня)
         result = validator.validate_appointment_data(
-            name="Граничный Тест",
+            name="Иван Петров",  # Используем корректное имя
             phone="+972501234567",
             service_name="Граничная Услуга",
             specialist_name="Граничный Специалист",
@@ -549,8 +549,8 @@ class BoundaryTestSuite:
         
         # Тест записи в 18:00 (конец рабочего дня)
         result = validator.validate_appointment_data(
-            name="Граничный Тест",
-            phone="+972501234567",
+            name="Мария Иванова",  # Используем другое корректное имя
+            phone="+972501234568",  # Другой телефон чтобы избежать конфликтов
             service_name="Граничная Услуга",
             specialist_name="Граничный Специалист",
             date=tomorrow,

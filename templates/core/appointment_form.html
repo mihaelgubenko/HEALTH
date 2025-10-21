@@ -232,6 +232,110 @@ $(document).ready(function() {
             });
         }
     });
+
+    // Валидация формы
+    function validateStep(stepNumber) {
+        let isValid = true;
+        let step = document.getElementById('step-' + stepNumber);
+        
+        // Очищаем предыдущие ошибки
+        step.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+        step.querySelectorAll('.invalid-feedback').forEach(el => el.remove());
+        
+        if (stepNumber === 1) {
+            // Валидация имени
+            let nameField = document.getElementById('id_name');
+            if (!nameField.value.trim()) {
+                showFieldError(nameField, 'Пожалуйста, введите ваше имя');
+                isValid = false;
+            } else if (nameField.value.trim().length < 2) {
+                showFieldError(nameField, 'Имя должно содержать минимум 2 символа');
+                isValid = false;
+            }
+            
+            // Валидация телефона
+            let phoneField = document.getElementById('id_phone');
+            if (!phoneField.value.trim()) {
+                showFieldError(phoneField, 'Пожалуйста, введите номер телефона');
+                isValid = false;
+            } else if (phoneField.value.trim().length < 7) {
+                showFieldError(phoneField, 'Номер телефона слишком короткий');
+                isValid = false;
+            }
+        }
+        
+        if (stepNumber === 2) {
+            // Валидация услуги
+            let serviceField = document.getElementById('id_service');
+            if (!serviceField.value) {
+                showFieldError(serviceField, 'Пожалуйста, выберите услугу');
+                isValid = false;
+            }
+            
+            // Валидация специалиста
+            let specialistField = document.getElementById('id_specialist');
+            if (!specialistField.value) {
+                showFieldError(specialistField, 'Пожалуйста, выберите специалиста');
+                isValid = false;
+            }
+        }
+        
+        if (stepNumber === 3) {
+            // Валидация даты
+            let dateField = document.getElementById('id_preferred_date');
+            if (!dateField.value) {
+                showFieldError(dateField, 'Пожалуйста, выберите дату');
+                isValid = false;
+            }
+            
+            // Валидация времени
+            let timeField = document.getElementById('id_preferred_time');
+            if (!timeField.value) {
+                showFieldError(timeField, 'Пожалуйста, выберите время');
+                isValid = false;
+            }
+        }
+        
+        return isValid;
+    }
+    
+    function showFieldError(field, message) {
+        field.classList.add('is-invalid');
+        let errorDiv = document.createElement('div');
+        errorDiv.className = 'invalid-feedback';
+        errorDiv.textContent = message;
+        field.parentNode.appendChild(errorDiv);
+    }
+    
+    // Переопределяем обработчики кнопок "Далее"
+    document.querySelectorAll('.btn-next').forEach(button => {
+        button.addEventListener('click', function(e) {
+            let currentStep = document.querySelector('.form-step:not([style*="display: none"])');
+            let stepNumber = parseInt(currentStep.id.replace('step-', ''));
+            
+            if (!validateStep(stepNumber)) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+        });
+    });
+    
+    // Валидация при отправке формы
+    document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+        let isValid = true;
+        for (let i = 1; i <= 3; i++) {
+            if (!validateStep(i)) {
+                isValid = false;
+            }
+        }
+        
+        if (!isValid) {
+            e.preventDefault();
+            alert('Пожалуйста, исправьте ошибки в форме');
+            return false;
+        }
+    });
 });
 </script>
 {% endblock %}

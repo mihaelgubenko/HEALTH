@@ -845,6 +845,9 @@ class ValidationManager:
         self.availability_validator = AvailabilityValidator(country)
         self.datetime_validator = DateTimeValidator(country)
         self.conflict_validator = ConflictValidator()
+        
+        # Кэш для ускорения повторных валидаций
+        self._validation_cache = {}
     
     def validate_appointment_data(self, name: str, phone: str, service_name: str, 
                                specialist_name: str, date: str, time_str: str, 

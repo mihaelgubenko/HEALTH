@@ -13,7 +13,10 @@ class AppointmentForm(forms.ModelForm):
         label='Ваше имя',
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Введите ваше имя'
+            'placeholder': 'Введите ваше имя',
+            'required': True,
+            'minlength': '2',
+            'maxlength': '100'
         })
     )
     
@@ -22,7 +25,10 @@ class AppointmentForm(forms.ModelForm):
         label='Телефон',
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': '+972545270015'
+            'placeholder': '+972545270015',
+            'required': True,
+            'type': 'tel',
+            'pattern': r'[\+]?[0-9\s\-\(\)]{7,20}'
         })
     )
     
@@ -31,7 +37,8 @@ class AppointmentForm(forms.ModelForm):
         label='Email (необязательно)',
         widget=forms.EmailInput(attrs={
             'class': 'form-control',
-            'placeholder': 'your@email.com'
+            'placeholder': 'your@email.com',
+            'type': 'email'
         })
     )
     
@@ -40,7 +47,8 @@ class AppointmentForm(forms.ModelForm):
         widget=forms.DateInput(attrs={
             'class': 'form-control',
             'type': 'date',
-            'min': timezone.now().date().strftime('%Y-%m-%d')
+            'min': timezone.now().date().strftime('%Y-%m-%d'),
+            'required': True
         })
     )
     
@@ -48,7 +56,8 @@ class AppointmentForm(forms.ModelForm):
         label='Предпочитаемое время',
         choices=[],
         widget=forms.Select(attrs={
-            'class': 'form-control'
+            'class': 'form-control',
+            'required': True
         })
     )
     
@@ -66,8 +75,8 @@ class AppointmentForm(forms.ModelForm):
         model = Appointment
         fields = ['service', 'specialist']
         widgets = {
-            'service': forms.Select(attrs={'class': 'form-control'}),
-            'specialist': forms.Select(attrs={'class': 'form-control'}),
+            'service': forms.Select(attrs={'class': 'form-control', 'required': True}),
+            'specialist': forms.Select(attrs={'class': 'form-control', 'required': True}),
         }
         labels = {
             'service': 'Услуга',
