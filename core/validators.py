@@ -788,9 +788,14 @@ class ConflictValidator:
                 )
                 
                 if not has_conflicts:
+                    # Убеждаемся, что time существует и не пустой
+                    slot_time = slot.get('time')
+                    if not slot_time:
+                        slot_time = slot_datetime.strftime('%H:%M')
+                    
                     alternatives.append({
                         'date': check_date,
-                        'time': slot['time'],
+                        'time': slot_time,
                         'datetime': slot_datetime,
                         'date_str': check_date.strftime('%d.%m.%Y'),
                         'weekday': check_date.strftime('%A')

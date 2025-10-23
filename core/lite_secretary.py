@@ -1284,10 +1284,16 @@ class LiteSmartSecretary:
                                 if alternatives:
                                     alt_dates = []
                                     for alt in alternatives[:3]:
-                                        alt_dates.append(f"{alt['date']} в {alt['time']}")
-                                    alt_str = ", ".join(alt_dates)
-                                    error_message = f"⚠️ {validation_result['errors'][0]}\n\n✅ Доступные альтернативы: {alt_str}\n\nВыберите удобную дату и время:"
-                                    return False, error_message
+                                        # Безопасная проверка наличия ключей
+                                        if 'date' in alt and 'time' in alt and alt['time']:
+                                            alt_dates.append(f"{alt['date']} в {alt['time']}")
+                                        elif 'date' in alt and 'datetime' in alt:
+                                            # Fallback: используем datetime если time отсутствует
+                                            alt_dates.append(f"{alt['date']} в {alt['datetime'].strftime('%H:%M')}")
+                                    if alt_dates:
+                                        alt_str = ", ".join(alt_dates)
+                                        error_message = f"⚠️ {validation_result['errors'][0]}\n\n✅ Доступные альтернативы: {alt_str}\n\nВыберите удобную дату и время:"
+                                        return False, error_message
                     except Exception as e:
                         logger.error(f"Error getting available slots: {e}", exc_info=True)
                 
@@ -1305,8 +1311,14 @@ class LiteSmartSecretary:
                 if alternatives:
                     alt_dates = []
                     for alt in alternatives[:3]:
-                        alt_dates.append(f"{alt['date']} в {alt['time']}")
-                    error_parts.append(f"📅 Альтернативные даты: {', '.join(alt_dates)}")
+                        # Безопасная проверка наличия ключей
+                        if 'date' in alt and 'time' in alt and alt['time']:
+                            alt_dates.append(f"{alt['date']} в {alt['time']}")
+                        elif 'date' in alt and 'datetime' in alt:
+                            # Fallback: используем datetime если time отсутствует
+                            alt_dates.append(f"{alt['date']} в {alt['datetime'].strftime('%H:%M')}")
+                    if alt_dates:
+                        error_parts.append(f"📅 Альтернативные даты: {', '.join(alt_dates)}")
                 
                 if not error_parts:
                     error_parts.append("⚠️ Произошла ошибка при создании записи")
