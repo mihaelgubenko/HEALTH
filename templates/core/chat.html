@@ -455,29 +455,21 @@ function handleAIResponse(response) {
     // Показываем кнопки выбора услуг
     if (response.intent === 'collect_service') {
         showServiceButtons();
-        // Добавляем кнопки навигации
-        setTimeout(() => showNavigationButtons(response.intent), 500);
     }
 
     // Показываем кнопки выбора специалистов
     if (response.intent === 'collect_specialist') {
         showSpecialistButtons();
-        // Добавляем кнопки навигации
-        setTimeout(() => showNavigationButtons(response.intent), 500);
     }
 
     // Показываем календарь когда AI спрашивает дату
     if (response.intent === 'collect_date' || response.intent === 'collect_day') {
         showCalendar();
-        // Добавляем кнопки навигации
-        setTimeout(() => showNavigationButtons(response.intent), 500);
     }
 
     // Показываем кнопки выбора времени
     if (response.intent === 'collect_time') {
         showTimeSlots();
-        // Добавляем кнопки навигации
-        setTimeout(() => showNavigationButtons(response.intent), 500);
     }
 
     // Показываем слоты времени (если есть в ответе)
@@ -490,21 +482,22 @@ function handleAIResponse(response) {
         showAppointmentConfirmation(response.entities || currentAppointmentData);
     }
 
-    // Показываем кнопки навигации для других интентов
-    if (response.intent === 'collect_name' || response.intent === 'collect_phone') {
-        setTimeout(() => showNavigationButtons(response.intent), 500);
-    }
-    
-    // Показываем кнопки навигации при ошибках валидации
+    // Показываем кнопки навигации для всех интентов сбора данных и ошибок
     if (response.intent && (response.intent.includes('collect_') || response.intent === 'error' || response.intent === 'booking_error')) {
-        if (response.reply && (response.reply.includes('Что хотите исправить?') || 
-                              response.reply.includes('номер телефона') || 
-                              response.reply.includes('имя') ||
-                              response.reply.includes('исправить') ||
-                              response.reply.includes('некорректный') ||
-                              response.reply.includes('ошибка') ||
-                              response.reply.includes('произошла ошибка'))) {
-            showNavigationButtons(response.intent);
+        // Для ошибок показываем кнопки только если есть соответствующие ключевые слова
+        if (response.intent === 'error' || response.intent === 'booking_error') {
+            if (response.reply && (response.reply.includes('Что хотите исправить?') || 
+                                  response.reply.includes('номер телефона') || 
+                                  response.reply.includes('имя') ||
+                                  response.reply.includes('исправить') ||
+                                  response.reply.includes('некорректный') ||
+                                  response.reply.includes('ошибка') ||
+                                  response.reply.includes('произошла ошибка'))) {
+                setTimeout(() => showNavigationButtons(response.intent, true), 500);
+            }
+        } else {
+            // Для обычных интентов сбора данных показываем кнопки всегда
+            setTimeout(() => showNavigationButtons(response.intent, true), 500);
         }
     }
 }
@@ -934,8 +927,13 @@ function showAppointmentConfirmation(data) {
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 
-function showNavigationButtons(intent) {
+function showNavigationButtons(intent, appendToEnd = false) {
     const messagesContainer = document.getElementById('chatMessages');
+    
+    // Очищаем предыдущие кнопки навигации
+    const existingButtons = messagesContainer.querySelectorAll('.navigation-buttons');
+    existingButtons.forEach(button => button.remove());
+    
     const buttonsDiv = document.createElement('div');
     buttonsDiv.className = 'interactive-buttons navigation-buttons';
     buttonsDiv.style.marginTop = '15px';
@@ -1001,7 +999,20 @@ function showNavigationButtons(intent) {
         buttonsDiv.appendChild(btn);
     });
     
-    messagesContainer.appendChild(buttonsDiv);
+    // Позиционируем кнопки правильно
+    if (appendToEnd) {
+        // Добавляем в конец контейнера
+        messagesContainer.appendChild(buttonsDiv);
+    } else {
+        // Добавляем после последнего AI сообщения
+        const lastAiMessage = messagesContainer.querySelector('.ai-message:last-child');
+        if (lastAiMessage) {
+            lastAiMessage.parentNode.insertBefore(buttonsDiv, lastAiMessage.nextSibling);
+        } else {
+            messagesContainer.appendChild(buttonsDiv);
+        }
+    }
+    
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 
