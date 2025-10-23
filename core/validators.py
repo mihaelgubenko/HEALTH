@@ -629,12 +629,8 @@ class ServiceValidator:
                 logger.info(f"Service found by partial match: {service.name}")
                 return True, f"Найдена услуга: {service.name}", service
             
-            # Получаем список доступных услуг
-            available = list(Service.objects.values_list('name', flat=True))
-            available_str = ", ".join(available)
-            
             logger.warning(f"Service not found: {service_name}")
-            return False, f"Услуга '{service_name}' не найдена. Доступны: {available_str}", None
+            return False, f"❌ Услуга '{service_name}' не найдена. Выберите услугу из списка:", None
 
 
 class ConflictValidator:
@@ -664,12 +660,7 @@ class ConflictValidator:
         conflicting_appointments = conflict_query.select_related('patient', 'service')
         
         for appointment in conflicting_appointments:
-            conflict_desc = (
-                f"Конфликт с записью: {appointment.patient.name} "
-                f"({appointment.service.name}) "
-                f"с {appointment.start_time.strftime('%H:%M')} "
-                f"до {appointment.end_time.strftime('%H:%M')}"
-            )
+            conflict_desc = f"❌ Время: Специалист уже занят в это время. Выберите другое время:"
             conflicts.append(conflict_desc)
         
         return len(conflicts) > 0, conflicts

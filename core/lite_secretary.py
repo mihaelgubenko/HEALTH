@@ -757,11 +757,31 @@ class LiteSmartSecretary:
                     reply = result
                     intent = 'collect_time'
                 else:
-                    # Другая ошибка - сообщаем об ошибке
-                    reply = f"Извините, произошла ошибка при создании записи: {result}"
-                    intent = 'booking_error'
-                    # Сохраняем последний интент в сессии для обработки ошибок
-                    session['last_intent'] = 'booking_error'
+                    # Определяем тип ошибки и возвращаем на соответствующий шаг
+                    if 'Услуга' in result and 'не найдена' in result:
+                        # Ошибка услуги - возвращаем к выбору услуги
+                        entities['service'] = None
+                        session['state'] = DialogState.COLLECTING_SERVICE
+                        reply = f"❌ {result}"
+                        intent = 'collect_service'
+                    elif 'Дата' in result or 'дата' in result:
+                        # Ошибка даты - возвращаем к выбору даты
+                        entities['date'] = None
+                        entities['time'] = None
+                        session['state'] = DialogState.COLLECTING_DATE
+                        reply = f"❌ {result}"
+                        intent = 'collect_date'
+                    elif 'Время' in result or 'время' in result or 'специалист' in result.lower():
+                        # Ошибка времени или специалиста - возвращаем к выбору времени
+                        entities['time'] = None
+                        session['state'] = DialogState.COLLECTING_TIME
+                        reply = f"❌ {result}"
+                        intent = 'collect_time'
+                    else:
+                        # Другая ошибка - показываем общие кнопки навигации
+                        reply = f"❌ {result}"
+                        intent = 'booking_error'
+                        session['last_intent'] = 'booking_error'
             
         elif next_field == 'service':
             # ИСПРАВЛЕНО: После определения услуги автоматически определяем специалиста

@@ -283,7 +283,7 @@ class DateTimeValidator:
         if check_date < current_date:
             tomorrow = current_date + timedelta(days=1)
             day_after_tomorrow = current_date + timedelta(days=2)
-            return False, f"⚠️ Дата: Нельзя записаться на прошедшую дату\n\n💡 Предлагаем альтернативные даты:\n• Завтра ({tomorrow.strftime('%d.%m.%Y')})\n• Послезавтра ({day_after_tomorrow.strftime('%d.%m.%Y')})"
+            return False, f"❌ Дата: Нельзя записаться на прошедшую дату. Выберите другую дату:"
         
         # Проверка на слишком далекое будущее (больше года)
         max_date = current_date + timedelta(days=365)
@@ -294,14 +294,14 @@ class DateTimeValidator:
         if self.holiday_manager.is_weekend(check_date, self.country):
             next_working = self.holiday_manager.get_next_working_day(check_date, self.country)
             next_next_working = self.holiday_manager.get_next_working_day(next_working, self.country)
-            return False, f"⚠️ Дата: Центр не работает в выходные дни\n\n💡 Предлагаем альтернативные даты:\n• {next_working.strftime('%d.%m.%Y')} ({next_working.strftime('%A')})\n• {next_next_working.strftime('%d.%m.%Y')} ({next_next_working.strftime('%A')})"
+            return False, f"❌ Дата: Центр не работает в выходные дни. Выберите рабочий день:"
         
         # Проверка на праздники
         is_holiday, holiday_name = self.holiday_manager.is_holiday(check_date, self.country)
         if is_holiday:
             next_working = self.holiday_manager.get_next_working_day(check_date, self.country)
             next_next_working = self.holiday_manager.get_next_working_day(next_working, self.country)
-            return False, f"⚠️ Дата: Центр не работает в праздничные дни ({holiday_name})\n\n💡 Предлагаем альтернативные даты:\n• {next_working.strftime('%d.%m.%Y')} ({next_working.strftime('%A')})\n• {next_next_working.strftime('%d.%m.%Y')} ({next_next_working.strftime('%A')})"
+            return False, f"❌ Дата: Центр не работает в праздничные дни. Выберите рабочий день:"
         
         return True, "OK"
     
@@ -318,7 +318,7 @@ class DateTimeValidator:
         
         # Проверка рабочих часов
         if check_time.hour < start_hour or check_time.hour >= end_hour:
-            return False, f"Центр работает с {start_hour:02d}:00 до {end_hour:02d}:00"
+            return False, f"❌ Время: Центр работает с {start_hour:02d}:00 до {end_hour:02d}:00. Выберите другое время:"
         
         # Проверка, что время не в прошлом (если дата сегодня)
         current_datetime = TimezoneManager.get_current_time(self.country)
@@ -331,7 +331,7 @@ class DateTimeValidator:
             buffer_time = (current_datetime + timedelta(minutes=buffer_minutes)).time()
             
             if check_time <= buffer_time:
-                return False, f"Нельзя записаться на время ранее {buffer_time.strftime('%H:%M')} (нужно время для подготовки)"
+                return False, f"❌ Время: Нельзя записаться на время ранее {buffer_time.strftime('%H:%M')}. Выберите другое время:"
         
         return True, "OK"
     
