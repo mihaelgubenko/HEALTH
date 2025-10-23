@@ -1,1 +1,2 @@
-web: gunicorn smart_secretary.wsgi:application
+web: bash start.sh
+migrate: python manage.py migrate
