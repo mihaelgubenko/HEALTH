@@ -16,20 +16,14 @@ class AdminDashboard:
         week_ago = today - timedelta(days=7)
         month_ago = today - timedelta(days=30)
         
-        # Отладочная информация
-        print(f"DEBUG: Today is {today}")
-        print(f"DEBUG: All appointments today: {Appointment.objects.filter(start_time__date=today).count()}")
-        print(f"DEBUG: Active appointments today: {Appointment.objects.filter(start_time__date=today, status__in=['pending', 'confirmed']).count()}")
-        
         # Альтернативный способ подсчета (на случай проблем с часовыми поясами)
-        start_of_day = datetime.combine(today, datetime.min.time())
-        end_of_day = datetime.combine(today, datetime.max.time())
+        start_of_day = timezone.make_aware(datetime.combine(today, datetime.min.time()))
+        end_of_day = timezone.make_aware(datetime.combine(today, datetime.max.time()))
         appointments_today_alt = Appointment.objects.filter(
             start_time__gte=start_of_day,
             start_time__lte=end_of_day,
             status__in=['pending', 'confirmed']
         ).count()
-        print(f"DEBUG: Alternative count: {appointments_today_alt}")
         
         # Статистика записей (только активные статусы)
         # Используем альтернативный способ для избежания проблем с часовыми поясами
@@ -116,7 +110,12 @@ class AdminDashboard:
             'week_ago': week_ago,
             'month_ago': month_ago,
         }
-        return render(request, 'admin/dashboard.html', context)
+        response = render(request, 'admin/dashboard.html', context)
+        # Добавляем заголовки для предотвращения кэширования
+        response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        response['Pragma'] = 'no-cache'
+        response['Expires'] = '0'
+        return response
 
 
 # Создаем экземпляр дашборда
