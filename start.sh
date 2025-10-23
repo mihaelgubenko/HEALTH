@@ -1,5 +1,6 @@
 #!/bin/bash
-echo "🚀 Выполнение миграций Django..."
+
+echo "🚀 Запуск приложения Family Health Center Bot..."
 
 # Проверяем наличие DATABASE_URL
 if [ -z "$DATABASE_URL" ]; then
