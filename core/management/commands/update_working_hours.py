@@ -8,39 +8,21 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.stdout.write('Обновление рабочих часов специалистов...')
 
-        # Новые рабочие часы (без пятницы)
-        working_hours_ekaterina = {
-            'monday': {'start': '09:00', 'end': '19:00'},
-            'tuesday': {'start': '09:00', 'end': '19:00'},
-            'wednesday': {'start': '09:00', 'end': '19:00'},
-            'thursday': {'start': '09:00', 'end': '19:00'},
-            'saturday': {'start': '09:00', 'end': '14:00'},
-            'sunday': {'start': '10:00', 'end': '16:00'}
+        # Унифицированные рабочие часы для всех специалистов
+        # Вс, Пн, Вт, Ср, Чт: 10:00-19:00; Пт, Сб: выходные
+        working_hours_unified = {
+            'monday': {'start': '10:00', 'end': '19:00'},
+            'tuesday': {'start': '10:00', 'end': '19:00'},
+            'wednesday': {'start': '10:00', 'end': '19:00'},
+            'thursday': {'start': '10:00', 'end': '19:00'},
+            'sunday': {'start': '10:00', 'end': '19:00'}
         }
 
-        working_hours_rimma = {
-            'monday': {'start': '10:00', 'end': '18:00'},
-            'tuesday': {'start': '10:00', 'end': '18:00'},
-            'wednesday': {'start': '10:00', 'end': '18:00'},
-            'thursday': {'start': '10:00', 'end': '18:00'},
-            'saturday': {'start': '10:00', 'end': '14:00'},
-            'sunday': {'start': '10:00', 'end': '14:00'}
-        }
-
-        working_hours_avraam = {
-            'monday': {'start': '09:00', 'end': '19:00'},
-            'tuesday': {'start': '09:00', 'end': '19:00'},
-            'wednesday': {'start': '09:00', 'end': '19:00'},
-            'thursday': {'start': '09:00', 'end': '19:00'},
-            'saturday': {'start': '09:00', 'end': '14:00'},
-            'sunday': {'start': '10:00', 'end': '16:00'}
-        }
-
-        # Обновляем рабочие часы
+        # Обновляем рабочие часы для всех специалистов
         specialists_data = [
-            {'name': 'Екатерина', 'working_hours': working_hours_ekaterina},
-            {'name': 'Римма', 'working_hours': working_hours_rimma},
-            {'name': 'Авраам', 'working_hours': working_hours_avraam}
+            {'name': 'Екатерина', 'working_hours': working_hours_unified},
+            {'name': 'Римма', 'working_hours': working_hours_unified},
+            {'name': 'Авраам', 'working_hours': working_hours_unified}
         ]
 
         updated_count = 0
