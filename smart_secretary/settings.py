@@ -41,6 +41,8 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',') if os.getenv('ALLOWED
 CSRF_TRUSTED_ORIGINS = [
     'https://health-production-49d3.up.railway.app',
     'https://*.up.railway.app',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
 ]
 
 
@@ -140,6 +142,19 @@ TIME_ZONE = 'Asia/Jerusalem'
 USE_I18N = True
 
 USE_TZ = True
+
+# Session configuration
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_AGE = 1209600  # 2 weeks
+SESSION_COOKIE_SECURE = False  # Set to True in production with HTTPS
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+SESSION_SAVE_EVERY_REQUEST = True
+
+# Authentication
+LOGIN_URL = '/admin/login/'
+LOGIN_REDIRECT_URL = '/admin/'
+LOGOUT_REDIRECT_URL = '/'
 
 
 # Static files (CSS, JavaScript, Images)
