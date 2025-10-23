@@ -573,7 +573,7 @@ class LiteSmartSecretary:
             # Сбрасываем счетчик попыток при исправлении
             self.session_manager.reset_correction_attempts(session_id)
             return {
-                'reply': '👤 Хорошо, давайте исправим имя.\n\nКак вас зовут?',
+                'reply': '👤 Хорошо, давайте исправим имя.\n\nКак к вам обращаться?',
                 'intent': 'collect_name',
                 'session_id': session_id
             }
@@ -748,7 +748,7 @@ class LiteSmartSecretary:
                     # Проблема с именем - возвращаемся к сбору имени
                     entities['name'] = None
                     session['state'] = DialogState.COLLECTING_NAME
-                    reply = f"{result}\n\n👤 Как вас зовут?"
+                    reply = f"{result}\n\n👤 Как к вам обращаться?"
                     intent = 'collect_name'
                 elif '💡 Рекомендуемые времена' in result:
                     # Валидатор предложил слоты (старый формат)
@@ -791,11 +791,11 @@ class LiteSmartSecretary:
                 specialist = self._auto_determine_specialist(service_name)
                 if specialist:
                     entities['specialist'] = specialist
-                    reply = f"Отлично! К {specialist}. Как вас зовут?"
+                    reply = f"Отлично! К {specialist}. Как к вам обращаться?"
                     intent = 'collect_name'
                 elif 'массаж' in service_name.lower():
                     # Для массажа специалист определяется по полу, спрашиваем имя
-                    reply = "Отлично! Как вас зовут?"
+                    reply = "Отлично! Как к вам обращаться?"
                     intent = 'collect_name'
                 else:
                     reply = self._ask_for_service(user_message)
@@ -849,7 +849,7 @@ class LiteSmartSecretary:
                 # Спрашиваем имя, учитывая уже определенного специалиста
                 specialist = entities.get('specialist', '')
                 if specialist:
-                    reply = f"Отлично! К {specialist}. Как вас зовут?"
+                    reply = f"Отлично! К {specialist}. Как к вам обращаться?"
                 else:
                     reply = self._ask_for_name(extracted, entities)
                 intent = 'collect_name'
@@ -1064,18 +1064,18 @@ class LiteSmartSecretary:
         """Спрашивает специалиста с учетом контекста"""
         # ИСПРАВЛЕНО: Проверяем, не указал ли пользователь специалиста в сообщении
         if 'к аврааму' in user_message.lower() or 'авраам' in user_message.lower():
-            return "Отлично! К Аврааму. Как вас зовут?"
+            return "Отлично! К Аврааму. Как к вам обращаться?"
         elif 'к екатерине' in user_message.lower() or 'екатерина' in user_message.lower():
-            return "Отлично! К Екатерине. Как вас зовут?"
+            return "Отлично! К Екатерине. Как к вам обращаться?"
         elif 'к римме' in user_message.lower() or 'римма' in user_message.lower():
-            return "Отлично! К Римме. Как вас зовут?"
+            return "Отлично! К Римме. Как к вам обращаться?"
         else:
             return "К какому специалисту хотите записаться? (Авраам, Екатерина, Римма)"
     
     def _ask_for_name(self, extracted: Dict, entities: Dict) -> str:
         """Спрашивает имя"""
         # ИСПРАВЛЕНО: Всегда просто спрашиваем имя, без перехода к следующему полю
-        return "Как вас зовут?"
+        return "Как к вам обращаться?"
     
     def _determine_gender_by_name(self, name: str) -> str:
         """Определяет пол по имени согласно SmartSecretary.md"""
