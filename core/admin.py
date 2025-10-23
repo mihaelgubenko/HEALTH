@@ -291,7 +291,7 @@ class CustomAdminSite(admin.AdminSite):
 
 
 # Создаем кастомный сайт админки
-admin_site = CustomAdminSite(name='admin')
+admin_site = CustomAdminSite(name='admin_custom')
 
 # Регистрируем модели в кастомном сайте
 admin_site.register(Patient, PatientAdmin)

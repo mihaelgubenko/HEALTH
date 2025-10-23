@@ -26,6 +26,7 @@ from core.admin_validation_api import (
 
 urlpatterns = [
     path('admin/', admin_site.urls),  # Кастомная админка с дашбордом
+    path('admin-standard/', admin.site.urls),  # Стандартная админка для тестирования
     path('', include('core.urls')),
     
     # API для валидации в админке
