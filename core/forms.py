@@ -96,8 +96,8 @@ class AppointmentForm(forms.ModelForm):
         # Заполняем временные слоты
         time_choices = [('', 'Выберите время')]
         
-        # Генерируем все доступные слоты с 9:00 до 19:00
-        for hour in range(9, 19):
+        # Генерируем все доступные слоты с 10:00 до 19:00
+        for hour in range(10, 19):
             for minute in [0, 30]:
                 time_str = f'{hour:02d}:{minute:02d}'
                 time_choices.append((time_str, time_str))

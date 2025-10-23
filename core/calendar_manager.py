@@ -28,8 +28,8 @@ class InternalCalendar:
         Returns:
             List[Dict]: Список доступных слотов
         """
-        # Рабочие часы специалиста (9:00 - 19:00)
-        work_start = time(9, 0)
+        # Рабочие часы специалиста (10:00 - 19:00)
+        work_start = time(10, 0)
         work_end = time(19, 0)
         
         # Получаем занятые слоты
@@ -190,9 +190,9 @@ class DateParser:
                         datetime.combine(target_date, time(hour, minute))
                     )
                 else:
-                    # Если время не указано, возвращаем дату с 9:00
+                    # Если время не указано, возвращаем дату с 10:00
                     return timezone.make_aware(
-                        datetime.combine(target_date, time(9, 0))
+                        datetime.combine(target_date, time(10, 0))
                     )
         
         return None

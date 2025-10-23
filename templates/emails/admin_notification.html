@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Новая запись на приём</title>
+</head>
+<body>
+    <h2>Новая запись на приём</h2>
+    
+    <p><strong>Пациент:</strong> {{ appointment.patient.name }}</p>
+    <p><strong>Телефон:</strong> {{ appointment.patient.phone }}</p>
+    <p><strong>Услуга:</strong> {{ appointment.service.name }}</p>
+    <p><strong>Специалист:</strong> {{ appointment.specialist.name }}</p>
+    <p><strong>Дата и время:</strong> {{ appointment.start_time|date:"d.m.Y H:i" }}</p>
+    
+    <p>Запись создана: {{ appointment.created_at|date:"d.m.Y H:i" }}</p>
+    
+    <hr>
+    <p><em>Это автоматическое уведомление от системы записи на приём.</em></p>
+</body>
+</html>
