@@ -281,7 +281,9 @@ class DateTimeValidator:
         
         # Проверка, что дата не в прошлом
         if check_date < current_date:
-            return False, "Нельзя записаться на прошедшую дату"
+            tomorrow = current_date + timedelta(days=1)
+            day_after_tomorrow = current_date + timedelta(days=2)
+            return False, f"⚠️ Дата: Нельзя записаться на прошедшую дату\n\n💡 Предлагаем альтернативные даты:\n• Завтра ({tomorrow.strftime('%d.%m.%Y')})\n• Послезавтра ({day_after_tomorrow.strftime('%d.%m.%Y')})"
         
         # Проверка на слишком далекое будущее (больше года)
         max_date = current_date + timedelta(days=365)
@@ -291,13 +293,15 @@ class DateTimeValidator:
         # Проверка на выходные дни
         if self.holiday_manager.is_weekend(check_date, self.country):
             next_working = self.holiday_manager.get_next_working_day(check_date, self.country)
-            return False, f"Центр не работает в выходные дни. Ближайший рабочий день: {next_working.strftime('%d.%m.%Y')}"
+            next_next_working = self.holiday_manager.get_next_working_day(next_working, self.country)
+            return False, f"⚠️ Дата: Центр не работает в выходные дни\n\n💡 Предлагаем альтернативные даты:\n• {next_working.strftime('%d.%m.%Y')} ({next_working.strftime('%A')})\n• {next_next_working.strftime('%d.%m.%Y')} ({next_next_working.strftime('%A')})"
         
         # Проверка на праздники
         is_holiday, holiday_name = self.holiday_manager.is_holiday(check_date, self.country)
         if is_holiday:
             next_working = self.holiday_manager.get_next_working_day(check_date, self.country)
-            return False, f"Центр не работает в праздничные дни ({holiday_name}). Ближайший рабочий день: {next_working.strftime('%d.%m.%Y')}"
+            next_next_working = self.holiday_manager.get_next_working_day(next_working, self.country)
+            return False, f"⚠️ Дата: Центр не работает в праздничные дни ({holiday_name})\n\n💡 Предлагаем альтернативные даты:\n• {next_working.strftime('%d.%m.%Y')} ({next_working.strftime('%A')})\n• {next_next_working.strftime('%d.%m.%Y')} ({next_next_working.strftime('%A')})"
         
         return True, "OK"
     

@@ -455,21 +455,29 @@ function handleAIResponse(response) {
     // Показываем кнопки выбора услуг
     if (response.intent === 'collect_service') {
         showServiceButtons();
+        // Добавляем кнопки навигации
+        setTimeout(() => showNavigationButtons(response.intent), 500);
     }
 
     // Показываем кнопки выбора специалистов
     if (response.intent === 'collect_specialist') {
         showSpecialistButtons();
+        // Добавляем кнопки навигации
+        setTimeout(() => showNavigationButtons(response.intent), 500);
     }
 
     // Показываем календарь когда AI спрашивает дату
     if (response.intent === 'collect_date' || response.intent === 'collect_day') {
         showCalendar();
+        // Добавляем кнопки навигации
+        setTimeout(() => showNavigationButtons(response.intent), 500);
     }
 
     // Показываем кнопки выбора времени
     if (response.intent === 'collect_time') {
         showTimeSlots();
+        // Добавляем кнопки навигации
+        setTimeout(() => showNavigationButtons(response.intent), 500);
     }
 
     // Показываем слоты времени (если есть в ответе)
@@ -481,15 +489,21 @@ function handleAIResponse(response) {
     if (response.intent === 'time_collected' || response.intent === 'booking_completed') {
         showAppointmentConfirmation(response.entities || currentAppointmentData);
     }
+
+    // Показываем кнопки навигации для других интентов
+    if (response.intent === 'collect_name' || response.intent === 'collect_phone') {
+        setTimeout(() => showNavigationButtons(response.intent), 500);
+    }
     
     // Показываем кнопки навигации при ошибках валидации
-    if (response.intent && (response.intent.includes('collect_') || response.intent === 'error')) {
+    if (response.intent && (response.intent.includes('collect_') || response.intent === 'error' || response.intent === 'booking_error')) {
         if (response.reply && (response.reply.includes('Что хотите исправить?') || 
                               response.reply.includes('номер телефона') || 
                               response.reply.includes('имя') ||
                               response.reply.includes('исправить') ||
                               response.reply.includes('некорректный') ||
-                              response.reply.includes('ошибка'))) {
+                              response.reply.includes('ошибка') ||
+                              response.reply.includes('произошла ошибка'))) {
             showNavigationButtons(response.intent);
         }
     }
@@ -941,6 +955,12 @@ function showNavigationButtons(intent) {
         buttons.push({text: '⏰ Выбрать другое время', action: 'fix_time'});
         buttons.push({text: '📅 Изменить дату', action: 'fix_date'});
         buttons.push({text: '⬅️ Шаг назад', action: 'step_back'});
+        buttons.push({text: '🔄 Начать заново', action: 'restart'});
+    } else if (intent === 'booking_error') {
+        buttons.push({text: '⏰ Изменить время', action: 'fix_time'});
+        buttons.push({text: '📅 Изменить дату', action: 'fix_date'});
+        buttons.push({text: '👤 Изменить имя', action: 'fix_name'});
+        buttons.push({text: '📞 Изменить телефон', action: 'fix_phone'});
         buttons.push({text: '🔄 Начать заново', action: 'restart'});
     } else {
         // Общие кнопки для любых ошибок
