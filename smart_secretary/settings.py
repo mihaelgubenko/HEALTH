@@ -46,6 +46,14 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 
+# Security and proxy settings for HTTPS behind Railway
+# Ensure Django respects X-Forwarded headers from the platform proxy
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# Force HTTPS in production unless explicitly disabled via env
+SECURE_SSL_REDIRECT = os.getenv('SECURE_SSL_REDIRECT', 'True' if not DEBUG else 'False').lower() == 'true'
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -146,10 +154,13 @@ USE_TZ = True
 # Session configuration
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_AGE = 1209600  # 2 weeks
-SESSION_COOKIE_SECURE = False  # Set to True in production with HTTPS
+SESSION_COOKIE_SECURE = not DEBUG
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'
 SESSION_SAVE_EVERY_REQUEST = True
+
+# CSRF cookie should be secure when running over HTTPS
+CSRF_COOKIE_SECURE = not DEBUG
 
 # Authentication
 LOGIN_URL = '/admin/login/'
