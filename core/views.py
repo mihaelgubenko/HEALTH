@@ -13,8 +13,9 @@ from .email_service import EmailService
 
 def home(request):
     """Главная страница"""
-    # Получаем популярные услуги (первые 6)
-    popular_services = Service.objects.filter(is_active=True, catalog='A')[:6]
+    # Временно закомментировано для тестирования без БД
+    # popular_services = Service.objects.filter(is_active=True, catalog='A')[:6]
+    popular_services = []  # Пустой список для тестирования
     
     context = {
         'popular_services': popular_services,
@@ -24,7 +25,9 @@ def home(request):
 
 def services(request):
     """Страница всех услуг"""
-    services_list = Service.objects.filter(is_active=True, catalog='A').order_by('name')
+    # Временно закомментировано для тестирования без БД
+    # services_list = Service.objects.filter(is_active=True, catalog='A').order_by('name')
+    services_list = []  # Пустой список для тестирования
     
     context = {
         'services': services_list,
@@ -34,7 +37,9 @@ def services(request):
 
 def service_detail(request, service_id):
     """Детальная страница услуги"""
-    service = get_object_or_404(Service, id=service_id, is_active=True)
+    # Временно закомментировано для тестирования без БД
+    # service = get_object_or_404(Service, id=service_id, is_active=True)
+    service = None  # Пустое значение для тестирования
     
     context = {
         'service': service,
@@ -131,7 +136,9 @@ def appointment_success(request):
 
 def contacts(request):
     """Страница контактов"""
-    faq_list = FAQ.objects.filter(is_active=True).order_by('category', 'order')
+    # Временно закомментировано для тестирования без БД
+    # faq_list = FAQ.objects.filter(is_active=True).order_by('category', 'order')
+    faq_list = []  # Пустой список для тестирования
     
     if request.method == 'POST':
         # Обработка формы контактов
@@ -148,14 +155,15 @@ def contacts(request):
             }
             return render(request, 'core/contacts.html', context)
         
+        # Временно закомментировано для тестирования без БД
         # Сохраняем сообщение в БД
-        from .models import ContactMessage
-        ContactMessage.objects.create(
-            name=name,
-            phone=phone,
-            email=email if email else None,
-            message=message
-        )
+        # from .models import ContactMessage
+        # ContactMessage.objects.create(
+        #     name=name,
+        #     phone=phone,
+        #     email=email if email else None,
+        #     message=message
+        # )
         
         # Успешная отправка
         context = {
@@ -173,58 +181,66 @@ def contacts(request):
 
 def get_specialists(request):
     """API для получения специалистов по услуге"""
-    service_id = request.GET.get('service_id')
+    # Временно закомментировано для тестирования без БД
+    # service_id = request.GET.get('service_id')
+    # 
+    # if service_id:
+    #     # Логика выбора специалиста по услуге
+    #     if 'массаж' in Service.objects.get(id=service_id).name.lower():
+    #         specialists = Specialist.objects.filter(name__in=['Авраам', 'Екатерина'])
+    #     elif 'консультация' in Service.objects.get(id=service_id).name.lower():
+    #         specialists = Specialist.objects.filter(name__in=['Екатерина', 'Римма'])
+    #     else:
+    #         specialists = Specialist.objects.filter(is_active=True)
+    # else:
+    #     specialists = Specialist.objects.filter(is_active=True)
+    # 
+    # data = [{'id': s.id, 'name': s.name, 'specialty': s.specialty} for s in specialists]
+    # return JsonResponse(data, safe=False)
     
-    if service_id:
-        # Логика выбора специалиста по услуге
-        if 'массаж' in Service.objects.get(id=service_id).name.lower():
-            specialists = Specialist.objects.filter(name__in=['Авраам', 'Екатерина'])
-        elif 'консультация' in Service.objects.get(id=service_id).name.lower():
-            specialists = Specialist.objects.filter(name__in=['Екатерина', 'Римма'])
-        else:
-            specialists = Specialist.objects.filter(is_active=True)
-    else:
-        specialists = Specialist.objects.filter(is_active=True)
-    
-    data = [{'id': s.id, 'name': s.name, 'specialty': s.specialty} for s in specialists]
-    return JsonResponse(data, safe=False)
+    # Возвращаем пустой список для тестирования
+    return JsonResponse([], safe=False)
 
 
 def get_available_slots(request):
     """API для получения доступных слотов"""
-    specialist_id = request.GET.get('specialist_id')
-    date = request.GET.get('date')
+    # Временно закомментировано для тестирования без БД
+    # specialist_id = request.GET.get('specialist_id')
+    # date = request.GET.get('date')
+    # 
+    # if not specialist_id or not date:
+    #     return JsonResponse([], safe=False)
+    # 
+    # try:
+    #     specialist = Specialist.objects.get(id=specialist_id)
+    #     target_date = datetime.strptime(date, '%Y-%m-%d').date()
+    #     
+    #     # Генерируем слоты на основе рабочих часов специалиста
+    #     slots = []
+    #     day_name = target_date.strftime('%A').lower()
+    #     
+    #     if day_name in specialist.working_hours:
+    #         start_time = specialist.working_hours[day_name]['start']
+    #         end_time = specialist.working_hours[day_name]['end']
+    #         
+    #         # Простая генерация слотов (каждый час)
+    #         start_hour = int(start_time.split(':')[0])
+    #         end_hour = int(end_time.split(':')[0])
+    #         
+    #         for hour in range(start_hour, end_hour):
+    #             slot_time = f"{hour:02d}:00"
+    #             slots.append({
+    #                 'time': slot_time,
+    #                 'display': slot_time
+    #             })
+    #     
+    #     return JsonResponse(slots, safe=False)
+    #     
+    # except Exception as e:
+    #     return JsonResponse([], safe=False)
     
-    if not specialist_id or not date:
-        return JsonResponse([], safe=False)
-    
-    try:
-        specialist = Specialist.objects.get(id=specialist_id)
-        target_date = datetime.strptime(date, '%Y-%m-%d').date()
-        
-        # Генерируем слоты на основе рабочих часов специалиста
-        slots = []
-        day_name = target_date.strftime('%A').lower()
-        
-        if day_name in specialist.working_hours:
-            start_time = specialist.working_hours[day_name]['start']
-            end_time = specialist.working_hours[day_name]['end']
-            
-            # Простая генерация слотов (каждый час)
-            start_hour = int(start_time.split(':')[0])
-            end_hour = int(end_time.split(':')[0])
-            
-            for hour in range(start_hour, end_hour):
-                slot_time = f"{hour:02d}:00"
-                slots.append({
-                    'time': slot_time,
-                    'display': slot_time
-                })
-        
-        return JsonResponse(slots, safe=False)
-        
-    except Exception as e:
-        return JsonResponse([], safe=False)
+    # Возвращаем пустой список для тестирования
+    return JsonResponse([], safe=False)
 
 
 def chat(request):
