@@ -941,31 +941,13 @@ function showNavigationButtons(intent, appendToEnd = false) {
     // Определяем какие кнопки показать в зависимости от контекста
     const buttons = [];
     
-    if (intent === 'collect_phone' || intent.includes('phone')) {
-        buttons.push({text: '📞 Исправить телефон', action: 'fix_phone'});
-        buttons.push({text: '⬅️ Шаг назад', action: 'step_back'});
-        buttons.push({text: '🔄 Начать заново', action: 'restart'});
-    } else if (intent === 'collect_name' || intent.includes('name')) {
-        buttons.push({text: '👤 Исправить имя', action: 'fix_name'});
-        buttons.push({text: '⬅️ Шаг назад', action: 'step_back'});
-        buttons.push({text: '🔄 Начать заново', action: 'restart'});
-    } else if (intent === 'collect_time' || intent.includes('time')) {
-        buttons.push({text: '⏰ Выбрать другое время', action: 'fix_time'});
-        buttons.push({text: '📅 Изменить дату', action: 'fix_date'});
-        buttons.push({text: '⬅️ Шаг назад', action: 'step_back'});
-        buttons.push({text: '🔄 Начать заново', action: 'restart'});
-    } else if (intent === 'booking_error') {
-        buttons.push({text: '⏰ Изменить время', action: 'fix_time'});
-        buttons.push({text: '📅 Изменить дату', action: 'fix_date'});
-        buttons.push({text: '👤 Изменить имя', action: 'fix_name'});
-        buttons.push({text: '📞 Изменить телефон', action: 'fix_phone'});
+    // Упрощенная логика - только кнопка "Шаг назад" на каждом этапе
+    if (intent === 'collect_service') {
+        // На этапе выбора услуги - кнопка "Начать заново"
         buttons.push({text: '🔄 Начать заново', action: 'restart'});
     } else {
-        // Общие кнопки для любых ошибок
-        buttons.push({text: '📞 Исправить телефон', action: 'fix_phone'});
-        buttons.push({text: '👤 Исправить имя', action: 'fix_name'});
+        // На всех остальных этапах - только "Шаг назад"
         buttons.push({text: '⬅️ Шаг назад', action: 'step_back'});
-        buttons.push({text: '🔄 Начать заново', action: 'restart'});
     }
     
     buttons.forEach(buttonInfo => {
@@ -1027,18 +1009,6 @@ function handleNavigationAction(action, buttonsDiv) {
     let message = '';
     
     switch(action) {
-        case 'fix_phone':
-            message = 'Хочу исправить номер телефона';
-            break;
-        case 'fix_name':
-            message = 'Хочу исправить имя';
-            break;
-        case 'fix_time':
-            message = 'Хочу выбрать другое время';
-            break;
-        case 'fix_date':
-            message = 'Хочу изменить дату';
-            break;
         case 'step_back':
             message = 'Шаг назад';
             break;
@@ -1046,6 +1016,9 @@ function handleNavigationAction(action, buttonsDiv) {
             message = 'Начать заново';
             // Очищаем данные записи
             currentAppointmentData = {};
+            break;
+        default:
+            message = 'Шаг назад';
             break;
     }
     

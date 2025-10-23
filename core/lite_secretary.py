@@ -993,6 +993,9 @@ class LiteSmartSecretary:
             # Если это конкретно мужской массаж - сразу Авраам
             elif 'мужчин' in service_lower:
                 return 'Авраам'
+            # Если это детский массаж или массаж грудничкам - Авраам
+            elif 'детский' in service_lower or 'грудных' in service_lower or 'грудничк' in service_lower:
+                return 'Авраам'
             # Если это общий массаж - ждем получения имени для определения пола
             elif 'общий' in service_lower:
                 return None
