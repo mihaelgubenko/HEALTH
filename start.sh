@@ -31,6 +31,25 @@ else
     echo "⚠️  ПРЕДУПРЕЖДЕНИЕ: Ошибка при загрузке начальных данных"
 fi
 
+# Опционально: создание/сброс admin пользователя при старте (через переменные окружения)
+# Установите AUTO_CREATE_ADMIN=true и (опционально) ADMIN_PASSWORD в Railway → Variables
+if [ "${AUTO_CREATE_ADMIN:-false}" = "true" ]; then
+    echo "👤 Создание/сброс admin пользователя..."
+
+    if [ -z "$ADMIN_PASSWORD" ]; then
+        echo "🔐 ADMIN_PASSWORD не задан — генерирую временный пароль..."
+        ADMIN_PASSWORD=$(python - <<'PY'
+import secrets, string
+alphabet = string.ascii_letters + string.digits + "!@#$%^&*()-_=+"
+print(''.join(secrets.choice(alphabet) for _ in range(20)))
+PY
+)
+        echo "ℹ️ ВРЕМЕННЫЙ ПАРОЛЬ ДЛЯ admin: ${ADMIN_PASSWORD}"
+    fi
+
+    python manage.py reset_admin_password --password "$ADMIN_PASSWORD"
+fi
+
 # Собираем статические файлы
 echo "📁 Сбор статических файлов..."
 python manage.py collectstatic --noinput
