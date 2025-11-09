@@ -1,0 +1,7 @@
+Smart Secretary — Changelog
+
+Формат записи:
+YYYY-MM-DD — <Автор/инициатор> — <краткое описание> — Тесты/проверки
+
+2025-11-09 — GPT-5 Codex — Создан каталог .ai-guard, добавлены master-prompt, dependency-map, changelog — manage.py check, manage.py test
+

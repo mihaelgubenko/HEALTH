@@ -1,0 +1,47 @@
+Smart Secretary — Dependency Map (обновлено 2025-11-09)
+
+Основная структура
+- manage.py → smart_secretary.settings (конфигурация Django).
+- smart_secretary/
+  - settings.py → dj_database_url, dotenv, core (INSTALLED_APPS), whitenoise.
+  - urls.py → core.urls, admin.site, admin_site (кастомная админка).
+  - wsgi.py/asgi.py → стандартный запуск Django.
+- core/
+  - apps.py → регистрация приложения.
+  - models.py ↔ forms.py (через ModelChoice), admin.py, views.py, lite_secretary.py.
+  - admin.py → admin_dashboard.py, models.py, validators (косвенно через admin_validation_api).
+  - admin_dashboard.py → models.Appointment/Service/Patient/DialogLog/ContactMessage.
+  - views.py → models, forms.AppointmentForm, email_service.EmailService, analytics.SecretaryAnalytics.
+  - email_service.py → Django send_mail (зависит от настроек почты в settings.py).
+  - forms.py → models.Patient/Appointment.
+  - lite_secretary.py → models, calendar_manager (CalendarSyncManager, DateParser), validators (ValidationManager), timezone.
+  - validators.py → использует модели и бизнес-логика валидации (подключена в admin_validation_api и lite_secretary).
+  - analytics.py → DialogLog, Appointment, Service.
+  - calendar_manager.py → Specialist working_hours, Appointment; синхронизируется с CalendarSyncManager.
+  - admin_validation_api.py → validators.ValidationManager/AvailabilityValidator/ConflictValidator, models.
+  - api_views.py & calendar_api_views.py → REST-endpoints для календаря/чат-бота (используют модели, lite_secretary).
+  - management/commands/health_check.py → Django ORM, LiteSmartSecretary, openai client.
+- templates/ → Зависимости от views/admin_dashboard.
+- static/ и staticfiles/ → Статические ресурсы, обслуживаются через WhiteNoise.
+
+Внешние зависимости
+- Django 4.2.7 (основа приложения).
+- APScheduler (для фоновых задач; пока не используется напрямую).
+- openai (используется в health_check при полной проверке).
+- requests, python-dotenv, whitenoise, dj-database-url, psycopg2-binary, gunicorn.
+
+Зависимости внутри модуля core
+- AppointmentForm → Appointment, Specialist, Service (получает queryset).
+- LiteSmartSecretary → ValidationManager → AvailabilityValidator/ConflictValidator → Appointment/Specialist models.
+- EmailService → шаблоны в templates/emails.
+- Tests (core/tests.py и test_* корневые файлы) — пока пустые; добавить при расширении.
+
+Точки интеграции
+- Админка: core/admin.py регистрирует admin_site и стандартный admin.site.
+- API: admin_validation_api.py и calendar_api_views.py подключаются через core/urls.py.
+- Управление состоянием: lite_secretary.py поддерживает диалоговый интерфейс (зависит от моделей и календаря).
+
+Примечания
+- При добавлении новых модулей обновлять этот файл: указать прямые зависимости и используемые модели/сервисы.
+- Для нестандартных команд/скриптов фиксировать их связь с компонентами (например, новые management commands).
+
